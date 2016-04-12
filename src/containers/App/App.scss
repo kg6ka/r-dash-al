@@ -5,3 +5,63 @@ body {
 .custom {
   background-color: pink;
 }
+
+@font-face {
+    font-family: 'modeka';
+    src: url("./fonts/Modeka.otf")  format("opentype");
+}
+@font-face {
+    font-family: 'telegrafico';
+    src: url("./fonts/telegrafico.ttf")  format("truetype");
+}
+@font-face {
+    font-family: 'PTSans';
+    src: url("./fonts/PT_Sans-Caption-Web-Regular.ttf") format("truetype");
+}
+
+body {
+    margin: 0;
+    background-color: #0b0a0a;
+}
+
+:global(.block) {
+    fill: url(#blockGradient);
+}
+
+:global(.gradientArc) {
+    fill: url(#gradient);
+}
+
+:global(.carsStatus) {
+    width: calc(100vw / 2.8);
+    height: calc(100vw / 4.75);
+    font-family: 'PTSans';
+    display: inline-block;
+}
+
+:global(.anomaliesBlock) {
+    width: calc(100vw / 2.2);
+    height: calc(100vw / 4.75);
+    font-family: 'PTSans';
+    display: inline-block;
+}
+
+:global(.svgIcon) {
+   font-family: FontAwesome;
+}
+
+:global(.redArc) {
+    fill: url(#redGradient);
+}
+
+:global(.blueArc) {
+    fill: url(#blueGradient);
+}
+
+:global(.registeredCars) {
+    fill: url(#registeredGradient);
+}
+
+:global(.glowText) {
+    text-shadow: 0 0 5px #2fc6f4;
+}

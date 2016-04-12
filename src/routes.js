@@ -1,10 +1,11 @@
 import React from 'react';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import { App, Home, AuthorizedArea, Login } from 'containers';
+import { App, Home, AuthorizedArea, Login, Dashboard } from 'containers';
 
 export default () => (
   <Router history={browserHistory}>
     <Route component={App}>
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/" component={AuthorizedArea}>
         <IndexRoute component={Home} />
       </Route>

@@ -33,17 +33,14 @@ var config = {
     loaders: [
       { test: /\.js?$/, exclude: /node_modules/, loader: 'babel' },
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.png?$/, loader: 'file' },
+      { test: /\.(woff2?|svg|jpe?g|png|gif|ico)$/, loader: 'url?limit=10000' },
+      { test: /\.(ttf|eot|otf)$/, loader: 'url' },
       {
         test: /\.scss$/,
         loader: isProduction
           ? ExtractTextPlugin.extract.apply(ExtractTextPlugin, stylesLoader)
           : stylesLoader.join('!')
       },
-      {
-          test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-          loader: 'url-loader'
-      }
     ]
   },
   postcss: [ autoprefixer({ browsers: ['last 2 versions', 'ie 10'] }) ]

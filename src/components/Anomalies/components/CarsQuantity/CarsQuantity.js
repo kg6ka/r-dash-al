@@ -1,7 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { number } = PropTypes;
 import whitecar from './images/whiteCar.svg';
 
 export default class CarsQuantity extends Component {
+  static propTypes = {
+    cars: number,
+    offset: number,
+    x: number,
+    y: number,
+  };
+
   constructor(props) {
     super(props);
     this.screenWidth = window.innerWidth;

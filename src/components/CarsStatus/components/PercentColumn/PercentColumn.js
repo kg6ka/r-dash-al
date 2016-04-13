@@ -1,8 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { string, number, array } = PropTypes;
 import { ViewPercent } from 'components';
+import Pointer from '../Pointer/Pointer';
 import d3 from 'd3';
 
 export default class PercentColumn extends Component {
+  static propTypes = {
+    className: string,
+    percent: number,
+    lable: array,
+    description: array,
+  };
+
   constructor(props) {
     super(props);
     this.screenWidth = window.innerWidth;
@@ -46,15 +55,20 @@ export default class PercentColumn extends Component {
   drawPercets() {
     const translateString = `translate(${this.screenWidth / 76.8},${this.height})`;
     return (
-      <rect
-        className={ this.props.className }
-        fill="url(#rainbowPattern)"
-        x={ 0 }
-        y={ 0 }
-        width={ this.screenWidth / 192 }
-        height={ this.props.percent * this.height / 100 }
-        transform={`${translateString} rotate(180)`}
-      />
+      <g transform={`${translateString} rotate(180)`}>
+        <rect
+          className={ this.props.className }
+          fill="url(#rainbowPattern)"
+          x={ 0 }
+          y={ 0 }
+          width={ this.screenWidth / 192 }
+          height={ this.props.percent * this.height / 100 }
+        />
+        <Pointer
+          className={ `${this.props.className}Pointer` }
+          mountPoint={this.props.percent * this.height / 100}
+        />
+      </g>
     );
   }
 

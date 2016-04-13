@@ -1,8 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { number } = PropTypes;
 import d3 from 'd3';
 import { CarsQuantity } from '..';
 
 export default class AnomaliesDial extends Component {
+  static propTypes = {
+    anomalies: number,
+    cars: number,
+    percent: number,
+    percentRight: number,
+  };
+
   constructor(props) {
     super(props);
     this.screenWidth = window.innerWidth;
@@ -10,29 +18,28 @@ export default class AnomaliesDial extends Component {
     this.componentHeight = this.screenWidth / 5.7;
     this.innerRadius = this.screenWidth / 14.1;
     this.outerRadius = this.screenWidth / 16;
+    this.yellowAngle = this.getYellowAngle(props.percentRight);
     this.redAngle = this.getRedAngle(props.percentRight);
-    this.blueAngle = this.getBlueAngle(props.percentRight);
     this.arc = d3.svg.arc()
       .startAngle(0)
-      .innerRadius(this.innerRadius + 4)
-      .outerRadius(this.outerRadius + 2);
+      .innerRadius(this.innerRadius + window.innerWidth / 120)
+      .outerRadius(this.outerRadius);
     this.translateString =
-      `translate(${this.componentWidth / 2}, ${this.componentHeight / 2})`
-    ;
+      `translate(${this.componentWidth / 2}, ${this.componentHeight / 2})`;
   }
 
   componentWillReceiveProps(nextProps) {
+    this.tweenArc(this.yellowAngle, this.getYellowAngle(nextProps.percentRight), 'yellowArc');
     this.tweenArc(this.redAngle, this.getRedAngle(nextProps.percentRight), 'redArc');
-    this.tweenArc(this.blueAngle, this.getBlueAngle(nextProps.percentRight), 'blueArc');
+    this.yellowAngle = this.getYellowAngle(nextProps.percentRight);
     this.redAngle = this.getRedAngle(nextProps.percentRight);
-    this.blueAngle = this.getBlueAngle(nextProps.percentRight);
   }
 
-  getRedAngle(percent) {
+  getYellowAngle(percent) {
     return - percent * 3.6;
   }
 
-  getBlueAngle(percent) {
+  getRedAngle(percent) {
     return (100 - percent) * 3.6;
   }
 
@@ -79,8 +86,8 @@ export default class AnomaliesDial extends Component {
   }
 
   drawGradient(fill, clipPath) {
-    const url = 'url(#' + clipPath + ')';
-    const offset = clipPath === 'redClip' ? 10 : 1;
+    const url = `url(#${clipPath})`;
+    const offset = window.innerWidth / 120;
     return (
     <circle
       cx={ this.componentWidth / 2 }
@@ -126,84 +133,93 @@ export default class AnomaliesDial extends Component {
   render() {
     const offset = this.componentWidth / 9.28 / 2;
     const { anomalies, cars, percent } = this.props;
-    const percentString = '^ ' + percent + '%';
+    const percentString = `^${percent}%`;
     return (
-  <g>
-    <circle
-      cx={ this.componentWidth / 2 }
-      cy={ this.componentHeight / 2 }
-      r={ this.innerRadius }
-      stroke="white"
-      strokeWidth="1"
-    />
-    <circle
-      cx={ this.componentWidth / 2 }
-      cy={ this.componentHeight / 2 }
-      r={ this.outerRadius }
-      stroke="white"
-      strokeWidth="1"
-    />
-    <text
-      x={ this.componentWidth / 2 }
-      y={ this.componentHeight / 2.4 }
-      fontSize={ this.screenWidth / 35.6 }
-      fontFamily="modeka"
-      fill="white"
-      style={{ textAnchor: 'middle' }}
-    >
-      { anomalies }
-    </text>
-    <text
-      x={ this.componentWidth / 2 }
-      y={ this.componentHeight / 2 }
-      fontSize={ this.screenWidth / 150 }
-      fontFamily="PTSans"
-      fill="white"
-      style={{ textAnchor: 'middle' }}
-    >Anomalies</text>
-    <line
-      x1={ this.componentWidth / 2 - offset }
-      y1={ this.componentHeight / 2 + this.screenWidth / 120 }
-      x2={ this.componentWidth / 2 + offset }
-      y2={ this.componentHeight / 2 + this.screenWidth / 120 }
-      stroke={'#246faf'}
-      strokeWidth="2"
-    ></line>
-    <CarsQuantity
-      cars={ cars }
-      offset={ offset }
-      x={ this.componentWidth / 2 }
-      y={ this.componentHeight / 2 + this.screenWidth / 40 }
-    />
-    <text
-      x={ this.componentWidth / 2 }
-      y={ this.componentHeight / 2 + this.screenWidth / 25 }
-      fontSize={ this.screenWidth / 160 }
-      fontFamily="PTSans"
-      fill="#f00"
-      style={{ textAnchor: 'middle' }}
-    >{ percentString }</text>
-    { this.drawScale() }
-    { this.drawInnerScale() }
-    { this.drawGradient('url(#redGradient)', 'redClip') }
-    { this.drawGradient('url(#blueGradient)', 'blueClip') }
-    <clipPath id="redClip">
-      { this.drawArc(this.redAngle, 'redArc') }
-    </clipPath>
-    <clipPath id="blueClip">
-      { this.drawArc(this.blueAngle, 'blueArc') }
-    </clipPath>
-    <radialGradient id="redGradient">
-      <stop offset="70%" stopColor="#000" stopOpacity='0' />
-      <stop offset='90%' stopColor="#f00" stopOpacity='.8' />
-      <stop offset='91%' stopColor="#f00" stopOpacity='.3' />
-      <stop offset='100%' stopColor="#f90" stopOpacity='0' />
-    </radialGradient>
-    <radialGradient id="blueGradient">
-      <stop offset="80%" stopColor="#000" stopOpacity='0' />
-      <stop offset="100%" stopColor="#2fc6f4" stopOpacity='.8' />
-    </radialGradient>
-  </g>
-  );
+      <g>
+        <circle
+          cx={ this.componentWidth / 2 }
+          cy={ this.componentHeight / 2 }
+          r={ this.innerRadius }
+          stroke="white"
+          strokeWidth="1"
+        />
+        <circle
+          cx={ this.componentWidth / 2 }
+          cy={ this.componentHeight / 2 }
+          r={ this.outerRadius }
+          stroke="white"
+          strokeWidth="1"
+        />
+        <text
+          x={ this.componentWidth / 2 }
+          y={ this.componentHeight / 2.4 }
+          fontSize={ this.screenWidth / 35.6 }
+          fontFamily="modeka"
+          fill="white"
+          style={{ textAnchor: 'middle' }}
+        >
+          { anomalies }
+        </text>
+        <text
+          x={ this.componentWidth / 2 }
+          y={ this.componentHeight / 2 }
+          fontSize={ this.screenWidth / 150 }
+          fontFamily="PTSans"
+          fill="white"
+          style={{ textAnchor: 'middle' }}
+        >Anomalies</text>
+        <line
+          x1={ this.componentWidth / 2 - offset }
+          y1={ this.componentHeight / 2 + this.screenWidth / 120 }
+          x2={ this.componentWidth / 2 + offset }
+          y2={ this.componentHeight / 2 + this.screenWidth / 120 }
+          stroke="#C3660F"
+          strokeWidth="2"
+        ></line>
+        <CarsQuantity
+          cars={ cars }
+          offset={ offset }
+          x={ this.componentWidth / 2 }
+          y={ this.componentHeight / 2 + this.screenWidth / 40 }
+        />
+        <text
+          x={ this.componentWidth / 2 }
+          y={ this.componentHeight / 2 + this.screenWidth / 25 }
+          fontSize={ this.screenWidth / 160 }
+          fontFamily="PTSans"
+          fill="#f00"
+          style={{ textAnchor: 'middle' }}
+        >
+          { percentString }
+        </text>
+        { this.drawScale() }
+        { this.drawInnerScale() }
+        { this.drawGradient('url(#yellowGradient)', 'yellowClip') }
+        { this.drawGradient('url(#redGradient)', 'redClip') }
+        <clipPath id="yellowClip">
+          { this.drawArc(this.yellowAngle, 'yellowArc') }
+        </clipPath>
+        <clipPath id="redClip">
+          { this.drawArc(this.redAngle, 'redArc') }
+        </clipPath>
+        <linearGradient id="orangeLine">
+          <stop offset="0%" stopColor="#0b0a0a" />
+          <stop offset="50%" stopColor="#C3660F" />
+          <stop offset="100%" stopColor="#0b0a0a" />
+        </linearGradient>
+        <radialGradient id="yellowGradient">
+          <stop offset="70%" stopColor="#0b0a0a" stopOpacity="0" />
+          <stop offset="87%" stopColor="#fad900" stopOpacity=".5" />
+          <stop offset="89%" stopColor="#fad900" stopOpacity=".6" />
+          <stop offset="100%" stopColor="#0b0a0a" stopOpacity=".1" />
+        </radialGradient>
+        <radialGradient id="redGradient">
+          <stop offset="70%" stopColor="#0b0a0a" stopOpacity="0" />
+          <stop offset="87%" stopColor="#f00" stopOpacity=".5" />
+          <stop offset="89%" stopColor="#f00" stopOpacity=".6" />
+          <stop offset="100%" stopColor="#0b0a0a" stopOpacity=".7" />
+        </radialGradient>
+      </g>
+    );
   }
 }

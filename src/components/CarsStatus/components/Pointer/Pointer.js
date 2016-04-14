@@ -30,11 +30,13 @@ export default class Pointer extends Component {
       >
         <g fill="white">
           <circle
+            filter="url(#glow)"
             cx={ window.innerWidth / 60 }
             cy={ 0 }
             r={ window.innerWidth / 480 }
           />
           <polygon
+            filter="url(#glow)"
             points={`${window.innerWidth / 60},${window.innerWidth / 480}
               ${window.innerWidth / 60},${- window.innerWidth / 480}
               ${window.innerWidth / 130},0`}
@@ -47,15 +49,14 @@ export default class Pointer extends Component {
           width={ window.innerWidth / 240 }
           height={ window.innerWidth / 240 }
         />
-        <filter id="glow" x="-10%" y="-10%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="10 10" result="glow" />
+        <filter id="glow" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
           <feMerge>
-            <feMergeNode in="glow" />
-            <feMergeNode in="glow" />
-            <feMergeNode in="glow" />
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-    </g>
+      </g>
     );
   }
 }

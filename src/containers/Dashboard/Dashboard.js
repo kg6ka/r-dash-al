@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { CarsStatus, Anomalies, Delimiter } from 'components';
-console.log('cs', CarsStatus);
+import { CarsStatus, Anomalies } from 'components';
+import styles from './Dashboard.scss';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -8,9 +8,6 @@ export default class Dashboard extends Component {
     this.state = {
       percent: Math.random(),
     };
-  }
-
-  componentDidMount() {
     window.setInterval(() => {
       this.setState({
         percent: Math.random(),
@@ -20,7 +17,7 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.backgroundGradient}>
         <CarsStatus
           registeredCars={'35,203'}
           percentRegistered={12}
@@ -38,7 +35,6 @@ export default class Dashboard extends Component {
           blocked={210}
           cars3={5}
         />
-        <Delimiter />
       </div>
     );
   }

@@ -1,6 +1,15 @@
-import React, { Component } from 'react';
-import { RegisteredCars, PercentColumn } from './components'; 
+import React, { Component, PropTypes } from 'react';
+const { string, number } = PropTypes;
+import { RegisteredCars, PercentColumn } from './components';
+
 export default class CarsStatus extends Component {
+  static propTypes = {
+    registeredCars: string,
+    percentRegistered: number,
+    active: number,
+    uptodate: number,
+    updateData: string,
+  };
 
   constructor(props) {
     super(props);
@@ -16,8 +25,8 @@ export default class CarsStatus extends Component {
 
   render() {
     const { registeredCars, percentRegistered, updateData } = this.props;
-    const translateString1 = 'translate(' + this.screenWidth / 6.3 + ', ' + this.screenWidth / 33.7 + ')';
-    const translateString2 = 'translate(' + this.screenWidth / 4 + ', ' + this.screenWidth / 33.7 + ')';
+    const translateString1 = `translate(${this.screenWidth / 6.3}, ${this.screenWidth / 33.7})`;
+    const translateString2 = `translate(${this.screenWidth / 4}, ${this.screenWidth / 33.7})`;
     return (
       <div className={'carsStatus'}>
         <svg

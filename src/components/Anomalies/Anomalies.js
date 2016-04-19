@@ -1,8 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { number } = PropTypes;
 import { ViewPercent } from 'components';
 import { CarsQuantity, AnomaliesDial } from './components';
 
 export default class Anomalies extends Component {
+  static propTypes = {
+    anomalies: number,
+    cars1: number,
+    percent: number,
+    percentRight: number,
+    unblocked: number,
+    cars2: number,
+    blocked: number,
+    cars3: number,
+  };
+
   constructor(props) {
     super(props);
     this.screenWidth = window.innerWidth;
@@ -23,7 +35,9 @@ export default class Anomalies extends Component {
         y={ this.screenWidth / 54.6 }
         fill={'#2fc6f4'}
         fontSize={ this.screenWidth / 120 }
-      >TOTAL ANOMALIES</text>
+      >
+        TOTAL ANOMALIES
+      </text>
     );
   }
 
@@ -42,12 +56,12 @@ export default class Anomalies extends Component {
 
   leftText() {
     const { unblocked, cars2 } = this.props;
-    const carsTitle = `${unblocked} Unblocked`;
+    const carsTitle = `${unblocked} Suspicious`;
     const cars = cars2;
     const translateString =
       `translate(${this.componentWidth / 16.2}, ${this.componentHeight / 2.4})`
     ;
-    return this.drawText(translateString, this.percentRight, cars, carsTitle, '#f00');
+    return this.drawText(translateString, this.percentRight, cars, carsTitle, '#fad900');
   }
 
   rightText() {
@@ -55,7 +69,7 @@ export default class Anomalies extends Component {
     const carsTitle = `${blocked} Blocked`;
     const cars = cars3;
     const translateString = `translate(${this.screenWidth / 2.8},${this.componentHeight / 2.4})`;
-    return this.drawText(translateString, 100 - this.percentRight, cars, carsTitle, '#2fc6f4');
+    return this.drawText(translateString, 100 - this.percentRight, cars, carsTitle, '#f00');
   }
 
   drawText(translateString, percent, cars, carsTitle, color) {
@@ -89,24 +103,33 @@ export default class Anomalies extends Component {
 
   render() {
     const { anomalies, cars1, percent } = this.props;
+    const offset = window.innerWidth / 127.6;
     const calcY = this.componentHeight / 2;
-    const calcX = this.screenWidth / 6.83;
+    const calcX = this.screenWidth / 6.83 - offset;
     return (
-      <div className={'anomaliesBlock'}>
+      <div className="anomaliesBlock">
         <svg
           height="100%"
           width="100%"
         >
+          <line
+            x1="0"
+            y1={ this.componentHeight * 0.12 }
+            x2="0"
+            y2={ this.componentHeight }
+            stroke="#535353"
+            strokeWidth="1"
+          />
           { this.drawTitle() }
           { this.leftText() }
-          { this.drawAxisLine(this.screenWidth / 8.7, calcY, calcX, calcY) }
+          { this.drawAxisLine(this.screenWidth / 8.7 - offset, calcY, calcX, calcY) }
           { this.drawAxisLine(
               calcX,
               calcY - this.screenWidth / 128,
               calcX,
               calcY + this.screenWidth / 128)
           }
-          { this.drawAxisLine(this.componentWidth - this.screenWidth / 8.7, calcY,
+          { this.drawAxisLine(this.componentWidth - this.screenWidth / 8.7 + offset, calcY,
             this.componentWidth - calcX, calcY) }
           { this.drawAxisLine(this.componentWidth - calcX, calcY - this.screenWidth / 128,
             this.componentWidth - calcX, calcY + this.screenWidth / 128) }
@@ -122,5 +145,3 @@ export default class Anomalies extends Component {
     );
   }
 }
-
-window.Anomalies = Anomalies;

@@ -12,15 +12,8 @@ class App extends Component {
     const { children } = this.props;
     return (
       <div>
-        This is an example how to organize general layout in app. This line is in App.js file
-        <hr />
-        <header className={styles.custom}>
-          This header is styled by style, specified in CSS module
-        </header>
-        <hr />
+        <header-site></header-site>
         { children }
-        <hr />
-        <footer>Footer</footer>
       </div>
     );
   }

@@ -34,13 +34,15 @@ body {
 
 :global(.carsStatus) {
     width: calc(100vw / 2.8);
+    width: 50%;
     height: calc(100vw / 5.7);
     font-family: 'PTSans';
     display: inline-block;
 }
 
 :global(.anomaliesBlock) {
-    width: calc(100vw / 2.2);
+    width: calc(100vw / 2.2); 
+    width: 50%; 
     height: calc(100vw / 5.7);
     font-family: 'PTSans';
     display: inline-block;

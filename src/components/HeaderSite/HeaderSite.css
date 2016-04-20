@@ -1,0 +1,79 @@
+header-site {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    background-color: #1e252b;
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+ul.main-menu {
+    display: flex;
+    list-style: none;
+    flex-grow: 1;
+    margin: 0 1em;
+    padding: 0;
+    /* text-align: center; */
+    justify-content: center;
+}
+
+ul.main-menu > * {
+    /* padding: 0.4em 1em; */
+    color: #ffffff;
+    font-size: 0.876em;
+    border-left: 1px solid #2c353c;
+    /* padding: 0; */
+}
+
+ul.main-menu > *:last-child {
+    border-right: 1px solid #2c353c;
+}
+
+
+.menu-toggle {
+    color: white;
+    font-size: 2.1em;
+    padding: 0.4em 0.5em;
+}
+
+a.logo {
+    padding: 0.7em 0.2em;
+}
+
+[component="MainMenu"]{
+    align-items: center;
+        flex: 1 1 auto;
+}
+
+ul.main-menu a {
+ color:inherit;
+ text-decoration: blink;
+ text-transform: uppercase;
+ padding: 1.8em 3em;
+ display: block;
+ /* height: 100%; */
+}
+.error {
+    color: #ff0000;
+    font-size: 1.375em;
+    border-left: 1px solid #2c353c;
+    padding: 0.8em 1em;
+    box-shadow: 0px -20px 44px -29px red inset;
+}
+
+a.user {
+    border-left: 1px solid #2c353c;
+    padding: 0.8em 1.1em;
+}
+
+a:hover {
+    box-shadow: 0 0 0 10em rgba(255, 255, 255, 0.25) inset;
+}
+
+a.user img {
+    width: 2.3em;
+}
+
+
+x-react {
+    display: block;
+} 

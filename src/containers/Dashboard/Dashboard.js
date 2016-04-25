@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CarsStatus, Anomalies } from 'components';
+import { CarsStatus, Anomalies, FleetActivity } from 'components';
 import styles from './Dashboard.scss';
 
 export default class Dashboard extends Component {
@@ -17,24 +17,29 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <div className={styles.backgroundGradient}>
-        <CarsStatus
-          registeredCars={'35,203'}
-          percentRegistered={12}
-          active={Math.random() * 100}
-          uptodate={Math.random() * 100}
-          updateData={'13.01.16'}
-        />
-        <Anomalies
-          anomalies={310}
-          cars1={90}
-          percent={10}
-          percentRight={Math.random() * 100}
-          unblocked={100}
-          cars2={89}
-          blocked={210}
-          cars3={5}
-        />
+      <div>
+        <div className={styles.backgroundGradient}>
+          <CarsStatus
+            registeredCars={'35,203'}
+            percentRegistered={12}
+            active={Math.random() * 100}
+            uptodate={Math.random() * 100}
+            updateData={'13.01.16'}
+          />
+          <Anomalies
+            anomalies={310}
+            cars1={90}
+            percent={10}
+            percentRight={Math.random() * 100}
+            unblocked={100}
+            cars2={89}
+            blocked={210}
+            cars3={5}
+          />
+        </div>
+        <div className={styles.backgroundGradient}>
+          <FleetActivity />
+        </div>
       </div>
     );
   }

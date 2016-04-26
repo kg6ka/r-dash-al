@@ -8,6 +8,9 @@ export default class Dashboard extends Component {
     this.state = {
       percent: Math.random(),
     };
+  }
+
+  componentDidMount() {
     window.setInterval(() => {
       this.setState({
         percent: Math.random(),

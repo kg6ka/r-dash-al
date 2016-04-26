@@ -223,4 +223,6 @@ export default [
     val2: Math.random() * 50 + 50, val3: Math.random() * 100 + 50 },
   { time: 'Wed, 21 Apr 2016 19:45:00 GMT', val1: Math.random() * 100,
     val2: Math.random() * 50 + 50, val3: Math.random() * 100 + 50 },
+  { time: 'Wed, 21 Apr 2016 20:00:00 GMT', val1: Math.random() * 100,
+    val2: Math.random() * 50 + 50, val3: Math.random() * 100 + 50 },
 ];

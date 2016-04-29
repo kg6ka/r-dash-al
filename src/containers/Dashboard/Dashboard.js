@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { CarsStatus, Anomalies, FleetActivity } from 'components';
+import { CarsStatus, Anomalies, FleetActivity, Categories, Heatmap, Target } from 'components';
 import styles from './Dashboard.scss';
+import cx from 'classnames';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div>
-        <div className={styles.backgroundGradient}>
+        <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
           <CarsStatus
             registeredCars={'35,203'}
             percentRegistered={12}
@@ -40,8 +41,14 @@ export default class Dashboard extends Component {
             cars3={5}
           />
         </div>
-        <div className={styles.backgroundGradient}>
-          <FleetActivity />
+        <div className={styles.fleetStatus}>
+          <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
+            <FleetActivity />
+          </div>
+          <div className={styles.fleetActivity}>
+            <Categories />
+          </div>
+          <Target />
         </div>
       </div>
     );

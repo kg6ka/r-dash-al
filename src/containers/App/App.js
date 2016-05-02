@@ -12,7 +12,6 @@ class App extends Component {
     const { children } = this.props;
     return (
       <div>
-        <header-site></header-site>
         { children }
       </div>
     );

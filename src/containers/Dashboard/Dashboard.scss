@@ -3,4 +3,13 @@
   background: -o-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
   background: -moz-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
   background: linear-gradient(to bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
+  border-right: 1px solid #535353;
+}
+
+.fleetStatus {
+  width: calc(100vw / 1.23);
+}
+
+.fleetActivity {
+  width: calc(100vw / 1.7);
 }

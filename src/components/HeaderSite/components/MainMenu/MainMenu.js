@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
+import styles from '../../HeaderSite.scss';
+
 
 export default class MainMenu extends Component {
   constructor(props) {
     super(props);
     this.data  = [{
-        label: 'home',
+        label: 'germany',
         url: '#home',
+        icon: 'Germany.png'
     }, {
-        label: 'about',
-        url: '#about'
+        label: 'polo 2016',
+        url: '#about',
+        icon: 'polo-logo.png'
     }, {
-        label: 'contact-us',
-        url: '#contact-us'
-    },{
-        label: 'info',
-        url: '#info'
-    }];
-    
-  }
+        label: 'last 24 hrs:',
+        url: '#contact-us',
+        icon: 'data.png'
+    }
+  ]}
 
   renderSubMenu(list,stepClass) {
     if(!list) return;
@@ -35,10 +36,13 @@ export default class MainMenu extends Component {
 
 
   render() {
-    return  <ul className="main-menu">
+    return  <ul className={styles.mainMenu}>
           {this.data.map((link,i)=>
               <li key={i} >
-                  <a href={link.url} > {link.label} </a>
+                  <a href={link.url} className={link.label}>
+                    <img src={`/assets/images/menu-icons/${link.icon}`}/>
+                    {link.label}
+                  </a>
                   { this.renderSubMenu(link.items,'child') }
               </li>
           )}

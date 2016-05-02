@@ -49,7 +49,7 @@ export default class Pointer extends Component {
           width={ window.innerWidth / 240 }
           height={ window.innerWidth / 240 }
         />
-        <filter id="glow" width="160%" height="160%">
+        <filter id="glow" width="160%" height="160%" x="-0.3" y="-0.3">
           <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
           <feMerge>
             <feMergeNode in="coloredBlur" />

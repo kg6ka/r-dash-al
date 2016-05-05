@@ -3,7 +3,6 @@
   background: -o-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
   background: -moz-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
   background: linear-gradient(to bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
-  border-right: 1px solid #535353;
 }
 
 .fleetStatus {
@@ -11,5 +10,24 @@
 }
 
 .fleetActivity {
-  width: calc(100vw / 1.7);
+  width: calc(100vw / 1.69);
+  display: block;
+
+  svg {
+    display: inline-block;
+  }
+}
+
+.fleetInlineBlock {
+  display: inline-block;
+}
+
+.fleetBlock {
+  display: block;
+}
+
+.targetBlock {
+  height: calc(100vw / 2.86);
+  width: calc(100vw / 4.52);
+  float: right;;
 }

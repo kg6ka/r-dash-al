@@ -41,14 +41,19 @@ export default class Dashboard extends Component {
             cars3={5}
           />
         </div>
-        <div className={styles.fleetStatus}>
-          <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
-            <FleetActivity />
+        <div className={cx(styles.fleetStatus, styles.fleetBlock)}>
+          <div className={styles.fleetInlineBlock}>
+            <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
+              <FleetActivity />
+            </div>
+            <div className={styles.fleetActivity}>
+              <Categories />
+              <Heatmap />
+            </div>
           </div>
-          <div className={styles.fleetActivity}>
-            <Categories />
+          <div className={cx(styles.fleetInlineBlock, styles.targetBlock)}>
+            <Target />
           </div>
-          <Target />
         </div>
       </div>
     );

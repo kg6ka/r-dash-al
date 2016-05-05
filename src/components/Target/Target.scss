@@ -1,0 +1,85 @@
+.content {
+  margin: calc(100vw / 113.8);
+}
+
+.block {
+  height: calc(100vw / 2.86);
+  width: calc(100vw / 4.52);
+
+  div:last-of-type div {
+    background-color: #2fc6f4 !important;
+    width: 3px !important;
+  }
+}
+
+.glowText {
+  color: #2fc6f4;
+  text-shadow: 0 0 5px #2fc6f4;
+  font-size: calc(100vw / 120);
+  font-family: 'PTSans';
+  display: inline-block;
+}
+
+.buttonsBlock {
+  display: inline-block;;
+  float: right;
+}
+.customRadio {
+  display: none;
+}
+input.customRadio:checked + label {
+  background-color: #2fc6f4;
+  color: #000f4f;
+}
+
+.radioButton {
+  display: inline-block;
+  width: calc(100vw / 26.7);
+  height: calc(100vw / 87.3);
+  border: 1px solid #858585;
+  font-size: calc(100vw / 137);
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  color: #858585;
+  padding-top: calc(100vw / 273.2);
+
+  &:first-of-type {
+    border-radius: 30px 0 0 30px;
+    border-right: none;
+  }
+
+  &:last-of-type {
+    border-radius: 0 30px 30px 0;
+    border-left: none;
+  }
+
+  input {
+    display: none;
+  }
+}
+
+.title {
+  color: white;
+  font-family: 'PTSans';
+  font-size: calc(100vw / 110);
+  margin-top: calc(100vw / 136.6);
+  margin-bottom: calc(100vw / 196);
+}
+
+.designations {
+  border-top: 1px solid #8f9295;
+  border-bottom: 1px solid #8f9295;
+}
+
+.dataBlock {
+  width: 283px;
+  height: 365px;
+}
+
+.dataBlockInner {
+  width: calc(100vw / 4.52);
+  height: calc(100vw / 3.5);
+  width: 283px;
+  height: 365px;
+}

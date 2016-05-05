@@ -3,7 +3,7 @@ set -e
 
 DASHBOARD_DIR=/home/ubuntu/proj/dashboard
 
-docker rm -f dashboard
+docker rm -f dashboard || true
 docker build -t argussecurity/dashboard ${DASHBOARD_DIR}
 docker run -d --name dashboard argussecurity/dashboard
 

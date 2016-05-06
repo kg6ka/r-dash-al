@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { string } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
+import Pointer from './../CarsStatus/components/Pointer/Pointer';
 
 const externalLink =
   'M 8.3333327,8.3333 H 1.66667 V 1.6915 L 3.33333,1.6665 V 0 H 0 V 10 H 10.000003' +
@@ -28,6 +30,10 @@ export default class Categories extends Component {
       hovered: null,
     };
   }
+
+  static propTypes = {
+    name: string,
+  };
 
   getOffset(idx) {
     return idx === this.state.hovered ? window.innerWidth / 120 : window.innerWidth / 240;
@@ -178,7 +184,7 @@ export default class Categories extends Component {
           fill={'#2fc6f4'}
           fontSize={ window.innerWidth / 120 }
         >
-          CATEGORIES
+          {this.props.name}
         </text>
         { informationData.map((el, idx) => this.drawInformation(el, idx)) }
         <g
@@ -192,6 +198,7 @@ export default class Categories extends Component {
           <stop offset="30%" stopColor="#2fc6f4" stopOpacity="1" />
           <stop offset="100%" stopColor="#2fc6f4" stopOpacity="0" />
         </radialGradient>
+        <Pointer/>
       </svg>
     );
   }

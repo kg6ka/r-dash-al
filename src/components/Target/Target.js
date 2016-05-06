@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './Target.scss';
 import { Designations } from '../FleetActivity/components';
 import { DataView } from './components';
+import RadioButtons from '../RadioButtons/RadioButtons';
 // import Scrollbar from 'react-gemini-scrollbar';
 import Scrollbar from 'react-custom-scrollbars';
 
@@ -68,29 +69,6 @@ export default class Target extends Component {
     };
   }
 
-  onChange(event) {
-    this.setState({
-      checked: event.currentTarget.value,
-    });
-  }
-
-  renderRadioButton(item, idx) {
-    return (
-      [<input
-        id={ `target-${idx}` }
-        className={styles.customRadio}
-        name="types"
-        type="radio"
-        value={ item }
-        onChange={ ::this.onChange }
-        checked={ this.state.checked === item }
-      />,
-      <label className={styles.radioButton} key={ idx } htmlFor={ `target-${idx}` }>
-        { item }
-      </label>]
-    );
-  }
-
   render() {
     return (
       <div className={ styles.content }>
@@ -100,8 +78,10 @@ export default class Target extends Component {
           TARGET
         </div>
         <div className={styles.buttonsBlock}>
-          { buttonsNames.map((item, idx) =>
-            this.renderRadioButton(item, idx)) }
+          <RadioButtons
+            names={ buttonsNames }
+            checked={ this.state.checked }
+          />
         </div>
         <div className={styles.title}>TOP TARGETS</div>
         <div className={styles.designations}>

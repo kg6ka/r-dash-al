@@ -3,7 +3,6 @@ const { string } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
-import Pointer from './../CarsStatus/components/Pointer/Pointer';
 
 const externalLink =
   'M 8.3333327,8.3333 H 1.66667 V 1.6915 L 3.33333,1.6665 V 0 H 0 V 10 H 10.000003' +
@@ -198,7 +197,13 @@ export default class Categories extends Component {
           <stop offset="30%" stopColor="#2fc6f4" stopOpacity="1" />
           <stop offset="100%" stopColor="#2fc6f4" stopOpacity="0" />
         </radialGradient>
-        <Pointer/>
+        <filter id="glow" width="160%" height="160%" x="-0.3" y="-0.3">
+          <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </svg>
     );
   }

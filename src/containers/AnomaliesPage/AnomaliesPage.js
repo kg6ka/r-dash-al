@@ -5,7 +5,6 @@ import data from './data.js';
 
 export default class AnomaliesPage extends Component {
   constructor(props) {
-    debugger;
     super(props);
     this.state = {};
   }

@@ -13,8 +13,10 @@
   width: calc(100vw / 1.69);
   display: block;
 
-  svg {
+  div {
+    height: calc(100vw/6.1);
     display: inline-block;
+    width: 50%;
   }
 }
 
@@ -30,4 +32,10 @@
   height: calc(100vw / 2.86);
   width: calc(100vw / 4.52);
   float: right;;
+}
+
+.carsBlock {
+  top: calc(100vw / 14.46);
+  position: absolute;
+  width: calc(100vw / 5.7);
 }

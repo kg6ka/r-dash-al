@@ -51,7 +51,7 @@ export default class Dashboard extends Component {
               </div>
               <div className={styles.fleetActivity}>
                 <div>
-                  <Categories />
+                  <Categories name="categories" />
                 </div>
                 <div>
                   <img src={ map } alt="map" height="100%" width="100%" />

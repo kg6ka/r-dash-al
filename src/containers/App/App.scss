@@ -65,6 +65,7 @@ body {
 :global(.glowText) {
     text-shadow: 0 0 5px #2fc6f4;
     font-family: 'PTSans';
+    text-transform: uppercase;
 }
 
 :global(.fleetActivityBlock) {

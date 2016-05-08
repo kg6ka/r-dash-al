@@ -8,6 +8,7 @@ const FleetActivity = () => {
   const height = window.innerWidth / 5.45;
   const pictureSide = window.innerWidth / 96;
   const offset = window.innerWidth / 21.3;
+//   const data = window.argusComponents.fleetActivity.bars;
   return (
     <div className="fleetActivityBlock">
       <svg

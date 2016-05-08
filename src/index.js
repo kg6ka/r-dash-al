@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from 'redux/create';
 
+import api from 'api/api';
+
+
 const store = createStore();
 const rootEl = document.querySelector('#content');
 const renderApp = () => {

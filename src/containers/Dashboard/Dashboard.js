@@ -17,9 +17,11 @@ export default class Dashboard extends Component {
         percent: Math.random(),
       });
     }, 2000);
+
   }
 
   render() {
+
     return (
       <div>
         <HeaderSite/>
@@ -30,21 +32,21 @@ export default class Dashboard extends Component {
           <div className={cx(styles.layoutSideLeft,styles.layoutCol80)}>
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
               <CarsStatus
-                registeredCars={'35,203'}
+                registeredCars={argusComponents.fleetStatus.registered}
                 percentRegistered={12}
-                active={Math.random() * 100}
-                uptodate={Math.random() * 100}
+                active={argusComponents.fleetStatus.activity}
+                uptodate={argusComponents.fleetStatus.updated}
                 updateData={'13.01.16'}
               />
               <Anomalies
-                anomalies={310}
-                cars1={90}
-                percent={10}
-                percentRight={Math.random() * 100}
-                unblocked={100}
-                cars2={89}
-                blocked={210}
-                cars3={5}
+                anomalies={argusComponents.totalAnomalies.total_sum}
+                cars1={argusComponents.totalAnomalies.cars1}
+                percent={argusComponents.totalAnomalies.blocked_percent}
+                percentRight={argusComponents.totalAnomalies.suspicious_percent}
+                unblocked={argusComponents.totalAnomalies.suspicious_sum}
+                cars2={argusComponents.totalAnomalies.cars2}
+                blocked={argusComponents.totalAnomalies.blocked_sum}
+                cars3={argusComponents.totalAnomalies.cars3}
               />
             </div>
             <div className={cx(styles.layoutSideRight,styles.layoutCol25)}>

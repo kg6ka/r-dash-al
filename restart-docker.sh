@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-DASHBOARD_DIR=/home/ubuntu/proj/dashboard
+DOCKER_NAME=$1
+DASHBOARD_DIR=/home/ubuntu/proj/${DOCKER_NAME}
 
-docker rm -f dashboard || true
-docker build -t argussecurity/dashboard ${DASHBOARD_DIR}
-docker run -d --name dashboard argussecurity/dashboard
-
+docker rm -f $1 || true
+docker build -t argussecurity/$1 ${DASHBOARD_DIR}
+docker run -d --name $1 argussecurity/$1

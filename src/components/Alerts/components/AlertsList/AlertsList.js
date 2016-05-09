@@ -12,7 +12,10 @@ class AlertsList extends Component {
             <div className={styles.alerts}>
                 <img className={styles.carImage} src={`/assets/images/alerts/car.png`}/>
                 <div className={styles.alertsHeader}>
-                    <span className={styles.alertsNumber}>ALERTS | {alerts.length}</span>
+                    <div className={styles.alertsNumber}>
+                        <span>ALERTS </span>|
+                        <span> {alerts.length}</span>
+                     </div>
                     <div>
                         <span className={styles.vehicle}>Vehicle</span>
                         <span className={styles.msg}>MSG</span>

@@ -14,9 +14,11 @@
   justify-content: space-between;
   padding: 8px 8px;
   align-items: center;
+  font-size: 13px;
   .alertsNumber {
-    font-size: 13px;
-    color: #7DA5B9;
+    span {
+      color: #68B3D9;
+    }
   }
   .vehicle , .msg{
     border: 1px solid gray;
@@ -57,10 +59,10 @@
 
   .number {
     font-size: 21px;
-    color: #7DA5B9;
+    color: #68B3D9;
   }
   .resolve {
-    color: #7DA5B9;
+    color: #68B3D9;
     font-size: 10px;
   }
   .date {

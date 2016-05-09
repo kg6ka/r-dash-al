@@ -6,3 +6,4 @@ export FleetActivity from './FleetActivity/FleetActivity';
 export Categories from './Categories/Categories';
 export Heatmap from './Heatmap/Heatmap';
 export Target from './Target/Target';
+export RadioButtons from './RadioButtons/RadioButtons';

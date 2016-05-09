@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { MainMenu } from './components';
+import { MainMenu,ToggleMenu } from './components';
 import styles from './HeaderSite.scss';
 
 class HeaderSite extends Component {
@@ -13,7 +13,7 @@ class HeaderSite extends Component {
     }
     render() {
         return <header className={styles.headerSite}>
-            <div className={styles.menuToggle}></div>
+            <ToggleMenu/>
             <a href="#home" className={styles.logo}><img src="/assets/images/logo.png"/></a>
             <div className={styles.center}>
                 <MainMenu/>

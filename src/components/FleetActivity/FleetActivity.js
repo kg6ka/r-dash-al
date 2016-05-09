@@ -1,14 +1,13 @@
 import React from 'react';
 import expand from './images/expand.svg';
-import data from './data.js';
-import { Charts } from './components';
+// import data from './data.js';
+import { Charts, Designations } from './components';
 
 const FleetActivity = () => {
   const width = window.innerWidth / 1.71;
   const height = window.innerWidth / 5.45;
   const pictureSide = window.innerWidth / 96;
   const offset = window.innerWidth / 21.3;
-//   const data = window.argusComponents.fleetActivity.bars;
   return (
     <div className="fleetActivityBlock">
       <svg
@@ -25,34 +24,20 @@ const FleetActivity = () => {
         >
           FLEET ACTIVITY
         </text>
-        <rect
-          x={ offset }
-          y={ offset - window.innerWidth / 64 }
-          width={ window.innerWidth / 128 }
-          height={ window.innerWidth / 128 }
-          fill="url(#suspiciousGradient)"
+        <Designations
+          x={offset}
+          y={offset - window.innerWidth / 64}
+          color="suspiciousGradient"
+          textColor="white"
+          text="Suspicious"
         />
-        <text
-          x={ offset + window.innerWidth / 96 }
-          y={ offset - window.innerWidth / 128 }
-          fill="white"
-          fontSize={ window.innerWidth / 110 }
-          fontFamily="PTSans"
-        >Suspicious</text>
-        <rect
-          x={ window.innerWidth / 8.53 }
-          y={ offset - window.innerWidth / 64 }
-          width={ window.innerWidth / 128 }
-          height={ window.innerWidth / 128 }
-          fill="url(#blockedGradient)"
+        <Designations
+          x={window.innerWidth / 8.53}
+          y={offset - window.innerWidth / 64}
+          color="blockedGradient"
+          textColor="white"
+          text="Blocked"
         />
-        <text
-          x={ window.innerWidth / 8.53 + window.innerWidth / 96 }
-          y={ offset - window.innerWidth / 128 }
-          fill="white"
-          fontSize={ window.innerWidth / 110 }
-          fontFamily="PTSans"
-        >Blocked</text>
         <text
           x={ width - window.innerWidth / 6.4 }
           y={ offset - window.innerWidth / 128 }
@@ -83,7 +68,7 @@ const FleetActivity = () => {
           height={ pictureSide }
         />
         <Charts
-          data={ data }
+          data={ argusComponents.fleetActivity.bars }
           color1={'suspiciousGradient'}
           color2={'blockedGradient'}
           color3={'transmittingGradient'}

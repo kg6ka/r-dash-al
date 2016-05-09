@@ -1,0 +1,49 @@
+.content {
+  margin: calc(100vw / 113.8);
+}
+
+.block {
+  height: calc(100vw / 2.86);
+  width: calc(100vw / 4.52);
+
+  div:last-of-type div {
+    background-color: #2fc6f4 !important;
+    width: 3px !important;
+  }
+}
+
+.glowText {
+  color: #2fc6f4;
+  text-shadow: 0 0 5px #2fc6f4;
+  font-size: calc(100vw / 120);
+  font-family: 'PTSans';
+  display: inline-block;
+}
+
+.buttonsBlock {
+  display: inline-block;;
+  float: right;
+}
+
+.title {
+  color: white;
+  font-family: 'PTSans';
+  font-size: calc(100vw / 110);
+  margin-top: calc(100vw / 136.6);
+  margin-bottom: calc(100vw / 196);
+}
+
+.designations {
+  border-top: 1px solid #8f9295;
+  border-bottom: 1px solid #8f9295;
+}
+
+.dataBlock {
+  width: 283px;
+  height: 365px;
+}
+
+.dataBlockInner {
+  width: calc(100vw / 4.8);
+  height: calc(100vw / 3.5);
+}

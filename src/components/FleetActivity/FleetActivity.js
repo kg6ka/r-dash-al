@@ -4,7 +4,7 @@ import expand from './images/expand.svg';
 import { Charts, Designations } from './components';
 
 const FleetActivity = () => {
-  const width = window.innerWidth / 1.71;
+  const width = window.innerWidth / 1.79;
   const height = window.innerWidth / 5.45;
   const pictureSide = window.innerWidth / 96;
   const offset = window.innerWidth / 21.3;

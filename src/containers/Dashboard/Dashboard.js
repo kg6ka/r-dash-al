@@ -58,10 +58,10 @@ export default class Dashboard extends Component {
                 cars3={argusComponents.totalAnomalies.cars3}
               />
             </div>
-            <div className={cx(styles.layoutSideRight,styles.layoutCol25)}>
+            <div className={cx(styles.layoutSideRight,styles.layoutCol30)}>
               <Target />
             </div>
-            <div className={styles.fleetStatus,styles.layoutSideLeft,styles.layoutCol75}>
+            <div className={styles.fleetStatus,styles.layoutSideLeft,styles.layoutCol70}>
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity />
               </div>

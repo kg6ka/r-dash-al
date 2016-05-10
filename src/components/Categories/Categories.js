@@ -156,7 +156,7 @@ export default class Categories extends Component {
   }
 
   render() {
-    const translateString = `translate(${window.innerWidth / 5.25},${window.innerWidth / 23.4})`;
+    const translateString = `translate(${window.innerWidth / 5.6},${window.innerWidth / 23.4})`;
     return (
       <svg width={ window.innerWidth / 3.39 } height={ window.innerWidth / 6.1 }>
         <text

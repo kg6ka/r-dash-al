@@ -34,7 +34,7 @@ body {
 
 :global(.carsStatus) {
     width: calc(100vw / 2.8);
-    width: 50%;
+    width: 45%;
     height: calc(100vw / 5.7);
     font-family: 'PTSans';
     display: inline-block;
@@ -42,7 +42,7 @@ body {
 
 :global(.anomaliesBlock) {
     width: calc(100vw / 2.2); 
-    width: 50%; 
+    width: 55%; 
     height: calc(100vw / 5.7);
     font-family: 'PTSans';
     display: inline-block;
@@ -71,5 +71,6 @@ body {
 
 :global(.fleetActivityBlock) {
   width: calc(100vw / 1.71);
+  width: 100%;
   height: calc(100vw / 5.45);
 }

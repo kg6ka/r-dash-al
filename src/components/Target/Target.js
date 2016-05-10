@@ -18,9 +18,15 @@ export default class Target extends Component {
     };
   }
 
-  
+  handlerClick(event) {
+    this.setState({
+      checked: event.currentTarget.value,
+    });
+  }
+
   render() {
-   
+
+
     return (
       <div className={ styles.content }>
         <div
@@ -32,6 +38,7 @@ export default class Target extends Component {
           <RadioButtons
             names={ buttonsNames }
             checked={ this.state.checked }
+            handlerClick ={:: this.handlerClick}
           />
         </div>
         <div className={styles.title}>TOP TARGETS</div>

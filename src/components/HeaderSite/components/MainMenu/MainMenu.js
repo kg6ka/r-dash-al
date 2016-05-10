@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../../HeaderSite.scss';
 
-
 export default class MainMenu extends Component {
   constructor(props) {
     super(props);
@@ -9,11 +8,19 @@ export default class MainMenu extends Component {
     this.data  = [{
         label: 'germany',
         url: '#home',
-        icon: 'Germany.png'
+        icon: 'Germany.png',
+        items:[
+          {label: 'Germany', action:'', icon: 'Germany.png', },
+          {label: 'Israel', action:'', icon: 'Germany.png', }
+        ]
     }, {
         label: 'polo 2016',
         url: '#about',
-        icon: 'polo-logo.png'
+        icon: 'polo-logo.png',
+		items:[
+          {label: 'Polo 2016', action:'' },
+          {label: 'Golf 2016', action:'' }
+        ]
     }, {
         label: 'last 10 minutes:',
         url: '#contact-us',

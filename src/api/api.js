@@ -45,17 +45,17 @@ function getApiData(tags){
 
 
 
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/2/anomaliesByCause?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByCause",data.data[0])
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByCause?from=0`).then((data)=>{
+    CATEGORIES_TARGET_buildData("anomaliesByCause",data.data)
   })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/2/anomaliesByEcu?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByEcu",data.data[0])
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByEcu?from=0`).then((data)=>{
+    CATEGORIES_TARGET_buildData("anomaliesByEcu",data.data)
   })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/2/anomaliesByVehicle?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByVehicle",data.data[0])
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByVehicle?from=0`).then((data)=>{
+    CATEGORIES_TARGET_buildData("anomaliesByVehicle",data.data)
   })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/2/anomaliesByMessage?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByMessage",data.data[0])
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByMessage?from=0`).then((data)=>{
+    CATEGORIES_TARGET_buildData("anomaliesByMessage",data.data)
   })
 
 }
@@ -89,6 +89,7 @@ window.setInterval(() => {
 }, 5000);
 
 defaultData();
+getApiData("1111");
 
 function defaultData() {
   window.argusApi.registeredVehicles = { "count": 1 };
@@ -98,6 +99,10 @@ function defaultData() {
   window.argusApi.activitys = [{"timestamp":0,"values":[{"key":"all","value":1}]}];
 
   window.argusApi.anomalies = [{"timestamp":0,"values":[{"key":"total","value":1},{"key":"blocked","value":1}]}];
+
+ argusApi.anomaliesByEcu = [];
+argusApi.anomaliesByMessage = [];
+argusApi.anomaliesByVehicle = [];
 
 
   fleetStatus();
@@ -109,19 +114,30 @@ function defaultData() {
 }
 
 function category(){
-  var category = {};
-    category = [
-  { offset: window.innerWidth / 25.26, color: '#b2d733',
-    text: 'Irrational Data', percent: 53 },
-  { offset: window.innerWidth / 15.5, color: '#13aa38',
-    text: 'Timing Anomaly', percent: 20 },
-  { offset: window.innerWidth / 11.2, color: '#1156e4',
-    text: 'Abnormal diagnostics', percent: 12 },
-  { offset: window.innerWidth / 8.73, color: '#904fff',
-    text: 'Mix', percent: 5 },
-  { offset: window.innerWidth / 7.16, color: '#fff',
-    text: 'Others', percent: 8 },
+
+ var  old = [
+  { offset: window.innerWidth / 25.26, color: '#b2d733'},
+  { offset: window.innerWidth / 15.5, color: '#13aa38' },
+  { offset: window.innerWidth / 11.2, color: '#1156e4' },
+  { offset: window.innerWidth / 8.73, color: '#904fff' },
+  { offset: window.innerWidth / 7.16, color: '#fff' },
 ];
+
+  var category = [],item = {}, sum = 0;
+
+  for(var i in argusApi.anomaliesByCause) {
+    sum += argusApi.anomaliesByCause[i].total;
+  }
+ 
+  for(var i in argusApi.anomaliesByCause) {
+    item = {};
+    item.text = argusApi.anomaliesByCause[i].key.replace(/_/g," ");
+    item.percent = Math.floor(argusApi.anomaliesByCause[i].total * 100 / sum);
+    item.offset = old[i].offset;
+    item.color = old[i].color;
+    category.push(item);
+  }
+ 
   argusComponents.category = category;
 }
 
@@ -131,122 +147,6 @@ function target() {
         target.ECU = argusApi.anomaliesByEcu;
         target.MSG = argusApi.anomaliesByMessage;
         target.Vehicle = argusApi.anomaliesByVehicle;
-
- target.Vehicle = [
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-];
-
-
- target.MSG = [
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-  {
-    name: 'AFCM',
-    total: 160,
-    blocked: 100,
-  },
-  {
-    name: 'APIM',
-    total: 100,
-    blocked: 50,
-  },
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-];
-
-
- target.ECU = [
-  {
-    name: 'AFCM',
-    total: 160,
-    blocked: 100,
-  },
-  {
-    name: 'APIM',
-    total: 100,
-    blocked: 50,
-  },
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-  {
-    name: 'AFCM',
-    total: 160,
-    blocked: 100,
-  },
-  {
-    name: 'APIM',
-    total: 100,
-    blocked: 50,
-  },
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-];
 
     argusComponents.target = target;
 
@@ -302,13 +202,15 @@ function fleetActivity() {
      item.suspicious = argusApi.anomalies[i].values[0].value;
      item.blocked = argusApi.anomalies[i].values[1].value;
 
-     item.activitys = Math.floor((Math.random() * 3000) + 5000);
-     item.suspicious = Math.floor((Math.random() * 100) + 100);
-     item.blocked = Math.floor((Math.random() * 50));
+//      item.activitys = Math.floor((Math.random() * 10));
+//      item.suspicious = Math.floor((Math.random() * 100) + 90);
+//      item.blocked = Math.floor((Math.random() * 50));
 
 
      bars.push(item);
    }
+
+   argusComponents.fleetActivity.registered = window.argusApi.registeredVehicles.count;
    argusComponents.fleetActivity.bars = bars;
 
    

@@ -59,6 +59,9 @@ export default class Charts extends Component {
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
     const quantity = data.length - 1;
+    let tickValuesCars = [];
+    let tickValuesYAxis1 = [];
+
     const timeTicks = [];
     let tick = 0;
     for (let i = 0; i < 8; i++) {
@@ -66,7 +69,25 @@ export default class Charts extends Component {
       tick += Math.round(quantity / 7);
       if(tick > quantity) tick = quantity;
     }
+
+    tickValuesCars = [0,0.5,1,1.5,2];
     
+    if(argusComponents.fleetActivity.registered > 2)
+      tickValuesCars = [0,2.5,5,7.5,10];
+   
+    if(argusComponents.fleetActivity.registered >= 10)
+      tickValuesCars = [0,25,50,75,100];
+   
+    if(argusComponents.fleetActivity.registered >= 100)
+      tickValuesCars = [0,250,500,750,1000];
+        
+    if(argusComponents.fleetActivity.registered >= 1000)
+      tickValuesCars = [0,2500,5000,7500,10000];
+
+    tickValuesYAxis1 = [0, 5, 10, 15, 20];
+
+               
+//     console.log(data);
     charts.selectAll("svg").remove();
     charts.selectAll("image").remove();
     charts.selectAll("text").remove();
@@ -82,31 +103,31 @@ export default class Charts extends Component {
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
-      .domain([0, 400])
+      .domain([0, tickValuesYAxis1[4]])
       .range([axisHeigth, margin / 2]);
 
     const y2 = d3.scale.linear()
-      .domain([0, 10000])
+      .domain([0, tickValuesCars[4]])
       .range([axisHeigth, margin / 2]);
 
     const yAxis1 = d3.svg.axis()
       .scale(y1)
       .tickSize(-(axisWidth - margin))
       .orient('left')
-      .tickValues([0, 100, 200, 300, 400])
+      .tickValues(tickValuesYAxis1)
       .tickPadding(window.innerWidth / 128);
 
     const yAxis2 = d3.svg.axis()
       .scale(y2)
       .tickSize(-(axisWidth - margin))
       .orient('right')
-      .tickValues([0, 2500, 5000, 7500, 10000])
+      .tickValues(tickValuesCars)
       .tickPadding(window.innerWidth / 128)
       .tickFormat(d => {
-        if (d === 0) {
+        if (d < 1000)
           return d;
-        }
-        return `${d / 1000} K`;
+        else
+          return `${d / 1000} K`;
       });
 
     const xAxis = d3.svg.axis()

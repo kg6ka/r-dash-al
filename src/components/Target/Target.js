@@ -64,7 +64,7 @@ export default class Target extends Component {
         <Scrollbar className={styles.dataBlock}>
           <div className={styles.dataBlockInner}>
           { argusComponents.target[this.state.checked].map((el, idx) =>
-              <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
+              <DataView key={ idx } name={ el.key } total={ el.total } blocked={ el.blocked } />
           ) }
           </div>
         </Scrollbar>

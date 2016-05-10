@@ -1,5 +1,5 @@
 var React = require('react');
-
+import styles from './Map.scss';
 var Map = React.createClass({
 
     componentDidMount(){
@@ -42,9 +42,9 @@ var Map = React.createClass({
     render(){
 
         return (
-            <div className="map-holder">
+            <div className={styles.mapHolder}>
                 <p>Loading...</p>
-                <div id="map"></div>
+                <div className={styles.map} id="map"></div>
             </div>
         );
     }

@@ -14,7 +14,7 @@ const Alert = ({ onClick, name, number, messages, vehicleId, date}) => (
             </div>
         </div>
         <div className={styles.divInRow}>
-            <span>{messages} <img className={styles.msg} src={`/assets/images/alerts/Alerts.png`}/></span>
+            <span><img className={styles.msg} src={`/assets/images/alerts/Alerts.png`}/> {messages}</span>
             <span className={styles.date}>{date.toDateString()}</span>
         </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HeaderSite, CarsStatus, Anomalies, FleetActivity, Categories, Heatmap, Target, VisibleAlertsList } from 'components';
+import { HeaderSite, CarsStatus, Anomalies, FleetActivity, Categories, Heatmap, Target, VisibleAlertsList, Map } from 'components';
 import styles from './Dashboard.scss';
 import cx from 'classnames';
 import map from './images/map.jpeg';
@@ -10,6 +10,7 @@ export default class Dashboard extends Component {
     super(props);
     this.state = {
       percent: Math.random(),
+      alertsVisibility: false
     };
   }
 
@@ -21,16 +22,21 @@ export default class Dashboard extends Component {
     }, 5000);
 
   }
+  changeAlertsVisibilty =() => {
+    this.setState({
+      alertsVisibility: !this.state.alertsVisibility
+    });
+  }
 
   render() {
 
     return (
       <div>
-        <HeaderSite/>
+        <HeaderSite onClick={this.changeAlertsVisibilty}/>
         <div className={styles.layout}>
-          <div className={cx(styles.layoutSideRight,styles.layoutCol20)}>
+          <div className={cx(styles.layoutSideRight,styles.layoutCol20,this.state.alertsVisibility? styles.notActive: '')}>
 
-            <VisibleAlertsList/>
+            <VisibleAlertsList onClick={this.changeAlertsVisibilty}/>
           </div>
           <div className={cx(styles.layoutSideLeft,styles.layoutCol80)}>
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
@@ -63,7 +69,7 @@ export default class Dashboard extends Component {
                 <Categories />
               </div>
               <div className={styles.layoutCol50}>
-                 <img src="/assets/images/1.jpg"/>
+                 <Map lat={48.856614} lng={2.3522219} />
               </div>
             </div>
           </div>

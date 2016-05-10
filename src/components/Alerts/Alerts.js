@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
     return {
-        alerts: state.alerts.alerts
+        alerts: state.alerts.alerts,
     }
 }
 const mapDispatchToProps = (dispatch) => {

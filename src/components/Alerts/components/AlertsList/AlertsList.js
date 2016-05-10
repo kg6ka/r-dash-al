@@ -9,7 +9,10 @@ class AlertsList extends Component {
     render() {
         const alerts = this.props.alerts;
         return (
-            <div className={styles.alerts}>
+            <div className={styles.alerts} >
+                <div className={styles.close} onClick={this.props.onClick}>
+                    <span>X</span>
+                    </div>
                 <img className={styles.carImage} src={`/assets/images/alerts/car.png`}/>
                 <div className={styles.alertsHeader}>
                     <div className={styles.alertsNumber}>

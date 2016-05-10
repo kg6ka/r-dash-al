@@ -11,6 +11,8 @@ class HeaderSite extends Component {
         this.update_date = '2016 March 02, 13:21';
         this.user_img = 'avatar.png';
     }
+
+
     render() {
         return <header className={styles.headerSite}>
             <div className={styles.menuToggle}></div>
@@ -22,7 +24,7 @@ class HeaderSite extends Component {
                     <span>{this.update_date}</span>
                 </a>
             </div>
-            <div className={styles.error}>{this.count_error}</div>
+            <div className={styles.error} onClick={this.props.onClick}>{this.count_error}</div>
             <a href="#home" className={styles.user}><img src={`/assets/images/${this.user_img}`}/></a>
         </header>;
     }

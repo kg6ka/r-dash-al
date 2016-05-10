@@ -8,6 +8,7 @@ export default class Dashboard extends Component {
     super(props);
     this.state = {
       percent: Math.random(),
+      alertsVisibility: false
     };
   }
 
@@ -19,16 +20,21 @@ export default class Dashboard extends Component {
     }, 2000);
 
   }
+  changeAlertsVisibilty =() => {
+    this.setState({
+      alertsVisibility: !this.state.alertsVisibility
+    });
+  }
 
   render() {
 
     return (
       <div>
-        <HeaderSite/>
+        <HeaderSite onClick={this.changeAlertsVisibilty}/>
         <div className={styles.layout}>
-          <div className={cx(styles.layoutSideRight,styles.layoutCol20)}>
+          <div className={cx(styles.layoutSideRight,styles.layoutCol20,this.state.alertsVisibility? styles.notActive: '')}>
 
-            <VisibleAlertsList/>
+            <VisibleAlertsList onClick={this.changeAlertsVisibilty}/>
           </div>
           <div className={cx(styles.layoutSideLeft,styles.layoutCol80)}>
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>

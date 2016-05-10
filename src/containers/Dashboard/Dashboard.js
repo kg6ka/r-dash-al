@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HeaderSite, CarsStatus, Anomalies, FleetActivity, Categories, Heatmap, Target, VisibleAlertsList } from 'components';
+import { HeaderSite, CarsStatus, Anomalies, FleetActivity, Categories, Heatmap, Target, VisibleAlertsList, Map } from 'components';
 import styles from './Dashboard.scss';
 import cx from 'classnames';
 
@@ -68,7 +68,7 @@ export default class Dashboard extends Component {
                 <Categories />
               </div>
               <div className={styles.layoutCol50}>
-                 <img src="/assets/images/1.jpg"/>
+                 <Map lat={48.856614} lng={2.3522219} />
               </div>
             </div>
           </div>

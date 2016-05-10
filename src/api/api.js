@@ -86,7 +86,7 @@ function buildData(component,data) {
 
 window.setInterval(() => {
   getApiData("1111");
-}, 5000);
+}, 10000);
 
 defaultData();
 getApiData("1111");

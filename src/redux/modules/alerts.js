@@ -5,7 +5,7 @@ const INITIAL_STATE = {alerts : [{id:1,number:2,name:'dde',vehicleId:'231223',me
 const alerts = (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
-        case 'FETCH_POSTS':
+        case 'FETCH_ALERTS':
             return state;
         case 'DELETE_ALERT':
              return {

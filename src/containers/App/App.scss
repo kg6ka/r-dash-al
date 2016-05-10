@@ -66,6 +66,10 @@ body {
     text-shadow: 0 0 5px #2fc6f4;
     font-family: 'PTSans';
     text-transform: uppercase;
+    color: #2fc6f4;
+    font-size: calc(100vw / 120);
+    display: inline-block;
+    margin: 5%;
 }
 
 :global(.fleetActivityBlock) {

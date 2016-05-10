@@ -23,16 +23,17 @@ const informationData = [
 ];
 
 export default class Categories extends Component {
+  static propTypes = {
+    name: string,
+    filter: string,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       hovered: null,
     };
   }
-
-  static propTypes = {
-    name: string,
-  };
 
   getOffset(idx) {
     return idx === this.state.hovered ? window.innerWidth / 120 : window.innerWidth / 240;
@@ -173,19 +174,23 @@ export default class Categories extends Component {
   }
 
   render() {
-    const translateString = `translate(${window.innerWidth / 5.25},${window.innerWidth / 23.4})`;
+    const translateString = this.props.filter
+      ? `translate(${window.innerWidth / 7},${window.innerWidth / 23.4}) scale(0.7)`
+      : `translate(${window.innerWidth / 5.25},${window.innerWidth / 23.4})`;
     return (
-      <svg width={ window.innerWidth / 3.39 } height={ window.innerWidth / 6.1 }>
+      <svg className={styles.categoriesComponent}>
         <text
           className="glowText"
-          x={ window.innerWidth / 96 }
+          x="5%"
           y={ window.innerWidth / 54.6 }
           fill={'#2fc6f4'}
           fontSize={ window.innerWidth / 120 }
         >
           {this.props.name}
         </text>
-        { informationData.map((el, idx) => this.drawInformation(el, idx)) }
+        <g transform={ this.props.filter ? 'scale(0.8, 0.85)' : null }>
+          { informationData.map((el, idx) => this.drawInformation(el, idx)) }
+        </g>
         <g
           className="pieChart"
           transform={ translateString }
@@ -208,3 +213,5 @@ export default class Categories extends Component {
     );
   }
 }
+
+ {/*translate(130,38.93162393162393) scale(0.7)*/}

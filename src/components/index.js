@@ -6,3 +6,7 @@ export Categories from './Categories/Categories';
 export Heatmap from './Heatmap/Heatmap';
 export Target from './Target/Target';
 export RadioButtons from './RadioButtons/RadioButtons';
+export MSGfilter from './MSGfilter/MSGfilter';
+export VehiclesFilter from './VehiclesFilter/VehiclesFilter';
+export DataBars from './DataBars/DataBars';
+export Scrollbars from './Scrollbars/Scrollbars';

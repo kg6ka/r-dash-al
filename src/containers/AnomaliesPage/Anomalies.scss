@@ -1,3 +1,35 @@
 .fleetActivity {
   width: calc(100vw / 1.7);
 }
+
+.anomalyBlock {
+  display: block;
+}
+
+.anomalyInBlock {
+  display: inline-block;
+}
+
+.filters {
+  width: 44%;
+}
+
+.lineBlock {
+  display: block;
+  width: 100%;
+}
+
+.component {
+  width: 49.8%;
+  height: 100%;
+  border-right: 1px solid #535353;
+}
+
+.barsFilters {
+  height: calc(100vw / 5.85);
+}
+
+.chartsFilters {
+  height: calc(100vw / 6.34);
+  border-top: 1px solid #535353;
+}

@@ -16,6 +16,10 @@ export default class Charts extends Component {
     this.drawCharts();
     this.chartsDecoration();
   }
+  componentDidUpdate(prevProps, prevState)  {
+    this.drawCharts();
+    this.chartsDecoration();  
+  }
 
   chartsDecoration() {
     d3.selectAll('.tick text')
@@ -54,21 +58,27 @@ export default class Charts extends Component {
     const margin = window.innerWidth / 40;
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
-    const quantity = 112;
+    const quantity = data.length - 1;
     const timeTicks = [];
     let tick = 0;
+        console.log(data)
     for (let i = 0; i < 8; i++) {
-      timeTicks.push(new Date(data[data.length - quantity - 1 + tick].time));
-      tick += 16;
+      timeTicks.push(new Date(data[tick].time));
+      tick += Math.round(quantity / 7);
+      if(tick > quantity) tick = quantity;
     }
-
+    
+    charts.selectAll("svg").remove();
+    charts.selectAll("image").remove();
+    charts.selectAll("text").remove();
+        
     const svg = charts
       .append('svg')
       .attr('width', width)
       .attr('height', height);
 
     const x = d3.time.scale()
-      .domain([new Date(data[data.length - quantity - 1].time),
+      .domain([new Date(data[0].time),
         new Date(data[data.length - 1].time)])
       .range([margin, axisWidth]);
 
@@ -128,7 +138,7 @@ export default class Charts extends Component {
     const area = d3.svg.area()
       .x(d => x(new Date(d.time)))
       .y0(axisHeigth)
-      .y1(d => y2(d.val3 * 50));
+      .y1(d => y2(d.activitys));
 
     svg.append('g')
       .attr('fill', `url(#${color3})`)
@@ -137,22 +147,6 @@ export default class Charts extends Component {
       .attr('d', area(data))
       .attr('stroke', 'white')
       .attr('filter', 'url(#topGlow)');
-
-    svg.selectAll('.bar2')
-      .data(['bar2'])
-      .enter()
-      .append('g')
-      .attr('class', 'bar2')
-      .selectAll('.barItem')
-        .data(data.slice(0, data.length - 1))
-        .enter()
-        .append('rect')
-        .attr('class', 'barItem')
-        .attr('x', (d) => x(new Date(d.time)))
-        .attr('y', d => y1(d.val2))
-        .attr('width', (axisWidth - margin) / (quantity - 1))
-        .attr('height', d => axisHeigth - y1(d.val2))
-        .attr('fill', `url(#${color2})`);
 
     svg.selectAll('.bar1')
       .data(['bar1'])
@@ -165,10 +159,28 @@ export default class Charts extends Component {
         .append('rect')
         .attr('class', 'barItem')
         .attr('x', d => x(new Date(d.time)))
-        .attr('y', d => y1(d.val1))
+        .attr('y', d => y1(d.suspicious))
         .attr('width', (axisWidth - margin) / (quantity - 1))
-        .attr('height', d => axisHeigth - y1(d.val1))
+        .attr('height', d => axisHeigth - y1(d.suspicious))
         .attr('fill', `url(#${color1})`);
+
+
+    svg.selectAll('.bar2')
+      .data(['bar2'])
+      .enter()
+      .append('g')
+      .attr('class', 'bar2')
+      .selectAll('.barItem')
+        .data(data.slice(0, data.length - 1))
+        .enter()
+        .append('rect')
+        .attr('class', 'barItem')
+        .attr('x', (d) => x(new Date(d.time)))
+        .attr('y', d => y1(d.blocked))
+        .attr('width', (axisWidth - margin) / (quantity - 1))
+        .attr('height', d => axisHeigth - y1(d.blocked))
+        .attr('fill', `url(#${color2})`);
+
 
 
     charts.append('text')

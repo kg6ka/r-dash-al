@@ -16,14 +16,20 @@ export default class MainMenu extends Component {
     }, {
         label: 'last 24 hrs:',
         url: '#contact-us',
-        icon: 'data.png'
+        icon: 'data.png',
+        items:[
+          {label: 'last 24 hrs:', action:'' },
+          {label: 'last 12 hrs:', action:'' },
+          {label: 'last 5 hrs:', action:'' },
+          {label: 'last 1 hrs:', action:'' },
+        ]
     }
   ]}
 
   renderSubMenu(list,stepClass) {
     if(!list) return;
 
-    return <ul className={stepClass}>
+    return <ul className={styles[stepClass]}>
             {list.map((item,i)=>
               <li key={i} >
                 <a href={item.url}>

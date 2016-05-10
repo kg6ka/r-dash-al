@@ -7,6 +7,10 @@
     font-size: 16px;
     background-color: #1e252b;
     box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    width:100%;
+    z-index:1000;
 }
 
 .center{
@@ -50,12 +54,31 @@
     font-size: 0.967em;
     border-left: 1px solid #2c353c;
     /* padding: 0; */
+    position:relative;
+    .child{
+      position:absolute;
+      display:none;
+      background-color:#1e252b;
+        padding:0;
+        width:100%;
+      li{
+        display:block;
+      }
+    }
+    &:hover .child{
+       display:block;
+    }
+
+
 }
 
 .mainMenu > *:last-child {
     border-right: 1px solid #2c353c;
 }
 
+
+
+.mainMenu 
 .mainMenu a:after {
     content: "";
     vertical-align: middle;
@@ -70,14 +93,27 @@
 }
 
 
-.menuToggle {
+.toggleMenu {
     color: white;
     font-size: 2.1em;
     padding: 0.4em 0.5em;
 }
-.menuToggle { 
-        padding: 0.5em 1em;
-    background: url("./images/menu.png") no-repeat center center;
+.menuToggleIcon { 
+  padding: 0.5em;
+  background: url("./images/menu.png") no-repeat center center;
+  &[open] + .toggleMenuContent {
+    left: 0;
+  }
+  &[open]:after {
+    position: fixed;
+    top: 1.8em;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    content: "";
+    z-index: 1499;
+    background-color: rgba(0, 0, 0, 0.24);
+  }
 }
 
 .logo {
@@ -125,3 +161,48 @@
 .user img {
     width: 2.3em;
 }
+
+
+.toggleMenuContent ul {
+  margin:0;
+  padding-left:1em;
+}
+
+.toggleMenuContent > ul {
+  margin:0;
+  padding:0;
+}
+
+.toggleMenu li{
+  color: white;
+  font-size: 1.05em;
+  display: block;
+}
+
+.toggleMenu a {
+    color: inherit;
+    text-decoration: blink;
+    padding: 0.45em 0.6em;
+    display: block;
+    border-bottom: 1px solid #17191b;
+}
+
+.toggleMenuContent {
+  position: fixed;
+      font-size: 20px;
+    /* height: 20em; */
+    font-family: PTSans;
+  top: 3em;
+  width: 15em;
+  left: -100%;
+  bottom:0;
+  /* height:20em; */
+  height: calc(100% - 2em);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #333132;
+  z-index: 1500;
+  -webkit-transition: left 500ms;
+  transition: left 500ms;
+}
+

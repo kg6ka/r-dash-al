@@ -81,6 +81,10 @@ h1 {
   height: 350px !important;
   width: 350px;
   margin: 0 auto;
+
+  .gmnoprint .gm-style-mtc {
+    display: none !important;
+  }
 }
 
 .list-group {
@@ -114,3 +118,4 @@ a.list-group-item span.createdAt {
   color: #969FA8;
   z-index: -1;
 }
+

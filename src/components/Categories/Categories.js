@@ -8,18 +8,6 @@ const externalLink =
   ' V 5.8333 H 8.3333327 v 2.5 z M 4.9999997,0 l 1.666673,1.6667 -2.500003,2.5' +
   ' 1.666663,1.6666 2.5,-2.5 L 10.000003,5 V 0 H 4.9999997 z';
 
-const informationData = [
-  { offset: window.innerWidth / 25.26, color: '#b2d733',
-    text: 'Irrational Data', percent: 55 },
-  { offset: window.innerWidth / 15.5, color: '#13aa38',
-    text: 'Timing Anomaly', percent: 20 },
-  { offset: window.innerWidth / 11.2, color: '#1156e4',
-    text: 'Abnormal diagnostics', percent: 12 },
-  { offset: window.innerWidth / 8.73, color: '#904fff',
-    text: 'Mix', percent: 5 },
-  { offset: window.innerWidth / 7.16, color: '#fff',
-    text: 'Others', percent: 8 },
-];
 
 export default class Categories extends Component {
   constructor(props) {
@@ -99,7 +87,7 @@ export default class Categories extends Component {
 
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
-        { pie(informationData).map((d, idx) =>
+        { pie(argusComponents.category).map((d, idx) =>
           <path
             key={ `slice-${idx}` }
             fill={ d.data.color }
@@ -180,7 +168,7 @@ export default class Categories extends Component {
         >
           CATEGORIES
         </text>
-        { informationData.map((el, idx) => this.drawInformation(el, idx)) }
+        { argusComponents.category.map((el, idx) => this.drawInformation(el, idx)) }
         <g
           className="pieChart"
           transform={ translateString }

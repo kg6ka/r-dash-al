@@ -61,7 +61,6 @@ export default class Charts extends Component {
     const quantity = data.length - 1;
     const timeTicks = [];
     let tick = 0;
-        console.log(data)
     for (let i = 0; i < 8; i++) {
       timeTicks.push(new Date(data[tick].time));
       tick += Math.round(quantity / 7);

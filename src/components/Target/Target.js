@@ -18,7 +18,9 @@ export default class Target extends Component {
     };
   }
 
+  
   render() {
+   
     return (
       <div className={ styles.content }>
         <div
@@ -54,7 +56,7 @@ export default class Target extends Component {
         <div className={styles.dataBlockInner}>
         <Scrollbar className={styles.dataBlock}>
           <div className={styles.dataBlockInner}>
-          { argusComponents.target.map((el, idx) =>
+          { argusComponents.target[this.state.checked].map((el, idx) =>
               <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
           ) }
           </div>

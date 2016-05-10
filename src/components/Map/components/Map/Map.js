@@ -57,8 +57,6 @@
 import React, { PropTypes, Component } from 'react'
 import styles from '../../Map.scss'
 
-const yellowCircle = 'http://findicons.com/files/icons/2583/sweetieplus/24/circle_yellow.png';
-const redCircle = 'http://findicons.com/files/icons/2583/sweetieplus/16/circle_red_16_ns.png';
 
 
 class Map extends Component {
@@ -268,13 +266,11 @@ class Map extends Component {
                 lat: value.lat,
                 lng: value.lng,
                 icon: {
-                    url: value.blocked == 0 ?yellowCircle : redCircle,
-                    // This marker is 20 pixels wide by 32 pixels high.
-                    size: new google.maps.Size(50, 50),
-                    // The origin for this image is (0, 0).
-                    origin: new google.maps.Point(0, 0),
-                    // The anchor for this image is the base of the flagpole at (0, 32).
-                    anchor: new google.maps.Point(0, 32)
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 3,
+                    fillColor: value.blocked == 0? '#FFFF00' : "#B40404",
+                    strokeWeight:6,
+                    strokeColor: value.blocked == 0? '#FFFF00' : "#B40404"
                 }
             });
         });

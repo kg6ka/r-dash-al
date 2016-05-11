@@ -42,9 +42,17 @@ function getApiData(tags){
   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/statuses/vehicles/counts/updated`).then((data)=>{
     buildData("updatedVehicles",data.data[0])
   })
-
-
-
+// 
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/heatmap?from=0`).then((data)=>{
+    locations_buildData("heatmap",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/alerts/vehicle`).then((data)=>{
+    alerts_buildData("alertsVehicle",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/alerts/message`).then((data)=>{
+    alerts_buildData("alertsMessage",data.data)
+  })
+// 
   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByCause?from=0`).then((data)=>{
     CATEGORIES_TARGET_buildData("anomaliesByCause",data.data)
   })
@@ -60,16 +68,14 @@ function getApiData(tags){
 
 }
 
+var categoryTargetFlags = 0;
 function CATEGORIES_TARGET_buildData(component,data){
   window.argusApi[component] = data;
-  flags++;
-  if (flags == 4) {
+  categoryTargetFlags++;
+  if (categoryTargetFlags == 4) {
     category();
     target();
-//     fleetStatus();
-//     fleetActivity();
-//     totalAnomalies();
-    flags = 0;
+    categoryTargetFlags = 0;
   }
 }
 
@@ -86,6 +92,7 @@ function buildData(component,data) {
 
 window.setInterval(() => {
   getApiData("1111");
+  store.dispatch({type:"0"})
 }, 10000);
 
 defaultData();
@@ -111,6 +118,23 @@ argusApi.anomaliesByVehicle = [];
 
   category();
   target();
+}
+
+function locations_buildData(component,data){
+  if(window.argusApi[component] == undefined || window.argusApi[component].length != data.length){
+    window.argusApi[component] = data;
+    store.dispatch({type:'SET_LOCATIONS',data:argusApi.heatmap})
+  }
+}
+
+var alertsFlags = 0;
+function alerts_buildData(component,data){
+  window.argusApi[component] = data;
+  alertsFlags++;
+  if (alertsFlags == 2) {
+//     store.dispatch({type:'SET_ALERTS',data:{msg:argusApi.alertsMessage,vehicle:argusApi.alertsVehicle}})
+    alertsFlags = 0;
+  }
 }
 
 function category(){
@@ -139,6 +163,8 @@ function category(){
   }
  
   argusComponents.category = category;
+
+//   store.dispatch({type:'SET_CATEGORIES',data:category});
 }
 
 function target() {

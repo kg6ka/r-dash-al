@@ -7,6 +7,8 @@ const alerts = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'FETCH_ALERTS':
             return state;
+        case 'SET_ALERTS':
+            return {...state,alerts:action.data }
         case 'DELETE_ALERT':
              return {
                  ...state,

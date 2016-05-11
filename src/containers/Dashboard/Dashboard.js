@@ -9,18 +9,13 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      percent: Math.random(),
+      index:1,
       alertsVisibility: false
     };
   }
 
   componentDidMount() {
-    window.setInterval(() => {
-      this.setState({
-        percent: Math.random(1),
-      });
-    }, 5000);
-
+    store.subscribe(()=> this.setState({index:0 })).bind(this)
   }
   changeAlertsVisibilty =() => {
     this.setState({

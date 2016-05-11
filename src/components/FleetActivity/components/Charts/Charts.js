@@ -84,7 +84,7 @@ export default class Charts extends Component {
     if(argusComponents.fleetActivity.registered >= 1000)
       tickValuesCars = [0,2500,5000,7500,10000];
 
-    tickValuesYAxis1 = [0, 5, 10, 15, 20];
+    tickValuesYAxis1 = [0, 5, 10, 15,20];
 
                
 //     console.log(data);

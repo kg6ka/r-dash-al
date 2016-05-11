@@ -268,9 +268,9 @@ class Map extends Component {
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     scale: 3,
-                    fillColor: value.blocked == 0? '#FFFF00' : "#B40404",
+                    fillColor: value.count > 6 ? '#fba120' : "#B40404",
                     strokeWeight:6,
-                    strokeColor: value.blocked == 0? '#FFFF00' : "#B40404"
+                    strokeColor: value.count > 6 ? '#fba120' : "#B40404"
                 }
             });
         });

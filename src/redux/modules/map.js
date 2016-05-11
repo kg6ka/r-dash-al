@@ -10,7 +10,8 @@ const map = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'FETCH_LOCATIONS':
             return state;
-
+        case 'SET_LOCATIONS':
+            return {...state,locations:action.data }
         default:
             return state
     }

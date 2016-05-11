@@ -1,0 +1,34 @@
+.msgFilter {
+  height: 100%;
+}
+
+.buttonsBlock {
+  display: inline-block;;
+  float: right;
+  width: 33%;
+  margin: 2% 3% 0 0;
+}
+
+.charts {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  svg {
+    flex: 1 0 0;
+    flex-basis: calc(100vw / 28.5);
+  }
+}
+
+.scroll {
+  height: 80%;
+
+  &:first-of-type &:nth-of-type(2n) {
+    background-color: #37434b;
+    height: 4px;
+    ￼bottom: 5%;
+
+    &:first-of-type {
+      background-color: #cecece;
+    }
+  }
+}

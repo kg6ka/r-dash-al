@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Categories, FilterTable } from 'components';
-import styles from './Anomalies.scss';
 import data from './data.js';
+import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter, FilterTable } from 'components';
+import styles from './Anomalies.scss';
 import cx from 'classnames';
 
 export default class AnomaliesPage extends Component {
@@ -12,18 +12,28 @@ export default class AnomaliesPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className={styles.fleetActivity}>
-          <Categories name="filter by category" />
-        </div>
+      <div className={styles.anomalyBlock}>
         <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
-          <FilterTable data={ data }
-                          color1={'suspiciousGradient'}
-                          color2={'blockedGradient'}
-                          color3={'transmittingGradient'}
-          />
+          <FilterTable data={ data } />
         </div>
-
+        <div className={cx(styles.filters, styles.anomalyInBlock)}>
+            <div className={cx(styles.barsFilters, styles.lineBlock)}>
+              <div className={cx(styles.component, styles.anomalyInBlock)}>
+                <MSGfilter />
+              </div>
+              <div className={cx(styles.component, styles.anomalyInBlock)}>
+                <VehiclesFilter />
+              </div>
+            </div>
+            <div className={cx(styles.chartsFilters, styles.lineBlock)}>
+              <div className={cx(styles.component, styles.anomalyInBlock)}>
+                <Categories name="filter by category" filter="true" />
+              </div>
+              <div className={cx(styles.component, styles.anomalyInBlock)}>
+                <ConfidenceFilter />
+              </div>
+            </div>
+        </div>
       </div>
     );
   }

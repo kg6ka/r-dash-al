@@ -35,10 +35,6 @@ export default class Categories extends Component {
     };
   }
 
-  static propTypes = {
-    name: string,
-  };
-
   getOffset(idx) {
     return idx === this.state.hovered ? window.innerWidth / 120 : window.innerWidth / 240;
   }

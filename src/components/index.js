@@ -10,3 +10,4 @@ export MSGfilter from './MSGfilter/MSGfilter';
 export VehiclesFilter from './VehiclesFilter/VehiclesFilter';
 export DataBars from './DataBars/DataBars';
 export Scrollbars from './Scrollbars/Scrollbars';
+export ConfidenceFilter from './ConfidenceFilter/ConfidenceFilter';

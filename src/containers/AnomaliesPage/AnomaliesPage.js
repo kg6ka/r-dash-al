@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Categories, MSGfilter, VehiclesFilter } from 'components';
+import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter } from 'components';
 import styles from './Anomalies.scss';
 import cx from 'classnames';
-import data from './data.js';
 
 export default class AnomaliesPage extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ export default class AnomaliesPage extends Component {
                 <Categories name="filter by category" filter="true" />
               </div>
               <div className={cx(styles.component, styles.anomalyInBlock)}>
-
+                <ConfidenceFilter />
               </div>
             </div>
         </div>

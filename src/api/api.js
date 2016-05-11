@@ -261,6 +261,10 @@ function defaultData() {
   target();
 }
 
+window.updateApiData = function(dataFrom) {
+  argusComponents.dataFrom = dataFrom;
+  getApiData("1111");
+}
 
 window.setInterval(() => {
   getApiData("1111");

@@ -46,7 +46,8 @@ export default class MainMenu extends Component {
  	params.shift(1);
 	switch(action_name) {
 		case "dataFrom":
-          argusComponents.dataFrom = params[0];
+		  updateApiData(params[0]);
+//           argusComponents.dataFrom = params[0];
           this.data[2].label = item.label + ":";
         break;
 	}

@@ -1,4 +1,4 @@
-const INITIAL_STATE = {msg:[],vehicle:[]};
+const INITIAL_STATE = {alerts:{msg:[],vehicle:[]}}
 // {alerts : [{id:1,number:2,name:'dde',vehicleId:'231223',messages:20,date: new Date()},
 //     {id:2,number:3,name:'fee',vehicleId:'23fdd223',messages:10,date: new Date()}]};
 
@@ -15,7 +15,7 @@ const alerts = (state = INITIAL_STATE, action) => {
         case 'DELETE_ALERT':
              return {
                  ...state,
-                 alerts: state.alerts.filter(function (alert) {
+                 alerts: state.alerts["msg"].filter(function (alert) {
                      console.log(alert);
                      return alert.id != action.id
                  })

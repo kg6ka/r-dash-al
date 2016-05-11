@@ -8,7 +8,7 @@ class AlertsList extends Component {
     }
     render() {
 
-        const alerts = this.props.alerts.msg;
+        const alerts = this.props.alerts.alerts.msg;
                 console.log(alerts);
         return (
             <div className={styles.alerts} >
@@ -28,7 +28,7 @@ class AlertsList extends Component {
                 </div>
                 {alerts.map(alert =>
                     <Alert
-                        key={alert.id}
+                        key={alert.desc1}
                         number={alert.count1}
                         name={alert.desc1}
                         messages={alert.count2}

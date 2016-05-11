@@ -56,9 +56,10 @@ export default class FilterTable extends Component {
   drawCharts() {
     const { data } = this.props;
     const charts = d3.select('.charts');
-    const width = window.innerWidth / 1.85;
+    const width = document.documentElement.clientWidth * 0.46;
+    debugger;
     const height = window.innerWidth / 11.43;
-    const margin = window.innerWidth / 40;
+    const margin = 30;
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
     const quantity = 112;
@@ -81,12 +82,13 @@ export default class FilterTable extends Component {
 
     const y1 = d3.scale.linear()
       .domain([0, 400])
-      .range([axisHeigth, margin / 2]);
+      .range([axisHeigth, margin * 2]);
 
     const y2 = d3.scale.linear()
       .domain([0, 10000])
-      .range([axisHeigth, margin / 2]);
+      .range([axisHeigth, margin * 2]);
 
+    // fix tick format
     const yAxis2 = d3.svg.axis()
       .scale(y2)
       .tickSize(-(axisWidth - margin))
@@ -94,10 +96,7 @@ export default class FilterTable extends Component {
       .tickValues([0, 2500, 5000, 7500, 10000])
       .tickPadding(10)
       .tickFormat(d => {
-        if (d === 0) {
-          return d;
-        }
-        return `${d / 1000} K`;
+        return '';
       });
 
     const xAxis = d3.svg.axis()
@@ -238,24 +237,11 @@ export default class FilterTable extends Component {
   }
 
   render() {
-    const margin = window.innerWidth / 40;
-    const width = window.innerWidth / 1.85;
     return (
       <div className={componentStyle.bodyComponent}>
-        <svg
-          width={width}
-          height={30}
-        >
-          <text
-            className="glowText"
-            x={ margin }
-            y={ window.innerWidth / 54.6 }
-            fill={'#2fc6f4'}
-            fontSize={ window.innerWidth / 120 }
-          >
+        <div className={componentStyle.title}>
             filter by time
-          </text>
-        </svg>
+        </div>
         <div className={componentStyle.close}>X</div>
         <div className={componentStyle.dataList}>
           <div>
@@ -292,7 +278,7 @@ export default class FilterTable extends Component {
         </div>
         <g
           className="charts"
-          transform={`translate(${window.innerWidth / 45},${window.innerWidth / 15.61})`}
+          transform={`translate(${window.innerWidth / 45},${window.innerWidth / 20})`}
         >
           <filter id="topGlow" width="100%" height="160%" x="0" y="-0.55">
             <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />

@@ -1,13 +1,15 @@
 
 import config from 'config';
 
+/* ============================================================================ */ 
+/* ============================== Init function =============================== */ 
+/* ============================================================================ */ 
+
 window.argusApi = {}; 
 
 window.argusComponents= {};
 
 argusComponents.dataFrom = "5s";
-
-var flags = 0;
 
 
 function http(url) {
@@ -25,119 +27,16 @@ function http(url) {
 }
 
 
-function getApiData(tags){
-
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/1/activeVehiclesStatus?from=0`).then((data)=>{
-    buildData("activitys",data.data)
-  })
-
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/1/anomalies?from=0`).then((data)=>{
-    buildData("anomalies",data.data)
-  })
-
-  http(`${config.apiBaseUrl}/v1/tags/${tags}/vehicles/counts/total`).then((data)=>{
-    buildData("registeredVehicles",data.data[0])
-  })
-
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/statuses/vehicles/counts/updated`).then((data)=>{
-    buildData("updatedVehicles",data.data[0])
-  })
-// 
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/heatmap?from=0`).then((data)=>{
-    locations_buildData("heatmap",data.data)
-  })
-  http(`${config.apiBaseUrl}/v1/alerts/vehicle`).then((data)=>{
-    alerts_buildData("alertsVehicle",data.data)
-  })
-  http(`${config.apiBaseUrl}/v1/alerts/message`).then((data)=>{
-    alerts_buildData("alertsMessage",data.data)
-  })
-// 
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByCause?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByCause",data.data)
-  })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByEcu?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByEcu",data.data)
-  })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByVehicle?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByVehicle",data.data)
-  })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByMessage?from=0`).then((data)=>{
-    CATEGORIES_TARGET_buildData("anomaliesByMessage",data.data)
-  })
-
-}
-
-var categoryTargetFlags = 0;
-function CATEGORIES_TARGET_buildData(component,data){
-  window.argusApi[component] = data;
-  categoryTargetFlags++;
-  if (categoryTargetFlags == 4) {
-    category();
-    target();
-    categoryTargetFlags = 0;
-  }
-}
-
-function buildData(component,data) {
-  window.argusApi[component] = data;
-  flags++;
-  if (flags == 4) {
-    fleetStatus();
-    fleetActivity();
-    totalAnomalies();
-    flags = 0;
-  }
-}
-
-window.setInterval(() => {
-  getApiData("1111");
-  store.dispatch({type:"0"})
-}, 10000);
-
-defaultData();
-getApiData("1111");
-
-function defaultData() {
-  window.argusApi.registeredVehicles = { "count": 1 };
-
-  window.argusApi.updatedVehicles = { "count": 1 };
-
-  window.argusApi.activitys = [{"timestamp":0,"values":[{"key":"all","value":1}]}];
-
-  window.argusApi.anomalies = [{"timestamp":0,"values":[{"key":"total","value":1},{"key":"blocked","value":1}]}];
-
- argusApi.anomaliesByEcu = [];
-argusApi.anomaliesByMessage = [];
-argusApi.anomaliesByVehicle = [];
+/* ============================================================================ */ 
+/* ================== Build data for each componete function ================== */ 
+/* ============================================================================ */ 
 
 
-  fleetStatus();
-  fleetActivity();
-  totalAnomalies();
-
-  category();
-  target();
-}
-
-function locations_buildData(component,data){
-  if(window.argusApi[component] == undefined || window.argusApi[component].length != data.length){
-    window.argusApi[component] = data;
+function maps(){
     store.dispatch({type:'SET_LOCATIONS',data:argusApi.heatmap})
-  }
 }
 
-var alertsFlags = 0;
-function alerts_buildData(component,data){
-  window.argusApi[component] = data;
-  alertsFlags++;
-  if (alertsFlags == 2) {
-//     store.dispatch({type:'SET_ALERTS',data:{msg:argusApi.alertsMessage,vehicle:argusApi.alertsVehicle}})
-    alertsFlags = 0;
-  }
-}
-
-function category(){
+function category() {
 
  var  old = [
   { offset: window.innerWidth / 25.26, color: '#b2d733'},
@@ -180,8 +79,6 @@ function target() {
 
 
 function totalAnomalies() {
-
-    // Total Anomalies
 
     var totalAnomalies = {},suspicious_sum = 0,blocked_sum = 0;
 
@@ -232,14 +129,143 @@ function fleetActivity() {
 //      item.suspicious = Math.floor((Math.random() * 100) + 90);
 //      item.blocked = Math.floor((Math.random() * 50));
 
-
      bars.push(item);
    }
 
    argusComponents.fleetActivity.registered = window.argusApi.registeredVehicles.count;
    argusComponents.fleetActivity.bars = bars;
 
-   
 }
 
 
+
+/* ============================================================================ */ 
+/* =============================== Run function =============================== */ 
+/* ============================================================================ */ 
+
+
+function getApiData(tags){
+
+  // Group API for:
+  //    fleetStatus | fleetActivity | totalAnomalies
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/1/activeVehiclesStatus?from=0`).then((data)=>{
+    statusActivityAnomalies_buildData("activitys",data.data)
+  })
+
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/${argusComponents.dataFrom}/1/anomalies?from=0`).then((data)=>{
+    statusActivityAnomalies_buildData("anomalies",data.data)
+  })
+
+  http(`${config.apiBaseUrl}/v1/tags/${tags}/vehicles/counts/total`).then((data)=>{
+    statusActivityAnomalies_buildData("registeredVehicles",data.data[0])
+  })
+
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/statuses/vehicles/counts/updated`).then((data)=>{
+    statusActivityAnomalies_buildData("updatedVehicles",data.data[0])
+  })
+ 
+  // Group API for:
+  //    heatmap
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/heatmap?from=0`).then((data)=>{
+    if(window.argusApi.heatmap == undefined || window.argusApi.heatmap.length != data.data.length){
+      window.argusApi.heatmap = data.data;
+      maps();
+    }
+  })
+
+  // Group API for:
+  //    alerts
+  http(`${config.apiBaseUrl}/v1/alerts/vehicle`).then((data)=>{
+    alerts_buildData("alertsVehicle",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/alerts/message`).then((data)=>{
+    alerts_buildData("alertsMessage",data.data)
+  })
+
+  // Group API for:
+  //    Category
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByCause?from=0`).then((data)=>{
+      argusApi.anomaliesByCause = data.data;
+      category()
+  })
+
+  // Group API for:
+  //    Target
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByEcu?from=0`).then((data)=>{
+    target_buildData("anomaliesByEcu",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByVehicle?from=0`).then((data)=>{
+    target_buildData("anomaliesByVehicle",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByMessage?from=0`).then((data)=>{
+    target_buildData("anomaliesByMessage",data.data)
+  })
+
+}
+
+
+
+var targetFlags = 0;
+
+function target_buildData(component,data){
+  window.argusApi[component] = data;
+  if (++targetFlags == 3) {
+    target();
+    targetFlags = 0;
+  }
+}
+
+var statusActivityAnomaliesFlags = 0;
+
+function statusActivityAnomalies_buildData(component,data) {
+  window.argusApi[component] = data;
+  if (++statusActivityAnomaliesFlags == 4) {
+    fleetStatus();
+    fleetActivity();
+    totalAnomalies();
+    statusActivityAnomaliesFlags = 0;
+  }
+}
+
+
+var alertsFlags = 0;
+
+function alerts_buildData(component,data){
+  window.argusApi[component] = data;
+  if (++alertsFlags == 2) {
+    store.dispatch({type:'SET_ALERTS',data:{msg:argusApi.alertsMessage,vehicle:argusApi.alertsVehicle}})
+    alertsFlags = 0;
+  }
+}
+
+function defaultData() {
+
+  window.argusApi.registeredVehicles = { "count": 1 };
+
+  window.argusApi.updatedVehicles = { "count": 1 };
+
+  window.argusApi.activitys = [{"timestamp":0,"values":[{"key":"all","value":1}]}];
+
+  window.argusApi.anomalies = [{"timestamp":0,"values":[{"key":"total","value":1},{"key":"blocked","value":1}]}];
+
+  argusApi.anomaliesByEcu = [];
+  argusApi.anomaliesByMessage = [];
+  argusApi.anomaliesByVehicle = [];
+
+
+  fleetStatus();
+  fleetActivity();
+  totalAnomalies();
+
+  category();
+  target();
+}
+
+
+window.setInterval(() => {
+  getApiData("1111");
+  store.dispatch({type:"0"})
+}, 10000);
+
+defaultData();
+getApiData("1111");

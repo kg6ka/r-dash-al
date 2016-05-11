@@ -1,3 +1,10 @@
 .fleetActivity {
-  width: calc(100vw / 1.7);
+  width: calc(100vw / 1.85);
+}
+
+.backgroundGradient {
+  background: -webkit-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
+  background: -o-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
+  background: -moz-linear-gradient(bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
+  background: linear-gradient(to bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
 }

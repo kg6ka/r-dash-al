@@ -1,0 +1,58 @@
+.close {
+  color: #ffffff;
+  font-size: 14px;
+  display: inline-block;
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.bodyComponent {
+  position: relative;
+  width: 703px;
+}
+
+.dataList {
+  list-style-type: none;
+  margin:0 0 20px 30px;
+  color: #ffffff;
+  width: 300px;
+  position: relative;
+}
+
+.hiddenList {
+  display: none;
+}
+
+.showList {
+  display: block;
+}
+
+.list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  list-style-type: none;
+  padding-left: 0;
+  height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #000000;
+}
+
+.showListItem {
+  color: #2fc6f4;
+  margin-left: 10px;
+  display: inline-block;
+  transform: rotate(90deg);
+}
+
+.expandImage {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: 30px;
+  right: -40px;
+}
+

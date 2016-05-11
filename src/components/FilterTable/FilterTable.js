@@ -82,11 +82,11 @@ export default class FilterTable extends Component {
 
     const y1 = d3.scale.linear()
       .domain([0, 400])
-      .range([axisHeigth, margin * 2]);
+      .range([axisHeigth, margin / 2]);
 
     const y2 = d3.scale.linear()
       .domain([0, 10000])
-      .range([axisHeigth, margin * 2]);
+      .range([axisHeigth, margin / 2]);
 
     // fix tick format
     const yAxis2 = d3.svg.axis()

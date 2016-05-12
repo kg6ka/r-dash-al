@@ -256,9 +256,9 @@ export default class FilterTable extends Component {
             [componentStyle.list]: true,
           })}
           >
-            {this.props.data.map((item) =>
-              <li onClick={this.itemClick.bind(this, item)}>{item.time}</li>
-            )}
+            { this.props.data.map((item, idx) =>
+              <li key={ idx } onClick={ this.itemClick.bind(this, item) }>{ item.time }</li>
+            ) }
           </ul>
         </div>
         <div className={componentStyle.expandImage}>

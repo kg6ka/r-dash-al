@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import styles from './Target.scss';
 import { Designations } from '../FleetActivity/components';
 import { DataView } from './components';
-import RadioButtons from '../RadioButtons/RadioButtons';
-// import Scrollbar from 'react-gemini-scrollbar';
+import { RadioButtons } from 'components';
 import Scrollbar from 'react-custom-scrollbars';
 
 const data1 = [
@@ -69,6 +68,37 @@ export default class Target extends Component {
     };
   }
 
+  renderTrack({ style }) {
+    const trackStyle = {
+      width: '2%',
+      position: 'absolute',
+      height: '90%',
+      right: 0,
+      top: 0,
+      bottom: 0,
+      borderRadius: '3px',
+      cursor: 'pointer',
+      backgroundColor: '#070707',
+    };
+    return (
+      <div
+        style={{ ...style, ...trackStyle }}
+      />
+    );
+  }
+
+  renderThumb({ style }) {
+    const thumbStyle = {
+      backgroundColor: '#2fc6f4',
+      borderRadius: '3px',
+    };
+    return (
+        <div
+          style={{ ...style, ...thumbStyle }}
+        />
+    );
+  }
+
   render() {
     return (
       <div className={ styles.content }>
@@ -81,6 +111,10 @@ export default class Target extends Component {
           <RadioButtons
             names={ buttonsNames }
             checked={ this.state.checked }
+            style={{
+              width: window.innerWidth / 26.7,
+              height: window.innerWidth / 87.3,
+            }}
           />
         </div>
         <div className={styles.title}>TOP TARGETS</div>
@@ -103,13 +137,16 @@ export default class Target extends Component {
         </svg>
         </div>
         <div className={styles.dataBlockInner}>
-        <Scrollbar className={styles.dataBlock}>
-          <div className={styles.dataBlockInner}>
-          { data1.map((el, idx) =>
-              <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
-          ) }
-          </div>
-        </Scrollbar>
+          <Scrollbar
+            renderTrackVertical={this.renderTrack}
+            renderThumbVertical={this.renderThumb}
+          >
+            <div className={styles.dataBlockInner}>
+            { data1.map((el, idx) =>
+                <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
+            ) }
+            </div>
+          </Scrollbar>
         </div>
       </div>
     );

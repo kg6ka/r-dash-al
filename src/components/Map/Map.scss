@@ -58,7 +58,7 @@ h1 {
 
 .mapHolder {
   width: 100%;
-  height: 350px;
+  height: calc(100vw/5.9) !important;
   margin: 0 auto;
   background-color: #FCFCFC;
   position: relative;
@@ -78,7 +78,7 @@ h1 {
 
 .map {
   width: 100%;
-  height: 350px !important;
+  height: calc(100vw/5.9) !important;
 /*   width: 350px; */
   margin: 0 auto;
 
@@ -118,4 +118,3 @@ a.list-group-item span.createdAt {
   color: #969FA8;
   z-index: -1;
 }
-

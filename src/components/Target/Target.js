@@ -5,8 +5,6 @@ import { DataView } from './components';
 import { RadioButtons } from 'components';
 import Scrollbar from 'react-custom-scrollbars';
 
-
-
 const buttonsNames = ['ECU', 'MSG', 'Vehicle'];
 
 export default class Target extends Component {

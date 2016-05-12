@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { string } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
@@ -8,8 +9,12 @@ const externalLink =
   ' V 5.8333 H 8.3333327 v 2.5 z M 4.9999997,0 l 1.666673,1.6667 -2.500003,2.5' +
   ' 1.666663,1.6666 2.5,-2.5 L 10.000003,5 V 0 H 4.9999997 z';
 
-
 export default class Categories extends Component {
+  static propTypes = {
+    name: string,
+    filter: string,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -156,19 +161,23 @@ export default class Categories extends Component {
   }
 
   render() {
-    const translateString = `translate(${window.innerWidth / 5.8},${window.innerWidth / 23.4})`;
+    const translateString = this.props.filter
+      ? `translate(${window.innerWidth / 7},${window.innerWidth / 23.4}) scale(0.7)`
+      : `translate(${window.innerWidth / 5.25},${window.innerWidth / 23.4})`;
     return (
-      <svg width={ window.innerWidth / 3.39 } height={ window.innerWidth / 6.1 }>
+      <svg className={styles.categoriesComponent}>
         <text
           className="glowText"
-          x={ window.innerWidth / 96 }
+          x="5%"
           y={ window.innerWidth / 54.6 }
           fill={'#2fc6f4'}
           fontSize={ window.innerWidth / 120 }
         >
-          CATEGORIES
+          {this.props.name}
         </text>
-        { argusComponents.category.map((el, idx) => this.drawInformation(el, idx)) }
+        <g transform={ this.props.filter ? 'scale(0.8, 0.85)' : null }>
+          { argusComponents.category.map((el, idx) => this.drawInformation(el, idx)) }
+        </g>
         <g
           className="pieChart"
           transform={ translateString }
@@ -180,6 +189,13 @@ export default class Categories extends Component {
           <stop offset="30%" stopColor="#2fc6f4" stopOpacity="1" />
           <stop offset="100%" stopColor="#2fc6f4" stopOpacity="0" />
         </radialGradient>
+        <filter id="glow" width="160%" height="160%" x="-0.3" y="-0.3">
+          <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </svg>
     );
   }

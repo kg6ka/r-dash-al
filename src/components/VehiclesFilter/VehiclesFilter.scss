@@ -1,0 +1,18 @@
+.msgFilter {
+  height: 100%;
+}
+
+.charts {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  svg {
+    flex: 1 0 0;
+    flex-basis: calc(100vw / 28.5);
+  }
+}
+
+.scroll {
+  height: 80%;
+
+}

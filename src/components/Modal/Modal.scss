@@ -1,0 +1,32 @@
+:global(.ReactModal__Overlay) {
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+:global(.ReactModal__Content) {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border: none;
+  outline: none;
+  box-shadow: 0 0 20px 5px rgba(47, 198, 244, 0.7);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: white;
+
+    &:active {
+      outline: none;
+      color: white;
+    }
+
+    &:focus {
+      outline: none;
+    }
+}

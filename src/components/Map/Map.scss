@@ -58,7 +58,7 @@ h1 {
 
 .mapHolder {
   width: 100%;
-  height: calc(100vw/5.9) !important;
+  height: 100%;
   margin: 0 auto;
   background-color: #FCFCFC;
   position: relative;
@@ -78,8 +78,7 @@ h1 {
 
 .map {
   width: 100%;
-  height: calc(100vw/5.9) !important;
-/*   width: 350px; */
+  height: 100% !important;
   margin: 0 auto;
 
   .gmnoprint .gm-style-mtc {

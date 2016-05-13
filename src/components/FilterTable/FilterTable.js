@@ -233,12 +233,13 @@ export default class FilterTable extends Component {
   }
 
   render() {
+    const pictureSide = window.innerWidth / 90;
     return (
       <div className={componentStyle.bodyComponent}>
         <div className={cx(componentStyle.title, 'glowText')}>
             filter by time
         </div>
-        <div className={componentStyle.close}>X</div>
+        <div className={componentStyle.close}>&times;</div>
         <div className={componentStyle.dataList}>
           <div>
             {this.state.currentValue}
@@ -260,15 +261,15 @@ export default class FilterTable extends Component {
         </div>
         <div className={componentStyle.expandImage}>
           <svg
-            width="50"
-            height="50"
+            width="25"
+            height="25"
           >
             <image
               x="0"
               y="0"
               xlinkHref={ expand }
-              width="25"
-              height="25"
+              width={ pictureSide }
+              height={ pictureSide }
             />
           </svg>
         </div>

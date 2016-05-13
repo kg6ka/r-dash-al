@@ -64,6 +64,12 @@ export default class MSGfilter extends Component {
     };
   }
 
+  handlerClick(event) {
+    this.setState({
+      checked: event.currentTarget.value,
+    });
+  }
+
   render() {
     return (
       <div className={styles.msgFilter}>
@@ -73,6 +79,7 @@ export default class MSGfilter extends Component {
             <RadioButtons
               names={ buttonsNames }
               checked={ this.state.checked }
+              handlerClick ={:: this.handlerClick}
               style={{
                 width: '49%',
                 height: '6.7%',

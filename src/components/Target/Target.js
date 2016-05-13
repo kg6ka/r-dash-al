@@ -5,59 +5,6 @@ import { DataView } from './components';
 import { RadioButtons } from 'components';
 import Scrollbar from 'react-custom-scrollbars';
 
-const data1 = [
-  {
-    name: 'AFCM',
-    total: 160,
-    blocked: 100,
-  },
-  {
-    name: 'APIM',
-    total: 100,
-    blocked: 50,
-  },
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-  {
-    name: 'AFCM',
-    total: 160,
-    blocked: 100,
-  },
-  {
-    name: 'APIM',
-    total: 100,
-    blocked: 50,
-  },
-  {
-    name: 'OLS',
-    total: 80,
-    blocked: 30,
-  },
-  {
-    name: 'BCM',
-    total: 30,
-    blocked: 10,
-  },
-  {
-    name: 'BTRS',
-    total: 75,
-    blocked: 36,
-  },
-];
-
 const buttonsNames = ['ECU', 'MSG', 'Vehicle'];
 
 export default class Target extends Component {
@@ -66,6 +13,12 @@ export default class Target extends Component {
     this.state = {
       checked: 'ECU',
     };
+  }
+
+  handlerClick(event) {
+    this.setState({
+      checked: event.currentTarget.value,
+    });
   }
 
   renderTrack({ style }) {
@@ -100,6 +53,8 @@ export default class Target extends Component {
   }
 
   render() {
+
+
     return (
       <div className={ styles.content }>
         <div
@@ -111,6 +66,7 @@ export default class Target extends Component {
           <RadioButtons
             names={ buttonsNames }
             checked={ this.state.checked }
+            handlerClick ={:: this.handlerClick}
             style={{
               width: window.innerWidth / 26.7,
               height: window.innerWidth / 87.3,
@@ -142,7 +98,7 @@ export default class Target extends Component {
             renderThumbVertical={this.renderThumb}
           >
             <div className={styles.dataBlockInner}>
-            { data1.map((el, idx) =>
+            { argusComponents.target[this.state.checked].map((el, idx) =>
                 <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
             ) }
             </div>

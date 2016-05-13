@@ -1,10 +1,10 @@
 import React from 'react';
 import expand from './images/expand.svg';
-import data from './data.js';
+// import data from './data.js';
 import { Charts, Designations } from './components';
 
 const FleetActivity = () => {
-  const width = window.innerWidth / 1.71;
+  const width = window.innerWidth / 1.79;
   const height = window.innerWidth / 5.45;
   const pictureSide = window.innerWidth / 96;
   const offset = window.innerWidth / 21.3;
@@ -68,7 +68,7 @@ const FleetActivity = () => {
           height={ pictureSide }
         />
         <Charts
-          data={ data }
+          data={ argusComponents.fleetActivity.bars }
           color1={'suspiciousGradient'}
           color2={'blockedGradient'}
           color3={'transmittingGradient'}

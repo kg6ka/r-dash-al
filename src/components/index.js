@@ -1,3 +1,4 @@
+export HeaderSite from './HeaderSite/HeaderSite';
 export Anomalies from './Anomalies/Anomalies';
 export CarsStatus from './CarsStatus/CarsStatus';
 export ViewPercent from './ViewPercent/ViewPercent';
@@ -6,6 +7,8 @@ export Categories from './Categories/Categories';
 export Heatmap from './Heatmap/Heatmap';
 export Target from './Target/Target';
 export RadioButtons from './RadioButtons/RadioButtons';
+export VisibleAlertsList from './Alerts/Alerts';
+export Map from './Map/Map';
 export FilterTable from './FilterTable/FilterTable';
 export MSGfilter from './MSGfilter/MSGfilter';
 export VehiclesFilter from './VehiclesFilter/VehiclesFilter';

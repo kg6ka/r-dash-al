@@ -4,7 +4,7 @@ import { RegisteredCars, PercentColumn } from './components';
 
 export default class CarsStatus extends Component {
   static propTypes = {
-    registeredCars: string,
+    registeredCars: number,
     percentRegistered: number,
     active: number,
     uptodate: number,

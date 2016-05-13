@@ -6,7 +6,7 @@ import d3 from 'd3';
 
 export default class RegisteredCars extends Component {
   static propTypes = {
-    registered: string,
+    registered: number,
     percent: number,
   };
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 const DataView = (data) => {
   const suspicious = data.total - data.blocked;
-  const width = window.innerWidth / 5.6;
+  const width = window.innerWidth / 10;
   const rectH = window.innerWidth / 384;
   const lineH = window.innerWidth / 48;
   const startLine = window.innerWidth / 174.5;
@@ -23,12 +23,12 @@ const DataView = (data) => {
         <rect
           x="1"
           y={ startLine + lineH * 0.25 }
-          width={ data.blocked * width / 100 }
+          width={ data.blocked * 100 / width  }
           height={ rectH }
           fill="url(#blockedGradient)"
         />
         <text
-          x={ data.blocked * width / 100 + 10}
+          x={ data.blocked * 100 / width + 10}
           y={ offsetToText }
           fill="white"
           fontSize={ size }
@@ -39,12 +39,12 @@ const DataView = (data) => {
         <rect
           x="1"
           y={ startLine + lineH * 0.6 }
-          width={ suspicious * width / 100 }
+          width={ suspicious * 100 / width }
           height={ rectH }
           fill="url(#suspiciousGradient)"
         />
         <text
-          x={ suspicious * width / 100 + 10}
+          x={ suspicious * 100 / width + 10}
           y={ offsetToText + lineH * 0.35 }
           fill="white"
           fontSize={ size }

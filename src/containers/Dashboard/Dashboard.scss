@@ -5,19 +5,25 @@
   background: linear-gradient(to bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
 }
 
-.fleetStatus {
+/* .fleetStatus {
   width: calc(100vw / 1.23);
 }
 
 .fleetActivity {
-  width: calc(100vw / 1.69);
+  width: calc(100vw / 1.7);
+} */
+.fleetStatus,
+.fleetActivity  {
+  width: 100%;
+/* ======= */
+/*   width: calc(100vw / 1.69); */
   display: block;
 
-  div {
+/*   div {
     height: calc(100vw/6.1);
     display: inline-block;
     width: 50%;
-  }
+  } */
 }
 
 .fleetInlineBlock {
@@ -28,16 +34,108 @@
   display: block;
 }
 
-.targetBlock {
+/* .targetBlock {
   height: calc(100vw / 2.86);
   width: calc(100vw / 4.52);
   float: right;;
-}
+} */
 
-.carsBlock {
+/* .carsBlock {
   top: calc(100vw / 14.46);
   position: absolute;
   width: calc(100vw / 5.7);
+}
+ */
+
+.layout{
+    margin-top: 5em;
+}
+
+.layout,
+.layout [class*="layoutCol"],
+.layoutSideRight,
+.layoutSideLeft {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+/*    min-height: 14em;*/
+    box-sizing: border-box;
+}
+.layoutCol,
+.layoutSideRight,
+.layoutSideLeft {
+    border: solid #4a4a4a;
+    border-width: 0 1px 1px 0;
+}
+.layoutSideRight.notActive {
+  display: none !important;
+}
+
+
+.layout [class*="layoutCol"] > img {
+  width:100%;
+}
+
+
+/* @keyframes flip {
+  from {
+        transform: rotateY(0deg);
+  }
+
+  to {
+        transform: rotateY(360deg);
+  }
+} */
+.layout [class*="layoutCol"] > img:hover{
+/*     animation: flip 6s; */
+/*     animation-iteration-count: 1; */
+
+-ms-filter: brightness(60%);
+-webkit-filter: brightness(60%);
+-moz-filter: brightness(60%);
+-o-filter: brightness(60%);
+filter: brightness(60%);
+}
+.layoutCol100 {
+    width: 100%;
+}
+
+.layoutCol80 {
+    width: 80%;
+}
+
+.layoutCol70{
+      width: 70%;
+}
+.layoutCol30{
+      width: 30%;
+}
+
+.layoutCol75{
+      width: 75%;
+}
+.layoutCol25{
+      width: 25%;
+}
+.layoutCol50 {
+    width: 50%;
+}
+
+.layoutCol20 {
+    width: 20%;
+}
+
+.layoutSideLeft {
+    order:1;
+}
+
+.layoutSideRight {
+    order:2;
+}
+
+.blue-shadow {
+    box-shadow: 0px -33px 24px -24px #184451 inset;
+    border-bottom-color: rgb(36, 135, 166);
 }
 
 Categories {

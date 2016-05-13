@@ -16,6 +16,10 @@ export default class Charts extends Component {
     this.drawCharts();
     this.chartsDecoration();
   }
+  componentDidUpdate(prevProps, prevState)  {
+    this.drawCharts();
+    this.chartsDecoration();  
+  }
 
   chartsDecoration() {
     d3.selectAll('.tick text')
@@ -54,50 +58,76 @@ export default class Charts extends Component {
     const margin = window.innerWidth / 40;
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
-    const quantity = 112;
+    const quantity = data.length - 1;
+    let tickValuesCars = [];
+    let tickValuesYAxis1 = [];
+
     const timeTicks = [];
     let tick = 0;
     for (let i = 0; i < 8; i++) {
-      timeTicks.push(new Date(data[data.length - quantity - 1 + tick].time));
-      tick += 16;
+      timeTicks.push(new Date(data[tick].time));
+      tick += Math.round(quantity / 7);
+      if(tick > quantity) tick = quantity;
     }
 
+    tickValuesCars = [0,0.5,1,1.5,2];
+    
+    if(argusComponents.fleetActivity.registered > 2)
+      tickValuesCars = [0,2.5,5,7.5,10];
+   
+    if(argusComponents.fleetActivity.registered >= 10)
+      tickValuesCars = [0,25,50,75,100];
+   
+    if(argusComponents.fleetActivity.registered >= 100)
+      tickValuesCars = [0,250,500,750,1000];
+        
+    if(argusComponents.fleetActivity.registered >= 1000)
+      tickValuesCars = [0,2500,5000,7500,10000];
+
+    tickValuesYAxis1 = [0, 5, 10, 15,20];
+
+               
+//     console.log(data);
+    charts.selectAll("svg").remove();
+    charts.selectAll("image").remove();
+    charts.selectAll("text").remove();
+        
     const svg = charts
       .append('svg')
       .attr('width', width)
       .attr('height', height);
 
     const x = d3.time.scale()
-      .domain([new Date(data[data.length - quantity - 1].time),
+      .domain([new Date(data[0].time),
         new Date(data[data.length - 1].time)])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
-      .domain([0, 400])
+      .domain([0, tickValuesYAxis1[4]])
       .range([axisHeigth, margin / 2]);
 
     const y2 = d3.scale.linear()
-      .domain([0, 10000])
+      .domain([0, tickValuesCars[4]])
       .range([axisHeigth, margin / 2]);
 
     const yAxis1 = d3.svg.axis()
       .scale(y1)
       .tickSize(-(axisWidth - margin))
       .orient('left')
-      .tickValues([0, 100, 200, 300, 400])
+      .tickValues(tickValuesYAxis1)
       .tickPadding(window.innerWidth / 128);
 
     const yAxis2 = d3.svg.axis()
       .scale(y2)
       .tickSize(-(axisWidth - margin))
       .orient('right')
-      .tickValues([0, 2500, 5000, 7500, 10000])
+      .tickValues(tickValuesCars)
       .tickPadding(window.innerWidth / 128)
       .tickFormat(d => {
-        if (d === 0) {
+        if (d < 1000)
           return d;
-        }
-        return `${d / 1000} K`;
+        else
+          return `${d / 1000} K`;
       });
 
     const xAxis = d3.svg.axis()
@@ -128,7 +158,7 @@ export default class Charts extends Component {
     const area = d3.svg.area()
       .x(d => x(new Date(d.time)))
       .y0(axisHeigth)
-      .y1(d => y2(d.val3 * 50));
+      .y1(d => y2(d.activitys));
 
     svg.append('g')
       .attr('fill', `url(#${color3})`)
@@ -137,22 +167,6 @@ export default class Charts extends Component {
       .attr('d', area(data))
       .attr('stroke', 'white')
       .attr('filter', 'url(#topGlow)');
-
-    svg.selectAll('.bar2')
-      .data(['bar2'])
-      .enter()
-      .append('g')
-      .attr('class', 'bar2')
-      .selectAll('.barItem')
-        .data(data.slice(0, data.length - 1))
-        .enter()
-        .append('rect')
-        .attr('class', 'barItem')
-        .attr('x', (d) => x(new Date(d.time)))
-        .attr('y', d => y1(d.val2))
-        .attr('width', (axisWidth - margin) / (quantity - 1))
-        .attr('height', d => axisHeigth - y1(d.val2))
-        .attr('fill', `url(#${color2})`);
 
     svg.selectAll('.bar1')
       .data(['bar1'])
@@ -165,10 +179,28 @@ export default class Charts extends Component {
         .append('rect')
         .attr('class', 'barItem')
         .attr('x', d => x(new Date(d.time)))
-        .attr('y', d => y1(d.val1))
+        .attr('y', d => y1(d.suspicious))
         .attr('width', (axisWidth - margin) / (quantity - 1))
-        .attr('height', d => axisHeigth - y1(d.val1))
+        .attr('height', d => axisHeigth - y1(d.suspicious))
         .attr('fill', `url(#${color1})`);
+
+
+    svg.selectAll('.bar2')
+      .data(['bar2'])
+      .enter()
+      .append('g')
+      .attr('class', 'bar2')
+      .selectAll('.barItem')
+        .data(data.slice(0, data.length - 1))
+        .enter()
+        .append('rect')
+        .attr('class', 'barItem')
+        .attr('x', (d) => x(new Date(d.time)))
+        .attr('y', d => y1(d.blocked))
+        .attr('width', (axisWidth - margin) / (quantity - 1))
+        .attr('height', d => axisHeigth - y1(d.blocked))
+        .attr('fill', `url(#${color2})`);
+
 
 
     charts.append('text')

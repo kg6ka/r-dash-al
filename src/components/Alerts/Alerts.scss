@@ -1,0 +1,93 @@
+@import url(./fonts/PTSans.css);
+
+.alerts {
+  font-family: PTSans;
+  color: white;
+  width: 100%;
+
+  .carImage {
+    width: 100%;
+  }
+  .close {
+    position: absolute;
+    right: 0;
+    margin-right: 7px;
+    margin-top: 3px;
+    cursor:pointer;
+  }
+}
+.alertsHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 8px;
+  align-items: center;
+  font-size: 13px;
+  .alertsNumber {
+    span {
+      color: #68B3D9;
+    }
+  }
+  .vehicle , .msg{
+    border: 1px solid gray;
+    padding: 1px 11px;
+    color: gray;
+    font-size: 10px;
+  }
+  .vehicle {
+    border-bottom-left-radius: 9px;
+    border-top-left-radius: 9px;
+  }
+  .msg {
+    border-bottom-right-radius: 9px;
+    border-top-right-radius: 9px;
+  }
+}
+
+.row {
+  background-color: #353736;
+  padding: 8px;
+  font-size: 12px;
+  border-bottom: 1px solid black;
+}
+
+.divInRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3px;
+
+  .name_id {
+    color: gray;
+    font-size: 12px;
+
+    span {
+      color: white;
+    }
+  }
+
+  .number {
+    font-size: 21px;
+    color: #68B3D9;
+  }
+  .resolve {
+    color: #68B3D9;
+    font-size: 10px;
+    cursor:pointer;
+  }
+  .date {
+    color: gray;
+    font-size: 10px;
+  }
+
+  img.msg {
+    width: 15px;
+    height: 15px;
+    vertical-align: text-bottom;
+  }
+  img.car {
+    width: 14px;
+    height: 14px;
+    margin-left: 5px;
+  }
+}
+

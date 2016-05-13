@@ -34,7 +34,7 @@ export default class AnomaliesPage extends Component {
               </div>
             </div>
             <div className={cx(styles.chartsFilters, styles.lineBlock)}>
-              <div className={cx(styles.component, styles.anomalyInBlock)}>
+              <div className={cx(styles.component, styles.anomalyInBlock, styles.category)}>
                 <Categories name="filter by category" filter="true" />
               </div>
               <div className={cx(styles.component, styles.anomalyInBlock)}>

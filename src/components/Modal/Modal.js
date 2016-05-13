@@ -1,9 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styles from './Modal.scss';
-import cx from 'classnames';
 
-// see https://github.com/rackt/react-modal/issues/97
 const defaultStyles = {
   overlay: {
     backgroundColor: null,
@@ -30,7 +28,6 @@ export default (properties) => {
       <div>
         <Modal {...properties} style={defaultStyles}>
           { properties.children }
-          <i className={cx('fa fa-times')} />
           <button
             onClick={ properties.onRequestClose }
             className={styles.closeBtn}

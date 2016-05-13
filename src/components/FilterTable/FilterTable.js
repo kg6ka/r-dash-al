@@ -57,8 +57,8 @@ export default class FilterTable extends Component {
     const { data } = this.props;
     const charts = d3.select('.charts');
     const width = document.documentElement.clientWidth * 0.46;
-    const height = window.innerWidth / 11.43;
     const margin = 30;
+    const height = (window.innerWidth / 11.43);
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
     const quantity = 112;
@@ -72,7 +72,7 @@ export default class FilterTable extends Component {
     const svg = charts
       .append('svg')
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height + 10);
 
     const x = d3.time.scale()
       .domain([new Date(data[data.length - quantity - 1].time),
@@ -87,16 +87,13 @@ export default class FilterTable extends Component {
       .domain([0, 10000])
       .range([axisHeigth, margin / 2]);
 
-    // fix tick format
     const yAxis2 = d3.svg.axis()
       .scale(y2)
       .tickSize(-(axisWidth - margin))
       .orient('right')
       .tickValues([0, 2500, 5000, 7500, 10000])
       .tickPadding(10)
-      .tickFormat(d => {
-        return '';
-      });
+      .tickFormat('');
 
     const xAxis = d3.svg.axis()
       .scale(x)
@@ -152,9 +149,9 @@ export default class FilterTable extends Component {
 
     svg.append('line')
        .attr('x1', margin)
-       .attr('y1', height - 7)
+       .attr('y1', height)
        .attr('x2', width - 64)
-       .attr('y2', height - 7)
+       .attr('y2', height)
        .attr('stroke', '#37434b');
 
     const brush = d3.svg.brush();
@@ -179,7 +176,7 @@ export default class FilterTable extends Component {
       .extent([new Date(data[data.length - quantity - 1].time),
         new Date(data[data.length - 1].time)]);
 
-    this.coordinate = [margin, height - 7, width - 64, height - 7];
+    this.coordinate = [margin, height, width - 64, height];
 
     function brushstart() {
       svg.classed('selecting', true);
@@ -212,7 +209,7 @@ export default class FilterTable extends Component {
     brushg.selectAll('.resize')
       .append('circle')
       .attr('cx', 0)
-      .attr('cy', 50)
+      .attr('cy', (height / 2))
       .attr('r', 5)
       .attr('stroke-width', 6)
       .attr('stroke', '#2fc6f4')
@@ -238,7 +235,7 @@ export default class FilterTable extends Component {
   render() {
     return (
       <div className={componentStyle.bodyComponent}>
-        <div className={componentStyle.title}>
+        <div className={cx(componentStyle.title, 'glowText')}>
             filter by time
         </div>
         <div className={componentStyle.close}>X</div>
@@ -277,7 +274,7 @@ export default class FilterTable extends Component {
         </div>
         <g
           className="charts"
-          transform={`translate(${window.innerWidth / 45},${window.innerWidth / 20})`}
+          transform={`translate(${window.innerWidth / 45},${window.innerWidth / 15})`}
         >
           <filter id="topGlow" width="100%" height="160%" x="0" y="-0.55">
             <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />

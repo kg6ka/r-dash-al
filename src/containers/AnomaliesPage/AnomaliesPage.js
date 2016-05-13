@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { func } = PropTypes;
 import data from './data.js';
-import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter, FilterTable } from 'components';
+import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
+  FilterTable, MapsPopup } from 'components';
 import styles from './Anomalies.scss';
 import cx from 'classnames';
+import { connect } from 'react-redux';
+import { openMapsPopup } from 'redux/modules/mapsPopup';
 
 export default class AnomaliesPage extends Component {
+  static propTypes = {
+    openMapsPopup: func,
+  };
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -12,7 +20,7 @@ export default class AnomaliesPage extends Component {
 
   render() {
     return (
-      <div className={styles.anomalyBlock}>
+      <div className={styles.anomalyBlock} onClick={ this.props.openMapsPopup }>
         <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
           <FilterTable data={ data } />
         </div>
@@ -34,7 +42,13 @@ export default class AnomaliesPage extends Component {
               </div>
             </div>
         </div>
+        <MapsPopup />
       </div>
     );
   }
 }
+
+export default connect(
+  ({ mapsPopup }) => ({ mapsPopup }),
+  { openMapsPopup }
+)(AnomaliesPage);

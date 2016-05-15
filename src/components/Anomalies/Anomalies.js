@@ -137,7 +137,7 @@ export default class Anomalies extends Component {
           <AnomaliesDial
             anomalies={ anomalies }
             cars={ cars1 }
-            percent={ percent }
+            percent={ 0 }
             percentRight={ this.percentRight }
           />
         </svg>

@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
               <CarsStatus
                 registeredCars={ argusComponents.fleetStatus.registered }
-                percentRegistered={12}
+                percentRegistered={0}
                 active={ argusComponents.fleetStatus.activity }
                 uptodate={ argusComponents.fleetStatus.updated }
                 updateData={'13.01.16'}

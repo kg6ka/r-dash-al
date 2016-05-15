@@ -46,7 +46,7 @@ export default class RegisteredCars extends Component {
   render() {
     const { registered, percent } = this.props;
     const calcPercentY = window.innerWidth / 9.65 - window.innerWidth / 96;
-    const percentString = `^ ${percent}%`;
+    const percentString = (percent > 0) ? `^ ${percent}%` : '';
     const translateString =
       `translate(${this.outerRadius},${this.outerRadius + this.imgLength / 3})`
     ;

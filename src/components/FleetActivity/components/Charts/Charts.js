@@ -60,7 +60,7 @@ export default class Charts extends Component {
     const axisHeigth = height - margin;
     const quantity = data.length - 1;
     let tickValuesCars = [];
-    let tickValuesYAxis1 = [];
+    let tickValuesSuspicious = [];
 
     const timeTicks = [];
     let tick = 0;
@@ -71,21 +71,31 @@ export default class Charts extends Component {
     }
 
     tickValuesCars = [0,0.5,1,1.5,2];
-    
-    if(argusComponents.fleetActivity.registered > 2)
-      tickValuesCars = [0,2.5,5,7.5,10];
+    const registered = argusComponents.fleetActivity.registered;
+
+    if(registered > 2)     tickValuesCars = [0,2.5,5,7.5,10];
    
-    if(argusComponents.fleetActivity.registered >= 10)
-      tickValuesCars = [0,25,50,75,100];
+    if(registered >= 10)   tickValuesCars = [0,25,50,75,100];
    
-    if(argusComponents.fleetActivity.registered >= 100)
-      tickValuesCars = [0,250,500,750,1000];
+    if(registered >= 100)  tickValuesCars = [0,250,500,750,1000];
         
-    if(argusComponents.fleetActivity.registered >= 1000)
-      tickValuesCars = [0,2500,5000,7500,10000];
+    if(registered >= 1000) tickValuesCars = [0,2500,5000,7500,10000];
 
-    tickValuesYAxis1 = [0, 5, 10, 15,20];
 
+    tickValuesSuspicious = [0, 5, 10, 15,20];
+    let maxSuspicious = 0;
+    for (let i = 0; i < data.length; i++) {
+      if(data[i].suspicious > maxSuspicious)
+        maxSuspicious = data[i].suspicious;
+    }
+
+//     if(maxSuspicious > 2)     tickValuesSuspicious = [0,2.5,5,7.5,10];
+   
+    if(maxSuspicious >= 10)   tickValuesSuspicious = [0,25,50,75,100];
+   
+    if(maxSuspicious >= 100)  tickValuesSuspicious = [0,250,500,750,1000];
+        
+    if(maxSuspicious >= 1000) tickValuesSuspicious = [0,2500,5000,7500,10000];
                
 //     console.log(data);
     charts.selectAll("svg").remove();
@@ -103,7 +113,7 @@ export default class Charts extends Component {
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
-      .domain([0, tickValuesYAxis1[4]])
+      .domain([0, tickValuesSuspicious[4]])
       .range([axisHeigth, margin / 2]);
 
     const y2 = d3.scale.linear()
@@ -114,7 +124,7 @@ export default class Charts extends Component {
       .scale(y1)
       .tickSize(-(axisWidth - margin))
       .orient('left')
-      .tickValues(tickValuesYAxis1)
+      .tickValues(tickValuesSuspicious)
       .tickPadding(window.innerWidth / 128);
 
     const yAxis2 = d3.svg.axis()

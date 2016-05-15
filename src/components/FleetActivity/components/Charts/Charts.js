@@ -185,13 +185,13 @@ console.log(timeTicks);
       .append('g')
       .attr('class', 'bar1')
       .selectAll('.barItem')
-        .data(data.slice(0, data.length - 1))
+        .data(data.slice(0,quantity))
         .enter()
         .append('rect')
         .attr('class', 'barItem')
         .attr('x', d => x(new Date(d.time)))
         .attr('y', d => y1(d.suspicious))
-        .attr('width', (axisWidth - margin) / (quantity - 1))
+        .attr('width', (axisWidth - margin) / quantity)
         .attr('height', d => axisHeigth - y1(d.suspicious))
         .attr('fill', `url(#${color1})`);
 
@@ -202,13 +202,13 @@ console.log(timeTicks);
       .append('g')
       .attr('class', 'bar2')
       .selectAll('.barItem')
-        .data(data.slice(0, data.length - 1))
+        .data(data.slice(0, quantity))
         .enter()
         .append('rect')
         .attr('class', 'barItem')
         .attr('x', (d) => x(new Date(d.time)))
         .attr('y', d => y1(d.blocked))
-        .attr('width', (axisWidth - margin) / (quantity - 1))
+        .attr('width', (axisWidth - margin) / quantity)
         .attr('height', d => axisHeigth - y1(d.blocked))
         .attr('fill', `url(#${color2})`);
 

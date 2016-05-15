@@ -9,3 +9,4 @@ export Target from './Target/Target';
 export RadioButtons from './RadioButtons/RadioButtons';
 export VisibleAlertsList from './Alerts/Alerts';
 export Map from './Map/Map';
+export AnomaliesContainer from './AnomaliesList/Anomalies';

@@ -11,7 +11,7 @@ export default class ToggleMenu extends Component {
         url: '/dashboard'
       },{
         label: 'Reports',
-        url: '/dashboard',
+        url: '/reports',
         items:[
            {label: 'Logs',url: '#home'}
           ,{label: 'Events',url: '#home'}

@@ -31,8 +31,8 @@ export default class Dashboard extends Component {
           <div className={cx(
             styles.layoutSideRight,
             styles.layoutCol20,
-            { [this.state.alertsVisibility]: styles.notActive },
-            )}
+            (this.state.alertsVisibility) && styles.notActive
+           )}
           >
             <VisibleAlertsList onClick={this.changeAlertsVisibilty} />
           </div>

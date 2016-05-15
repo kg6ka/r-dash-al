@@ -63,12 +63,14 @@ export default class Charts extends Component {
     let tickValuesSuspicious = [];
 
     const timeTicks = [];
+    let jmpTime = (data[quantity].time - data[0].time) / 7;
     let tick = 0;
-    for (let i = 0; i < 8; i++) {
-      timeTicks.push(new Date(data[tick].time));
-      tick += Math.round(quantity / 7);
-      if(tick > quantity) tick = quantity;
+    for (let i = 0; i < 7; i++) {
+      timeTicks.push(new Date(data[0].time + tick));
+      tick = Math.round(tick + jmpTime);
     }
+    timeTicks.push(new Date(data[quantity].time)); // get last time anytime
+console.log(timeTicks);
 
     tickValuesCars = [0,0.5,1,1.5,2];
     const registered = argusComponents.fleetActivity.registered;
@@ -108,8 +110,7 @@ export default class Charts extends Component {
       .attr('height', height);
 
     const x = d3.time.scale()
-      .domain([new Date(data[0].time),
-        new Date(data[data.length - 1].time)])
+      .domain([timeTicks[0],timeTicks[timeTicks.length-1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
@@ -146,7 +147,7 @@ export default class Charts extends Component {
       .orient('bottom')
       .ticks(6)
       .tickPadding(window.innerWidth / 128)
-      .tickFormat(d3.time.format('%H:%M'))
+      .tickFormat(d3.time.format('%H:%M:%S'))
       .tickValues(timeTicks);
 
     svg.append('g')

@@ -6,7 +6,7 @@ class HeaderSite extends Component {
     constructor(props) {
         super(props);
 
-        this.count_error = 3;
+        this.count_error = 2;
         this.update_label = 'Update';
         this.update_date = '2016 March 02, 13:21';
         this.user_img = 'avatar.png';

@@ -6,14 +6,17 @@ const INITIAL_STATE = {locations : [{id:1,lat:48.856614,lng:2.3522219,total:20,b
 
 
 const map = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case 'FETCH_LOCATIONS':
+      return state;
+    case 'SET_LOCATIONS':
+      return {
+        ...state,
+        locations: action.data,
+      };
+    default:
+      return state;
+  }
+};
 
-    switch (action.type) {
-        case 'FETCH_LOCATIONS':
-            return state;
-
-        default:
-            return state
-    }
-}
-
-export default map
+export default map;

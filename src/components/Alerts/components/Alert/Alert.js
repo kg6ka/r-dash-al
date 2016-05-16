@@ -10,7 +10,7 @@ const Alert = ({ onClick, name, number, messages, vehicleId, date}) => (
         <div className={styles.divInRow}>
             <div className={styles.name_id}>
             <span>{name}</span> |
-            <span> ID {vehicleId}</span>
+            <span>{vehicleId}</span>
             </div>
         </div>
         <div className={styles.divInRow}>

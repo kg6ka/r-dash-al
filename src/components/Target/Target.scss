@@ -1,5 +1,6 @@
 .content {
-  margin: calc(100vw / 113.8);
+  width: 92.5%;
+  margin: calc(100vw / 120) 2.5% 0 5%;
 }
 
 .block {
@@ -38,12 +39,6 @@
   border-bottom: 1px solid #8f9295;
 }
 
-.dataBlock {
-  width: 283px;
-  height: 365px;
-}
-
 .dataBlockInner {
-  width: calc(100vw / 4.8);
   height: calc(100vw / 3.5);
 }

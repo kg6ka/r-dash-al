@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+const { string } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
@@ -10,23 +11,29 @@ const externalLink =
 
 const informationData = [
   { offset: window.innerWidth / 25.26, color: '#b2d733',
-    text: 'Irrational Data', percent: 55 },
+    text: 'READ ONLY DIAGNOSTICS', percent: 55 },
   { offset: window.innerWidth / 15.5, color: '#13aa38',
-    text: 'Timing Anomaly', percent: 20 },
+    text: 'TIMING ANOMALY', percent: 20 },
   { offset: window.innerWidth / 11.2, color: '#1156e4',
-    text: 'Abnormal diagnostics', percent: 12 },
+    text: 'IRRATIONAL DATA', percent: 12 },
   { offset: window.innerWidth / 8.73, color: '#904fff',
-    text: 'Mix', percent: 5 },
+    text: 'BAD DIAGNOSTICS', percent: 5 },
   { offset: window.innerWidth / 7.16, color: '#fff',
-    text: 'Others', percent: 8 },
+    text: 'BUS OFF', percent: 8 },
 ];
 
 export default class Categories extends Component {
+  static propTypes = {
+    name: string,
+    filter: string,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       hovered: null,
     };
+    this.category = argusComponents.category.length ? argusComponents.category : informationData;
   }
 
   getOffset(idx) {
@@ -96,10 +103,9 @@ export default class Categories extends Component {
     const arc = d3.svg.arc()
       .outerRadius((d, idx) => r + this.getOffset(idx))
       .innerRadius((d, idx) => r - this.getOffset(idx));
-
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
-        { pie(informationData).map((d, idx) =>
+        { pie(this.category).map((d, idx) =>
           <path
             key={ `slice-${idx}` }
             fill={ d.data.color }
@@ -168,19 +174,23 @@ export default class Categories extends Component {
   }
 
   render() {
-    const translateString = `translate(${window.innerWidth / 5.25},${window.innerWidth / 23.4})`;
+    const translateString = this.props.filter
+      ? `translate(${window.innerWidth / 7},${window.innerWidth / 23.4}) scale(0.7)`
+      : `translate(${window.innerWidth / 5.6},${window.innerWidth / 23.4}) scale(0.9)`;
     return (
-      <svg width={ window.innerWidth / 3.39 } height={ window.innerWidth / 6.1 }>
+      <svg className={styles.categoriesComponent}>
         <text
           className="glowText"
-          x={ window.innerWidth / 96 }
+          x="5%"
           y={ window.innerWidth / 54.6 }
           fill={'#2fc6f4'}
           fontSize={ window.innerWidth / 120 }
         >
-          CATEGORIES
+          {this.props.name}
         </text>
-        { informationData.map((el, idx) => this.drawInformation(el, idx)) }
+        <g transform={ this.props.filter ? 'scale(0.8, 0.85)' : null }>
+          { this.category.map((el, idx) => this.drawInformation(el, idx)) }
+        </g>
         <g
           className="pieChart"
           transform={ translateString }
@@ -192,6 +202,13 @@ export default class Categories extends Component {
           <stop offset="30%" stopColor="#2fc6f4" stopOpacity="1" />
           <stop offset="100%" stopColor="#2fc6f4" stopOpacity="0" />
         </radialGradient>
+        <filter id="glow" width="160%" height="160%" x="-0.3" y="-0.3">
+          <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </svg>
     );
   }

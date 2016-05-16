@@ -7,7 +7,8 @@ class AlertsList extends Component {
         this.props.fetchAlerts();
     }
     render() {
-        const alerts = this.props.alerts;
+
+        const alerts = this.props.alerts.alerts.msg;
         return (
             <div className={styles.alerts} >
                 <div className={styles.close} onClick={this.props.onClick}>
@@ -26,9 +27,13 @@ class AlertsList extends Component {
                 </div>
                 {alerts.map(alert =>
                     <Alert
-                        key={alert.id}
-                        {...alert}
-                        onClick={() => this.props.onResolveClick(alert.id)}
+                        key={alert.desc1}
+                        number={alert.count1}
+                        name={alert.desc1}
+                        messages={alert.count2}
+                        vehicleId={alert.desc2}
+                        date={new Date(alert.timestamp)}
+                        onClick={() => this.props.onResolveClick(alert.desc2)}
                     />
                 )}
             </div>

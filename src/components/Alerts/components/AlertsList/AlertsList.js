@@ -9,7 +9,6 @@ class AlertsList extends Component {
     render() {
 
         const alerts = this.props.alerts.alerts.msg;
-                console.log(alerts);
         return (
             <div className={styles.alerts} >
                 <div className={styles.close} onClick={this.props.onClick}>

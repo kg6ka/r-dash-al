@@ -9,6 +9,19 @@ const externalLink =
   ' V 5.8333 H 8.3333327 v 2.5 z M 4.9999997,0 l 1.666673,1.6667 -2.500003,2.5' +
   ' 1.666663,1.6666 2.5,-2.5 L 10.000003,5 V 0 H 4.9999997 z';
 
+const informationData = [
+  { offset: window.innerWidth / 25.26, color: '#b2d733',
+    text: 'READ ONLY DIAGNOSTICS', percent: 55 },
+  { offset: window.innerWidth / 15.5, color: '#13aa38',
+    text: 'TIMING ANOMALY', percent: 20 },
+  { offset: window.innerWidth / 11.2, color: '#1156e4',
+    text: 'IRRATIONAL DATA', percent: 12 },
+  { offset: window.innerWidth / 8.73, color: '#904fff',
+    text: 'BAD DIAGNOSTICS', percent: 5 },
+  { offset: window.innerWidth / 7.16, color: '#fff',
+    text: 'BUS OFF', percent: 8 },
+];
+
 export default class Categories extends Component {
   static propTypes = {
     name: string,
@@ -20,6 +33,7 @@ export default class Categories extends Component {
     this.state = {
       hovered: null,
     };
+    this.category = argusComponents.category.length ? argusComponents.category : informationData;
   }
 
   getOffset(idx) {
@@ -89,7 +103,6 @@ export default class Categories extends Component {
     const arc = d3.svg.arc()
       .outerRadius((d, idx) => r + this.getOffset(idx))
       .innerRadius((d, idx) => r - this.getOffset(idx));
-
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
         { pie(this.props.data).map((d, idx) =>
@@ -163,7 +176,7 @@ export default class Categories extends Component {
   render() {
     const translateString = this.props.filter
       ? `translate(${window.innerWidth / 7},${window.innerWidth / 23.4}) scale(0.7)`
-      : `translate(${window.innerWidth / 5.25},${window.innerWidth / 23.4})`;
+      : `translate(${window.innerWidth / 5.6},${window.innerWidth / 23.4}) scale(0.9)`;
     return (
       <svg className={styles.categoriesComponent}>
         <text
@@ -176,7 +189,7 @@ export default class Categories extends Component {
           {this.props.name}
         </text>
         <g transform={ this.props.filter ? 'scale(0.8, 0.85)' : null }>
-          { argusComponents.category.map((el, idx) => this.drawInformation(el, idx)) }
+          { this.category.map((el, idx) => this.drawInformation(el, idx)) }
         </g>
         <g
           className="pieChart"

@@ -1,6 +1,6 @@
 .fleetActivity {
   width: 44%;
-  padding-bottom: 40px;
+  padding-bottom: 2%;
 }
 
 .backgroundGradient {
@@ -38,6 +38,10 @@
 }
 
 .chartsFilters {
-  height: calc(100vw / 6.34);
+  height: calc(100vw/6.34);
   border-top: 1px solid #535353;
+}
+
+.category {
+  height: calc(100vw/6.34);
 }

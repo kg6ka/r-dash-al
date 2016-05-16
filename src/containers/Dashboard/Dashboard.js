@@ -190,7 +190,7 @@ export default class Dashboard extends Component {
                 <Categories name="categories" data={ this.state.categories } />
               </div>
               <div className={styles.layoutCol50}>
-                 <Map lat={48.856614} lng={2.3522219} />
+                <Map lat={48.856614} lng={2.3522219} />
               </div>
             </div>
           </div>

@@ -1,16 +1,18 @@
 .close {
   color: #ffffff;
-  font-size: 14px;
+  font-size: calc(100vw / 80);
   display: inline-block;
   float: right;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 19px;
+  width: calc(100vw / 96);
+  height: calc(100vw / 96);
+  text-align: right;
 }
 
 .title {
-  margin-bottom: 15px;
-  margin-left: 30px;
+  margin: 10px 0 15px 30px;
 }
 
 .bodyComponent {
@@ -23,6 +25,8 @@
   color: #ffffff;
   width: 300px;
   position: relative;
+  font-family: 'PTSans';
+  font-size: calc(100vw / 130);
 }
 
 .hiddenList {
@@ -53,9 +57,9 @@
 }
 
 .expandImage {
-  width: 70px;
-  height: 70px;
+  width: calc(100vw / 130);
+  height: calc(100vw / 130);
   position: absolute;
   top: 30px;
-  right: -40px;
+  right: 20px;
 }

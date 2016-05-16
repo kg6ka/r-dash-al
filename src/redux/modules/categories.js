@@ -64,3 +64,4 @@ export function* categoriesSaga() {
 export const sagas = [
   categoriesSaga,
 ];
+

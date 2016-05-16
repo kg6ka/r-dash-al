@@ -1,26 +1,19 @@
-import { Map } from './components'
-import { connect } from 'react-redux'
-
+import { Map } from './components';
+import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
-    return {
-        locations: state.map.locations,
-    }
-}
+  return {
+    locations: state.map.locations,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchLocations: () => {
-            dispatch({type: 'FETCH_LOCATIONS'})
-        }
-    }
-}
+  return {
+    fetchLocations: () => { dispatch({ type: 'FETCH_LOCATIONS' }); },
+  };
+};
 
-
-
-const MapContainer = connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Map)
-
-export default MapContainer
-
+)(Map);

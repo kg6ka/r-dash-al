@@ -1,7 +1,7 @@
 import { AnomaliesTable } from './components'
 import { connect } from 'react-redux'
 
-
+// import './fixed-data-table-style.min.css'
 
 const mapStateToProps = (state) => {
     return state.anomaliesList

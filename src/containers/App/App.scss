@@ -93,6 +93,7 @@ body {
 .layoutSideRight,
 .layoutSideLeft {
     display: flex;
+    align-items: flex-start;
     flex-wrap: wrap;
     flex: 1 1 auto;
 /*    min-height: 14em;*/

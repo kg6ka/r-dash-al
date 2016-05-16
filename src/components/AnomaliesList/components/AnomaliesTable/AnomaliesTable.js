@@ -1,17 +1,19 @@
 import React, { PropTypes, Component } from 'react'
-import styles from '../../Anomalies.scss'
+import styles from '../../AnomaliesList.scss'
 import Reactable  from 'reactable';
-
+ 
 var Table = Reactable.Table;
 
 
-class AnomaliesList extends Component {
+class AnomaliesTable extends Component {
     constructor(props) {
         super(props);
 
 
     }
-
+    componentWillMount() {
+        this.props.fetchAnomalies();
+    }
     render() {
         const anomalies = this.props.anomalies;
         return (
@@ -39,4 +41,4 @@ class AnomaliesList extends Component {
 }
 
 
-export default AnomaliesList;
+export default AnomaliesTable;

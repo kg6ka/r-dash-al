@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HeaderSite, CarsStatus, Anomalies, FleetActivity, Categories,
+import { CarsStatus, Anomalies, FleetActivity, Categories,
   Target, VisibleAlertsList, Map } from 'components';
 import styles from './Dashboard.scss';
 import cx from 'classnames';
@@ -17,16 +17,12 @@ export default class Dashboard extends Component {
     store.subscribe(()=> this.setState({ index: 0 })).bind(this);
   }
 
-  changeAlertsVisibilty =() => {
-    this.setState({
-      alertsVisibility: !this.state.alertsVisibility,
-    });
-  }
+
 
   render() {
     return (
       <div>
-        <HeaderSite onClick={ this.changeAlertsVisibilty } />
+        
         <div className={styles.layout}>
           <div className={cx(
             styles.layoutSideRight,

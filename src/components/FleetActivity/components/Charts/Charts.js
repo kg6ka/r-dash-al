@@ -70,7 +70,6 @@ export default class Charts extends Component {
       tick = Math.round(tick + jmpTime);
     }
     timeTicks.push(new Date(data[quantity].time)); // get last time anytime
-console.log(timeTicks);
 
     tickValuesCars = [0,0.5,1,1.5,2];
     const registered = argusComponents.fleetActivity.registered;

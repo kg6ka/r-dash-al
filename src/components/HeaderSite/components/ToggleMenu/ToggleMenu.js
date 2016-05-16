@@ -11,30 +11,30 @@ export default class ToggleMenu extends Component {
         url: '/dashboard'
       },{
         label: 'Reports',
-        url: '/reports',
+        url: '',
         items:[
-           {label: 'Logs',url: '#home'}
-          ,{label: 'Events',url: '#home'}
-          ,{label: 'Histogram Graph',url: '#home'}      
+           {label: 'Logs',url: ''}
+          ,{label: 'Events',url: 'anomalies'}
+          ,{label: 'Histogram Graph',url: ''}      
         ]
       },{
         label: 'Configuration',
         url: '/dashboard',
         items:[
-           {label: 'Group Parameters',url: '#home'}
-          ,{label: 'Group Config',url: '#home'}
-          ,{label: 'Ruleset Edit',url: '#home'}
-          ,{label: 'Firmware Upload',url: '#home'}    
+           {label: 'Group Parameters',url: ''}
+          ,{label: 'Group Config',url: ''}
+          ,{label: 'Ruleset Edit',url: ''}
+          ,{label: 'Firmware Upload',url: ''}    
         ]
       },{
         label: 'Admin',
         url: '/dashboard',
         items:[
-           {label: 'CRUD',url: '#home'}
-          ,{label: 'Alerts and Reports',url: '#home'}
-          ,{label: 'App Config',url: '#home'}
-          ,{label: 'User Management',url: '#home'}
-          ,{label: 'Logout ({{userName}})',url: '#home'}    
+           {label: 'CRUD',url: ''}
+          ,{label: 'Alerts and Reports',url: ''}
+          ,{label: 'App Config',url: ''}
+          ,{label: 'User Management',url: ''}
+          ,{label: 'Logout',url: ''}    
         ]
       }
     ];

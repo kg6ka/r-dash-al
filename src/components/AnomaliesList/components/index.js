@@ -1,1 +1,1 @@
-export AnomaliesList from './AnomaliesList/AnomaliesList';
+export AnomaliesTable from './AnomaliesTable/AnomaliesTable';

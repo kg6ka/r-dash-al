@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 const { func } = PropTypes;
 import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
-  FilterTable, MapsPopup, HeaderSite } from 'components';
+  FilterTable, MapsPopup,AnomaliesList } from 'components';
 import styles from './Anomalies.scss';
 import cx from 'classnames';
 import { connect } from 'react-redux';
@@ -20,12 +20,13 @@ export default class AnomaliesPage extends Component {
 
   render() {
     return (
-      <div>
-        <HeaderSite onClick={ this.changeAlertsVisibilty } />
+      <div> 
+        <AnomaliesList/>
         <div
           className={cx(styles.anomaliesContent, styles.anomalyBlock)}
           onClick={ this.props.openMapsPopup }
         >
+
           <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
             <FilterTable data={ data } />
           </div>

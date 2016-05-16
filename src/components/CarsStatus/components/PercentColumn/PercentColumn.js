@@ -54,6 +54,7 @@ export default class PercentColumn extends Component {
 
   drawPercets() {
     const translateString = `translate(${this.screenWidth / 76.8},${this.height})`;
+    const height = this.props.percent * this.height / 100 * 0.95;
     return (
       <g transform={`${translateString} rotate(180)`}>
         <rect
@@ -62,11 +63,11 @@ export default class PercentColumn extends Component {
           x={ 0 }
           y={ 0 }
           width={ this.screenWidth / 192 }
-          height={ this.props.percent * this.height / 100 }
+          height={ height }
         />
         <Pointer
           className={ `${this.props.className}Pointer` }
-          mountPoint={this.props.percent * this.height / 100}
+          mountPoint={ height }
         />
       </g>
     );
@@ -95,8 +96,8 @@ export default class PercentColumn extends Component {
   }
 
   tweenPercent(percent) {
-    const curr = this.props.percent * this.height / 100;
-    const next = percent * this.height / 100;
+    const curr = this.props.percent * this.height / 100 * 0.95;
+    const next = percent * this.height / 100 * 0.95;
     d3.select(`.${this.props.className}`)
       .transition()
       .duration(1000)

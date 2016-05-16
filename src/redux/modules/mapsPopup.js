@@ -29,7 +29,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: true,
       };
     case LOAD_DATA_SUCCESS:
-      console.log(action);
       return {
         ...state,
         loading: false,
@@ -60,8 +59,7 @@ export function hideMapsPopup() {
   };
 }
 
-export function getHeatmapData(qqq) {
-  console.log(qqq);
+export function getHeatmapData() {
   return {
     types: [LOAD_DATA, LOAD_DATA_SUCCESS, LOAD_DATA_FAIL],
     promise: (client) => client.get('http://newdash.argus-sec.com:8080/api/v1/metrics/tags/1111/heatmap?from=0'),

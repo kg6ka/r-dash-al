@@ -37,6 +37,8 @@ const INITIAL_STATE = {
       blocked: 0,
     },
   ],
+  data: [],
+  center: {},
 };
 
 export default function mapReducer(state = INITIAL_STATE, action) {

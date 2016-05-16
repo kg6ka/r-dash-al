@@ -133,7 +133,7 @@ export default class AnomaliesDial extends Component {
   render() {
     const offset = this.componentWidth / 9.28 / 2;
     const { anomalies, cars, percent } = this.props;
-    const percentString = `^${percent}%`;
+    const percentString = (percent>0) ? `^${percent}%` : '';
     return (
       <g>
         <circle

@@ -39,6 +39,7 @@ export default class CarsStatus extends Component {
             y={ this.screenWidth / 54.6 }
             fill={'#2fc6f4'}
             fontSize={this.screenWidth / 120}
+            fontFamily="telegrafico"
           >
             FLEET STATUS
           </text>

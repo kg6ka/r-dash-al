@@ -91,8 +91,8 @@ function totalAnomalies() {
     totalAnomalies.blocked_sum = blocked_sum;
     totalAnomalies.total_sum = suspicious_sum + blocked_sum;
 
-    totalAnomalies.suspicious_percent = totalAnomalies.total_sum / suspicious_sum * 100;
-    totalAnomalies.blocked_percent = totalAnomalies.total_sum / blocked_sum * 100;
+    totalAnomalies.suspicious_percent = suspicious_sum / totalAnomalies.total_sum * 100;
+    totalAnomalies.blocked_percent = blocked_sum / totalAnomalies.total_sum * 100;
 
     totalAnomalies.cars1 = 90;
     totalAnomalies.cars2 = 85;

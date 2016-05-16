@@ -15,10 +15,10 @@ const alerts = (state = INITIAL_STATE, action) => {
         case 'DELETE_ALERT':
              return {
                  ...state,
-                 alerts: state.alerts["msg"].filter(function (alert) {
+                 alerts: {"msg": state.alerts["msg"].filter(function (alert) {
                      console.log(alert);
-                     return alert.id != action.id
-                 })
+                     return alert.desc2 != action.id
+                 })}
              }
         default:
             return state

@@ -35,6 +35,7 @@ export default class Anomalies extends Component {
         y={ this.screenWidth / 54.6 }
         fill={'#2fc6f4'}
         fontSize={ this.screenWidth / 120 }
+        fontFamily="telegrafico"
       >
         TOTAL ANOMALIES
       </text>
@@ -137,7 +138,7 @@ export default class Anomalies extends Component {
           <AnomaliesDial
             anomalies={ anomalies }
             cars={ cars1 }
-            percent={ percent }
+            percent={ 5 }
             percentRight={ this.percentRight }
           />
         </svg>

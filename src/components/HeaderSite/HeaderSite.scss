@@ -55,6 +55,9 @@
     border-left: 1px solid #2c353c;
     /* padding: 0; */
     position:relative;
+     -webkit-box-flex: 1;
+     -webkit-flex-grow: 1; 
+     flex-grow: 1;
     .child{
       position:absolute;
       display:none;
@@ -130,11 +133,13 @@
     color: inherit;
     text-decoration: blink;
     text-transform: uppercase;
-    padding: 1.55em 3em;
+    padding: 1.55em 0.4em;
     display: block;
+    text-align: center;
     line-height: 1;
-    cursor:pointer;
-    min-width: 9em;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 11em;
 }
 .error {
     color: #ff0000;

@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 
 
 const mapStateToProps = (state) => {
-    return {
-        alerts: state.alerts
-    }
+    return state.alerts;
 }
 const mapDispatchToProps = (dispatch) => {
     return {

@@ -7,8 +7,7 @@ class AlertsList extends Component {
         this.props.fetchAlerts();
     }
     render() {
-
-        const alerts = this.props.alerts.alerts.msg;
+        const alerts = this.props.alerts.msg;
         return (
             <div className={styles.alerts} >
                 <div className={styles.close} onClick={this.props.onClick}>

@@ -92,7 +92,7 @@ export default class Categories extends Component {
 
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
-        { pie(argusComponents.category).map((d, idx) =>
+        { pie(this.props.data).map((d, idx) =>
           <path
             key={ `slice-${idx}` }
             fill={ d.data.color }

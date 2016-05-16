@@ -74,6 +74,42 @@ export default class Dashboard extends Component {
     }, []);
   }
 
+  componentWillReceiveProps(props) {
+    if (props.categories.data.length) {
+      this.setState({
+        categories: this.categoriesData(props),
+      });
+    }
+
+    if (props.carsStatus.activities.length) {
+      const result = {
+        registered: props.carsStatus.registeredVehicles[0].count,
+        activity: props.carsStatus.activities[props.carsStatus.activities.length - 1].values[0].value
+        / props.carsStatus.registeredVehicles[0].count * 100,
+        updated: props.carsStatus.updatedVehicles[0].count
+        / props.carsStatus.registeredVehicles[0].count * 100,
+        percentRegistered: 12,
+      };
+
+      this.setState({
+        registeredVehicles: result,
+      });
+
+      if (props.fleetActivities.data.length) {
+        this.setState({
+          fleetActivities: this.fleetActivitiesData(props),
+        });
+      }
+    }
+
+    if (props.totalAnomalies.data.length &&
+      props.totalAnomalies.data.length !== this.props.totalAnomalies.data.length) {
+      this.setState({
+        totalAnomalies: this.totalAnomaliesData(props),
+      });
+    }
+  }
+
   totalAnomaliesData(props) {
     const suspiciousAndBlockedSum = props.totalAnomalies.data.reduce((curValue, item) => {
       return {
@@ -104,40 +140,6 @@ export default class Dashboard extends Component {
       };
       return [...curValue, newBar];
     }, []);
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.categories.data.length) {
-      this.setState({
-        categories: this.categoriesData(props),
-      });
-    }
-
-    if (props.carsStatus.activities.length) {
-      const result = {
-        registered: props.carsStatus.registeredVehicles[0].count,
-        activity: props.carsStatus.activities[props.carsStatus.activities.length - 1].values[0].value / props.carsStatus.registeredVehicles[0].count * 100,
-        updated: props.carsStatus.updatedVehicles[0].count / props.carsStatus.registeredVehicles[0].count * 100,
-        percentRegistered: 12,
-      };
-
-      this.setState({
-        registeredVehicles: result,
-      });
-
-      if (props.fleetActivities.data.length) {
-
-        this.setState({
-          fleetActivities: this.fleetActivitiesData(props),
-        });
-      }
-    }
-
-    if (props.totalAnomalies.data.length && props.totalAnomalies.data.length !== this.props.totalAnomalies.data.length) {
-      this.setState({
-        totalAnomalies: this.totalAnomaliesData(props),
-      });
-    }
   }
 
   changeAlertsVisibilty =() => {
@@ -201,6 +203,27 @@ export default class Dashboard extends Component {
 }
 
 export default connect(
-  ({ carsStatus, totalAnomalies, fleetActivities, categories, target, map }) => ({ carsStatus, totalAnomalies, fleetActivities, categories, target, map }),
-    dispatch => bindActionCreators({ getCarsStatus, getTotalAnomalies, getFleetActivities, getCategories, getTarget, getMap }, dispatch)
+  ({
+    carsStatus,
+    totalAnomalies,
+    fleetActivities,
+    categories,
+    target,
+    map
+    }) => ({
+      carsStatus,
+      totalAnomalies,
+      fleetActivities,
+      categories,
+      target,
+      map,
+    }),
+    dispatch => bindActionCreators({
+      getCarsStatus,
+      getTotalAnomalies,
+      getFleetActivities,
+      getCategories,
+      getTarget,
+      getMap,
+    }, dispatch)
 )(Dashboard);

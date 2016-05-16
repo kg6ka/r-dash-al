@@ -7,25 +7,32 @@ const GOT_CARS_STATUS = 'argus/carsStatus/GOT_CARS_STATUS';
 const GET_CARS_STATUS_FAILURE = 'argus/carsStatus/GET_CARS_STATUS_FAILURE';
 
 const initialState = {
-  registered: null,
-  activity: null,
-  updated: null,
-  percentRegistered: 12,
+  activities: [],
+  registeredVehicles: [],
+  updatedVehicles: [],
+  loading: false,
 };
 
 export default function carsStatusReducer(state = initialState, action) {
-  const { type } = action;
-  const data = Object.assign({}, action.data);
+  const { type, data } = action;
   switch (type) {
+    case GETTING_CARS_STATUS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
     case GOT_CARS_STATUS: {
       return {
         ...state,
         ...data,
+        loading: false,
       };
     }
     case GET_CARS_STATUS_FAILURE:
       return {
         ...state,
+        loading: false,
       };
     default:
       return state;
@@ -56,13 +63,17 @@ export function* carsStatusSaga() {
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/statuses/vehicles/counts/updated`)
           .promise()
         ;
-      const { body } = activities;
-      const result = {
+      const body = {
+        activities: [...activities.body.data],
+        registeredVehicles: [...registeredVehicles.body.data],
+        updatedVehicles: [...updatedVehicles.body.data],
+      };
+      /*const result = {
         registered: registeredVehicles.body.data[0].count,
         activity: activities.body.data[activities.body.data.length - 1].values[0].value / registeredVehicles.body.data[0].count * 100,
         updated: updatedVehicles.body.data[0].count / registeredVehicles.body.data[0].count * 100,
-      };
-      yield put({ type: GOT_CARS_STATUS, data: result });
+      };*/
+      yield put({ type: GOT_CARS_STATUS, data: body });
     } catch (err) {
       yield put({ type: GET_CARS_STATUS_FAILURE });
     }

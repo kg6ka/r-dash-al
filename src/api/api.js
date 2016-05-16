@@ -32,10 +32,6 @@ function http(url) {
 /* ============================================================================ */ 
 
 function anomaliesTable(){
-  argusApi.anomaliesDetails =[{id:2,confidence:2,blocked:'dde',date:new Date(),time:20,bus: 1,
-                      msgId:2,data:'',category:'invalidData',vehicleId:'ff',ruleset:'129'},
-             {id:3,confidence:2,blocked:'dde',date:new Date(),time:20,bus: 1,
-        msgId:2,data:'',category:'noData',vehicleId:'gdgdg',ruleset:'129'}];
 
 
     store.dispatch({type:'SET_ANOMALIES',data:argusApi.anomaliesDetails})
@@ -213,8 +209,8 @@ function getApiData(tags){
 
   // Group API for:
   //    anomaliesTable
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByEcu?from=0`).then((data)=>{
-//     argusApi.anomaliesDetails = data.data;
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/anomalies`).then((data)=>{
+    argusApi.anomaliesDetails = data.data;
     anomaliesTable();
   })
 }

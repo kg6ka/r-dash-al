@@ -4,6 +4,7 @@ import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
   FilterTable, MapsPopup,AnomaliesList } from 'components';
 import styles from './Anomalies.scss';
+import layout from '../App/App.scss';
 import cx from 'classnames';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
@@ -20,33 +21,30 @@ export default class AnomaliesPage extends Component {
 
   render() {
     return (
-      <div> 
-        <AnomaliesList/>
+      <div className={layout.layout}>
+        <div className="backBtn"></div>
+        <div className={cx(layout.layoutSideRight,layout.layoutCol50)}>
+            <AnomaliesList/>
+        </div>
         <div
-          className={cx(styles.anomaliesContent, styles.anomalyBlock)}
+          className={cx(layout.layoutSideLeft,layout.layoutCol50)}
           onClick={ this.props.openMapsPopup }
         >
 
-          <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
+          <div className={cx(styles.backgroundGradient)}>
             <FilterTable data={ data } />
           </div>
-          <div className={cx(styles.filters, styles.anomalyInBlock)}>
-              <div className={cx(styles.barsFilters, styles.lineBlock)}>
-                <div className={cx(styles.component, styles.anomalyInBlock)}>
-                  <MSGfilter />
-                </div>
-                <div className={cx(styles.component, styles.anomalyInBlock)}>
-                  <VehiclesFilter />
-                </div>
-              </div>
-              <div className={cx(styles.chartsFilters, styles.lineBlock)}>
-                <div className={cx(styles.component, styles.anomalyInBlock, styles.category)}>
-                  <Categories name="filter by category" filter="true" />
-                </div>
-                <div className={cx(styles.component, styles.anomalyInBlock)}>
-                  <ConfidenceFilter />
-                </div>
-              </div>
+          <div className={cx(layout.layoutCol50,layout.height50,layout.borderRightButtom)}>
+            <MSGfilter />
+          </div>
+          <div className={cx(layout.layoutCol50,layout.height50)}>
+            <VehiclesFilter />
+          </div>
+          <div className={cx(layout.layoutCol50,layout.height50)}>
+            <Categories name="filter by category" filter="true" />
+          </div>
+          <div className={cx(layout.layoutCol50,layout.height50,layout.borderLeftTop)}>
+            <ConfidenceFilter />
           </div>
           <MapsPopup />
         </div>

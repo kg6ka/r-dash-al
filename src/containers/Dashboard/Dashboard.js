@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { CarsStatus, Anomalies, FleetActivity, Categories,
   Target, VisibleAlertsList, Map } from 'components';
 import styles from './Dashboard.scss';
+import layout from '../App/App.scss';
 import cx from 'classnames';
 
 export default class Dashboard extends Component {
@@ -23,16 +24,16 @@ export default class Dashboard extends Component {
     return (
       <div>
         
-        <div className={styles.layout}>
+        <div className={layout.layout}>
           <div className={cx(
-            styles.layoutSideRight,
-            styles.layoutCol20,
+            layout.layoutSideRight,
+            layout.layoutCol20,
             (this.state.alertsVisibility) && styles.notActive
            )}
           >
             <VisibleAlertsList onClick={this.changeAlertsVisibilty} />
           </div>
-          <div className={cx(styles.layoutSideLeft, styles.layoutCol80)}>
+          <div className={cx(layout.layoutSideLeft, layout.layoutCol80)}>
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
               <CarsStatus
                 registeredCars={ argusComponents.fleetStatus.registered }
@@ -52,17 +53,17 @@ export default class Dashboard extends Component {
                 cars3={ argusComponents.totalAnomalies.cars3 }
               />
             </div>
-            <div className={cx(styles.layoutSideRight, styles.layoutCol30)}>
+            <div className={cx(layout.layoutSideRight, layout.layoutCol30)}>
               <Target />
             </div>
-            <div className={cx(styles.fleetStatus, styles.layoutSideLeft, styles.layoutCol70)}>
+            <div className={cx(styles.fleetStatus, layout.layoutSideLeft, layout.layoutCol70)}>
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity />
               </div>
-              <div className={cx(styles.fleetActivity, styles.layoutCol50)}>
+              <div className={cx(styles.fleetActivity, layout.layoutCol50)}>
                 <Categories name="categories" />
               </div>
-              <div className={styles.layoutCol50}>
+              <div className={layout.layoutCol50}>
                 <Map lat={48.856614} lng={2.3522219} />
               </div>
             </div>

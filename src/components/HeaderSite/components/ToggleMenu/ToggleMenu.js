@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../../HeaderSite.scss';
-
+import { Link } from 'react-router';
 
 export default class ToggleMenu extends Component {
   constructor(props) {
@@ -62,9 +62,9 @@ export default class ToggleMenu extends Component {
     return <ul className={stepClass}>
             {list.map((item,i)=>
               <li key={i} >
-                <a href={item.url}>
+                <Link to={item.url}>
                   {item.label}
-                </a>
+                </Link>
               </li>
             )} 
            </ul>; 
@@ -77,7 +77,7 @@ export default class ToggleMenu extends Component {
         <div className={styles.toggleMenuContent}>
     		<ul className={styles.menuToggle}>{this.data.map((link,i)=>
               <li key={i} >
-                  <a href={link.url}>{link.label}</a>
+                  <Link to={link.url}>{link.label}</Link>
                   { this.renderSubMenu(link.items,'child') }
               </li>
           )}

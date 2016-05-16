@@ -94,9 +94,7 @@ export default class FilterTable extends Component {
       .orient('right')
       .tickValues([0, 2500, 5000, 7500, 10000])
       .tickPadding(10)
-      .tickFormat(d => {
-        return '';
-      });
+      .tickFormat(d => '');
 
     const xAxis = d3.svg.axis()
       .scale(x)
@@ -212,7 +210,7 @@ export default class FilterTable extends Component {
     brushg.selectAll('.resize')
       .append('circle')
       .attr('cx', 0)
-      .attr('cy', 50)
+      .attr('cy', (height / 2) - 7)
       .attr('r', 5)
       .attr('stroke-width', 6)
       .attr('stroke', '#2fc6f4')
@@ -238,7 +236,7 @@ export default class FilterTable extends Component {
   render() {
     return (
       <div className={componentStyle.bodyComponent}>
-        <div className={componentStyle.title}>
+        <div className={cx(componentStyle.title, 'glowText')}>
             filter by time
         </div>
         <div className={componentStyle.close}>X</div>

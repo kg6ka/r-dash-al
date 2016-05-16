@@ -60,10 +60,10 @@ export default class Dashboard extends Component {
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity />
               </div>
-              <div className={cx(styles.fleetActivity, layout.layoutCol50)}>
+              <div className={cx(styles.fleetActivity, layout.layoutCol50,layout.height50)}>
                 <Categories name="categories" />
               </div>
-              <div className={layout.layoutCol50}>
+              <div className={cx(layout.layoutCol50,layout.height50)}>
                 <Map lat={48.856614} lng={2.3522219} />
               </div>
             </div>

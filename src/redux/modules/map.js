@@ -82,7 +82,6 @@ export function* mapSaga() {
           .promise()
         ;
       const { body } = map;
-      debugger;
       yield put({ type: GOT_MAP, data: body });
     } catch (err) {
       yield put({ type: GET_MAP_FAILURE });

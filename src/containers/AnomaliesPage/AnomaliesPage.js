@@ -44,6 +44,7 @@ export default class AnomaliesPage extends Component {
   render() {
     const data = argusComponents.fleetActivity.bars;
     return (
+
       <div className={layout.layout}>
         <div className="backBtn"></div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50)}>

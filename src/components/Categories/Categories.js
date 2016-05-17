@@ -32,8 +32,17 @@ export default class Categories extends Component {
     super(props);
     this.state = {
       hovered: null,
+      data: [],
     };
     this.category = argusComponents.category.length ? argusComponents.category : informationData;
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.data.length) {
+      this.setState({
+        categories: props.data,
+      });
+    }
   }
 
   getOffset(idx) {
@@ -105,7 +114,7 @@ export default class Categories extends Component {
       .innerRadius((d, idx) => r - this.getOffset(idx));
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
-        { pie(this.props.data).map((d, idx) =>
+        { pie(this.state.data).map((d, idx) =>
           <path
             key={ `slice-${idx}` }
             fill={ d.data.color }

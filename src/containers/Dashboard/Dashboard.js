@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HeaderSite, CarsStatus, Anomalies, FleetActivity, Categories,
-  Target, VisibleAlertsList, Map } from 'components';
+  Target, AlertsList, Map } from 'components';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getTotalAnomalies } from './../../redux/modules/totalAnomalies';
 import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCategories } from './../../redux/modules/categories';
 import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
+import { getAlertsData } from './../../redux/modules/alertsList';
 import { bindActionCreators } from 'redux';
 import styles from './Dashboard.scss';
 import cx from 'classnames';
@@ -50,6 +51,7 @@ export default class Dashboard extends Component {
     this.props.getCategories('11111111-1111-1111-3333-000000000031');
     this.props.getTarget('11111111-1111-1111-3333-000000000031');
     this.props.getMap('11111111-1111-1111-3333-000000000031');
+    this.props.getAlertsData();
   }
 
   categoriesData(props) {
@@ -122,8 +124,8 @@ export default class Dashboard extends Component {
       suspiciousSum: suspiciousAndBlockedSum.suspiciousSum,
       blockedSum: suspiciousAndBlockedSum.blockedSum,
       totalSum,
-      suspiciousPercent: suspiciousAndBlockedSum.suspiciousSum / totalSum  * 100,
-      blockedPercent: suspiciousAndBlockedSum.blockedSum / totalSum  * 100,
+      suspiciousPercent: suspiciousAndBlockedSum.suspiciousSum / totalSum * 100,
+      blockedPercent: suspiciousAndBlockedSum.blockedSum / totalSum * 100,
       cars1: props.totalAnomalies.cars1,
       cars2: props.totalAnomalies.cars2,
       cars3: props.totalAnomalies.cars3,
@@ -159,7 +161,7 @@ export default class Dashboard extends Component {
             { [this.state.alertsVisibility]: styles.notActive },
             )}
           >
-            <VisibleAlertsList onClick={this.changeAlertsVisibilty} />
+            <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} />
           </div>
           <div className={cx(styles.layoutSideLeft, styles.layoutCol80)}>
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
@@ -182,17 +184,24 @@ export default class Dashboard extends Component {
               />
             </div>
             <div className={cx(styles.layoutSideRight, styles.layoutCol30)}>
-              <Target data={this.props.target} />
+              <Target
+                data={this.props.target}
+              />
             </div>
             <div className={cx(styles.fleetStatus, styles.layoutSideLeft, styles.layoutCol70)}>
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
-                <FleetActivity data={ this.state.fleetActivities } />
+                <FleetActivity
+                  data={ this.state.fleetActivities }
+                />
               </div>
               <div className={cx(styles.fleetActivity, styles.layoutCol50)}>
-                <Categories name="categories" data={ this.state.categories } />
+                <Categories
+                  name="categories"
+                  data={ this.state.categories }
+                />
               </div>
               <div className={styles.layoutCol50}>
-                <Map lat={this.props.map.center.lat} lng={this.props.map.center.lng} locations={this.props.map.data} />
+                <Map locations={this.props.map.data} lng={this.props.map.center.lng} lat={this.props.map.center.lat} />
               </div>
             </div>
           </div>
@@ -209,7 +218,8 @@ export default connect(
     fleetActivities,
     categories,
     target,
-    map
+    map,
+    alertsList,
     }) => ({
       carsStatus,
       totalAnomalies,
@@ -217,6 +227,7 @@ export default connect(
       categories,
       target,
       map,
+      alertsList,
     }),
     dispatch => bindActionCreators({
       getCarsStatus,
@@ -225,5 +236,6 @@ export default connect(
       getCategories,
       getTarget,
       getMap,
+      getAlertsData,
     }, dispatch)
 )(Dashboard);

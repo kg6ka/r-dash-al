@@ -8,7 +8,7 @@ export default class Map extends Component {
   };
 
   componentWillReceiveProps(props) {
-    if (props.locations && props.locations.length !== 0 && props.lng) {
+    if (props.locations && props.locations.length !== this.props.locations.length && props.lng) {
       const locations = props.locations;
       const mapStyle = [
         {

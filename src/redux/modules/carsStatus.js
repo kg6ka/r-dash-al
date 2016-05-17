@@ -68,11 +68,6 @@ export function* carsStatusSaga() {
         registeredVehicles: [...registeredVehicles.body.data],
         updatedVehicles: [...updatedVehicles.body.data],
       };
-      /*const result = {
-        registered: registeredVehicles.body.data[0].count,
-        activity: activities.body.data[activities.body.data.length - 1].values[0].value / registeredVehicles.body.data[0].count * 100,
-        updated: updatedVehicles.body.data[0].count / registeredVehicles.body.data[0].count * 100,
-      };*/
       yield put({ type: GOT_CARS_STATUS, data: body });
     } catch (err) {
       yield put({ type: GET_CARS_STATUS_FAILURE });

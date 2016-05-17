@@ -56,7 +56,16 @@ export function* totalAnomaliesSaga() {
           .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${dataFrom}/1/anomalies?from=0`)
           .promise()
         ;
-      const { body } = totalAnomalies;
+      const carsData = yield request
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/1/anomalousVehicles?from=0`)
+          .promise()
+        ;
+      const body = {
+        data: totalAnomalies.body.data,
+        cars1: carsData.body.data[0].values[0].value + carsData.body.data[0].values[1].value,
+        cars2: carsData.body.data[0].values[0].value,
+        cars3: carsData.body.data[0].values[1].value,
+      };
       yield put({ type: GOT_TOTAL_ANOMALIES, data: body });
     } catch (err) {
       yield put({ type: GET_TOTAL_ANOMALIES_FAILURE });

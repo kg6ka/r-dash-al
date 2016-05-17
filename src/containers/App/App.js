@@ -10,17 +10,13 @@ class App extends Component {
     children: node,
   }
 
-  changeAlertsVisibilty =() => {
-    this.setState({
-      alertsVisibility: !this.state.alertsVisibility,
-    });
-  }
+
 
   render() {
     const { children } = this.props;
     return (
       <div>
-        <HeaderSite onClick={ this.changeAlertsVisibilty } />
+        <HeaderSite />
         { children }
       </div>
     );

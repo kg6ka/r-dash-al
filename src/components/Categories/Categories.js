@@ -105,7 +105,7 @@ export default class Categories extends Component {
       .innerRadius((d, idx) => r - this.getOffset(idx));
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
-        { pie(this.category).map((d, idx) =>
+        { pie(this.props.data).map((d, idx) =>
           <path
             key={ `slice-${idx}` }
             fill={ d.data.color }

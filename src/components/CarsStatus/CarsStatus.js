@@ -14,8 +14,8 @@ export default class CarsStatus extends Component {
   constructor(props) {
     super(props);
     this.screenWidth = window.innerWidth;
-    this.active = Math.round(props.active);
-    this.uptodate = Math.round(props.uptodate);
+    this.active = Math.round(props.active) ? Math.round(props.active) : 0;
+    this.uptodate = Math.round(props.uptodate) ? Math.round(props.uptodate) : 0;
   }
 
   componentWillReceiveProps(nextProps) {

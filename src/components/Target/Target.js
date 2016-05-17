@@ -53,8 +53,6 @@ export default class Target extends Component {
   }
 
   render() {
-
-
     return (
       <div className={ styles.content }>
         <div
@@ -98,8 +96,8 @@ export default class Target extends Component {
             renderThumbVertical={this.renderThumb}
           >
             <div className={styles.dataBlockInner}>
-            { argusComponents.target[this.state.checked].map((el, idx) =>
-                <DataView key={ idx } name={ el.key } total={ el.total } blocked={ el.blocked } />
+            { this.props.data[this.state.checked].map((el, idx) =>
+                <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
             ) }
             </div>
           </Scrollbar>

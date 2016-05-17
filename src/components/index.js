@@ -6,7 +6,7 @@ export FleetActivity from './FleetActivity/FleetActivity';
 export Categories from './Categories/Categories';
 export Target from './Target/Target';
 export RadioButtons from './RadioButtons/RadioButtons';
-export VisibleAlertsList from './Alerts/Alerts';
+export AlertsList from './AlertsList/AlertsList';
 export Map from './Map/Map';
 export AnomaliesList from './AnomaliesList/AnomaliesList';
 export MapsPopup from './MapsPopup/MapsPopup';

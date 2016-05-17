@@ -23,6 +23,11 @@ export default class FilterTable extends Component {
     this.drawCharts();
     this.chartsDecoration();
   }
+  
+  componentDidUpdate(prevProps, prevState)  {
+    this.drawCharts();
+    this.chartsDecoration();  
+  }
 
   chartsDecoration() {
     d3.selectAll('.tick text')
@@ -61,37 +66,72 @@ export default class FilterTable extends Component {
     const height = (window.innerWidth / 11.43);
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
-    const quantity = 112;
+    const quantity = data.length - 1;
+    let tickValuesCars = [];
+    let tickValuesSuspicious = [];
+
     const timeTicks = [];
+    let jmpTime = (data[quantity].time - data[0].time) / 7;
     let tick = 0;
-    for (let i = 0; i < 8; i++) {
-      timeTicks.push(new Date(data[data.length - quantity - 1 + tick].time));
-      tick += 16;
+    for (let i = 0; i < 7; i++) {
+      timeTicks.push(new Date(data[0].time + tick));
+      tick = Math.round(tick + jmpTime);
+    }
+    timeTicks.push(new Date(data[quantity].time)); // get last time anytime
+
+    tickValuesCars = [0,0.5,1,1.5,2];
+    const registered = argusComponents.fleetActivity.registered;
+
+    if(registered > 2)     tickValuesCars = [0,2.5,5,7.5,10];
+   
+    if(registered >= 10)   tickValuesCars = [0,25,50,75,100];
+   
+    if(registered >= 100)  tickValuesCars = [0,250,500,750,1000];
+        
+    if(registered >= 1000) tickValuesCars = [0,2500,5000,7500,10000];
+
+
+    tickValuesSuspicious = [0, 5, 10, 15,20];
+    let maxSuspicious = 0;
+    for (let i = 0; i < data.length; i++) {
+      if(data[i].suspicious > maxSuspicious)
+        maxSuspicious = data[i].suspicious;
     }
 
+//     if(maxSuspicious > 2)     tickValuesSuspicious = [0,2.5,5,7.5,10];
+   
+    if(maxSuspicious >= 10)   tickValuesSuspicious = [0,25,50,75,100];
+   
+    if(maxSuspicious >= 100)  tickValuesSuspicious = [0,250,500,750,1000];
+        
+    if(maxSuspicious >= 1000) tickValuesSuspicious = [0,2500,5000,7500,10000];
+
+    charts.selectAll("svg").remove();
+    charts.selectAll("image").remove();
+    charts.selectAll("text").remove();
+        
     const svg = charts
       .append('svg')
       .attr('width', width)
       .attr('height', height + 10);
 
     const x = d3.time.scale()
-      .domain([new Date(data[data.length - quantity - 1].time),
-        new Date(data[data.length - 1].time)])
+      .domain([timeTicks[0],timeTicks[timeTicks.length-1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
-      .domain([0, 400])
+      .domain([0, tickValuesSuspicious[4]])
       .range([axisHeigth, margin / 2]);
 
     const y2 = d3.scale.linear()
-      .domain([0, 10000])
+      .domain([0, tickValuesCars[4]])
       .range([axisHeigth, margin / 2]);
 
     const yAxis2 = d3.svg.axis()
       .scale(y2)
       .tickSize(-(axisWidth - margin))
       .orient('right')
-      .tickValues([0, 2500, 5000, 7500, 10000])
+      .tickValues(tickValuesCars)
       .tickPadding(10)
       .tickFormat('');
 
@@ -101,7 +141,7 @@ export default class FilterTable extends Component {
       .orient('bottom')
       .ticks(6)
       .tickPadding(window.innerWidth / 128)
-      .tickFormat(d3.time.format('%H:%M'))
+      .tickFormat(d3.time.format('%H:%M:%S'))
       .tickValues(timeTicks);
 
     svg.append('g')
@@ -115,37 +155,39 @@ export default class FilterTable extends Component {
       `translate(0,${axisHeigth})`)
       .call(xAxis);
 
-    svg.selectAll('.bar2')
-      .data(['bar2'])
-      .enter()
-      .append('g')
-      .attr('class', 'bar2')
-      .selectAll('.barItem')
-      .data(data.slice(0, data.length - 1))
-      .enter()
-      .append('rect')
-      .attr('class', 'barItem')
-      .attr('x', (d) => x(new Date(d.time)))
-      .attr('y', d => y1(d.val2))
-      .attr('width', (axisWidth - margin) / (quantity - 1))
-      .attr('height', d => axisHeigth - y1(d.val2))
-      .attr('fill', '#c90000');
-
     svg.selectAll('.bar1')
       .data(['bar1'])
       .enter()
       .append('g')
       .attr('class', 'bar1')
       .selectAll('.barItem')
-      .data(data.slice(0, data.length - 1))
+      .data(data.slice(0, quantity))
       .enter()
       .append('rect')
       .attr('class', 'barItem')
       .attr('x', d => x(new Date(d.time)))
-      .attr('y', d => y1(d.val1))
-      .attr('width', (axisWidth - margin) / (quantity - 1))
-      .attr('height', d => axisHeigth - y1(d.val1))
+      .attr('y', d => y1(d.suspicious))
+      .attr('width', (axisWidth - margin) / quantity)
+      .attr('height', d => axisHeigth - y1(d.suspicious))
       .attr('fill', '#f5c300');
+
+    svg.selectAll('.bar2')
+      .data(['bar2'])
+      .enter()
+      .append('g')
+      .attr('class', 'bar2')
+      .selectAll('.barItem')
+      .data(data.slice(0, quantity))
+      .enter()
+      .append('rect')
+      .attr('class', 'barItem')
+      .attr('x', (d) => x(new Date(d.time)))
+      .attr('y', d => y1(d.blocked))
+      .attr('width', (axisWidth - margin) / quantity)
+      .attr('height', d => axisHeigth - y1(d.blocked))
+      .attr('fill', '#c90000');
+
+
 
     svg.append('line')
        .attr('x1', margin)
@@ -173,7 +215,7 @@ export default class FilterTable extends Component {
     };
 
     brush.x(x)
-      .extent([new Date(data[data.length - quantity - 1].time),
+      .extent([new Date(data[0].time),
         new Date(data[data.length - 1].time)]);
 
     this.coordinate = [margin, height, width - 64, height];

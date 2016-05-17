@@ -29,7 +29,7 @@ export default class CarsQuantity extends Component {
           x={ textX }
           y={ y }
           fontSize={ fontSize }
-          fontFamily="PTSans"
+          fontFamily="modeka"
           fill="white"
           style={{ textAnchor: 'middle' }}
         >{ cars }</text>

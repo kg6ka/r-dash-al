@@ -62,8 +62,8 @@ const VehiclesFilter = () =>
       <div className={styles.scroll}>
         <Scrollbars>
           <div className={styles.charts}>
-            { data.map((el, idx) => {
-              const { val, msg, suspicious, blocked } = el;
+            { argusComponents.target['Vehicle'].map((el, idx) => {
+              const { key,total,blocked } = el;
               return (<DataBars
                 key={ idx }
                 style={{
@@ -71,11 +71,11 @@ const VehiclesFilter = () =>
                   height: '80%',
                 }}
                 data={{
-                  val,
-                  msg,
-                  suspicious,
-                  blocked,
-                  maxHeight: '200',
+                  val:total,
+                  msg:key,
+                  suspicious:total - blocked,
+                  blocked:blocked,
+                  maxHeight: '400',
                 }}
               />);
             })}

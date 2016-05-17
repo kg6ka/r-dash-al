@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 const { func } = PropTypes;
-import data from './data.js';
+// import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
   FilterTable, MapsPopup,AnomaliesList } from 'components';
 import styles from './Anomalies.scss';
@@ -20,7 +20,10 @@ export default class AnomaliesPage extends Component {
   }
 
   render() {
+    const data = argusComponents.fleetActivity.bars
+          
     return (
+
       <div className={layout.layout}>
         <div className="backBtn"></div>
         <div className={cx(layout.layoutSideRight,layout.layoutCol50)}>

@@ -104,7 +104,7 @@ function target() {
     if(max <= 10)   max = 10;
     if(max <= 5)    max = 5;
 
-    target.maxDomain = max / 10;
+    target.maxDomain = max;
     argusComponents.target = target;
 
 }

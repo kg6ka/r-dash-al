@@ -17,7 +17,12 @@ export default class Dashboard extends Component {
   componentDidMount() {
     store.subscribe(()=> this.setState({ index: 0 })).bind(this);
   }
-
+   
+  changeAlertsVisibilty = () => {
+    this.setState({
+      alertsVisibility: !this.state.alertsVisibility,
+    });
+  }
 
 
   render() {

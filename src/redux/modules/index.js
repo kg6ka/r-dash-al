@@ -8,6 +8,7 @@ import fleetActivities, { sagas as fleetActivitiesSagas } from './fleetActivitie
 import categories, { sagas as categoriesSagas } from './categories.js';
 import target, { sagas as targetSagas } from './target.js';
 import map, { sagas as mapSagas } from './map.js';
+import alertsList, { sagas as alertsSagas } from './alertsList';
 import mapsPopup from './mapsPopup';
 
 
@@ -21,6 +22,7 @@ export default combineReducers({
   fleetActivities,
   target,
   mapsPopup,
+  alertsList,
 });
 
 export const sagas = [
@@ -31,4 +33,5 @@ export const sagas = [
   ...categoriesSagas,
   ...targetSagas,
   ...mapSagas,
+  ...alertsSagas,
 ];

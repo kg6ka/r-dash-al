@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import GoogleMaps from 'google-map-react';
 const { array } = PropTypes;
 import styles from './Map.scss';
 
@@ -109,7 +108,6 @@ export default class Map extends Component {
         },
       ];
 
-      debugger;
       const map = new GMaps({
         el: '#map',
         lat: locations[0].lat,
@@ -117,7 +115,7 @@ export default class Map extends Component {
         zoom: 2,
         disableDefaultUI: true,
       });
-      
+
       map.setOptions({styles: mapStyle});
 
       // Adding a marker to the location we are showing

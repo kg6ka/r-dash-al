@@ -7,6 +7,17 @@ const Table = Reactable.Table;
 class AnomaliesList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      anomalies: [],
+    };
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.anomalies.length > 0) {
+      this.setState({
+        anomalies: props.anomalies,
+      });
+    }
   }
 
   render() {
@@ -14,7 +25,7 @@ class AnomaliesList extends Component {
     return (
       <div className={styles.anomalies}>
         <header>Anomalies</header>
-        <Table className="table" data={anomalies} sortable={true} filterable={[{
+        <Table className="table" data={this.state.anomalies} sortable={true} filterable={[{
           column: 'category',
           filterFunction: (contents, filter) => contents.indexOf(filter) > -1,
         },

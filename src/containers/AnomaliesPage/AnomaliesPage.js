@@ -17,14 +17,36 @@ export default class AnomaliesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.state.anomalies = data;
+  }
+
+  onChangeSelect(range) {
+    const rangeToData = [
+      new Date(range[0]).getTime(),
+      new Date(range[1]).getTime(),
+    ];
+    let max;
+    let min;
+    if (rangeToData[0] > rangeToData[1]) {
+      max = rangeToData[0];
+      min = rangeToData[1];
+    } else {
+      max = rangeToData[1];
+      min = rangeToData[0];
+    }
+    const filterData = this.state.anomalies.filter((item) => new Date(item.time) > min && new Date(item.time) < max);
+
+    this.setState({
+      anomalies: filterData,
+    });
   }
 
   render() {
     return (
       <div className={layout.layout}>
         <div className="backBtn"></div>
-        <div className={cx(layout.layoutSideRight,layout.layoutCol50)}>
-            <AnomaliesList/>
+        <div className={cx(layout.layoutSideRight, layout.layoutCol50)}>
+            <AnomaliesList anomalies={ this.state.anomalies } />
         </div>
         <div
           className={cx(layout.layoutSideLeft,layout.layoutCol50)}
@@ -32,7 +54,7 @@ export default class AnomaliesPage extends Component {
         >
 
           <div className={cx(styles.backgroundGradient)}>
-            <FilterTable data={ data } />
+            <FilterTable data={ data } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50,layout.height50,layout.borderRightButtom)}>
             <MSGfilter />

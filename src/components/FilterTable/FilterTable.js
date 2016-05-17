@@ -191,12 +191,14 @@ export default class FilterTable extends Component {
       .attr('stroke', '#2fc6f4');
 
     function brushend() {
+      const s = brush.extent();
+      this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());
     }
 
     brush.on('brushstart', brushstart)
       .on('brush', brushmove)
-      .on('brushend', brushend);
+      .on('brushend', brushend.bind(this));
 
     const brushg = svg.append('g')
       .attr('class', 'brush')

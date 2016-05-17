@@ -2,14 +2,16 @@ import React from 'react';
 
 const DataView = (data) => {
   const suspicious = data.total - data.blocked;
-  const width = window.innerWidth / 12 + argusComponents.target.maxDomain;
+  const suspiciousPercent = suspicious / argusComponents.target.maxDomain;
+  const blockedPercent = data.blocked / argusComponents.target.maxDomain;
+  const width = window.innerWidth / 5.25;
   const rectH = window.innerWidth / 384;
   const lineH = window.innerWidth / 48;
   const startLine = window.innerWidth / 174.5;
   const size = window.innerWidth / 136.6;
   const offsetToText = window.innerWidth / 70;
   return (
-    <svg width={ window.innerWidth / 5 } height={ window.innerWidth / 22.77 }>
+    <svg width={ window.innerWidth / 4.55 } height={ window.innerWidth / 22.77 }>
       <g transform={`translate(0,${window.innerWidth / 64})`}>
         <text
           x="0"
@@ -23,12 +25,12 @@ const DataView = (data) => {
         <rect
           x="1"
           y={ startLine + lineH * 0.25 }
-          width={ data.blocked * 100 / width  }
+          width={ blockedPercent * width }
           height={ rectH }
           fill="url(#blockedGradient)"
         />
         <text
-          x={ data.blocked * 100 / width + 10}
+          x={ blockedPercent * width + 10}
           y={ offsetToText }
           fill="white"
           fontSize={ size }
@@ -39,12 +41,12 @@ const DataView = (data) => {
         <rect
           x="1"
           y={ startLine + lineH * 0.6 }
-          width={ suspicious * 100 / width }
+          width={ suspiciousPercent * width }
           height={ rectH }
           fill="url(#suspiciousGradient)"
         />
         <text
-          x={ suspicious * 100 / width + 10}
+          x={ suspiciousPercent * width + 10}
           y={ offsetToText + lineH * 0.35 }
           fill="white"
           fontSize={ size }

@@ -83,6 +83,28 @@ function target() {
         target.MSG = argusApi.anomaliesByMessage;
         target.Vehicle = argusApi.anomaliesByVehicle;
 
+    let max = 0;
+    for(var i in target.ECU) {
+      if(target.ECU[i].total > max)
+        max = target.ECU[i].total;
+    }
+
+    for(var i in target.MSG) {
+      if(target.MSG[i].total > max)
+        max = target.MSG[i].total;
+    }
+
+    for(var i in target.Vehicle) {
+      if(target.Vehicle[i].total > max)
+        max = target.Vehicle[i].total;
+    }
+    if(max > 500)  max = 1000;
+    if(max <= 500)  max = 500;
+    if(max <= 100)  max = 100;
+    if(max <= 10)   max = 10;
+    if(max <= 5)    max = 5;
+
+    target.maxDomain = max / 10;
     argusComponents.target = target;
 
 }

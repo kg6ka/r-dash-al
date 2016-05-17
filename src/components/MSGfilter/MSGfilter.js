@@ -90,22 +90,22 @@ export default class MSGfilter extends Component {
         <div className={styles.scroll}>
           <Scrollbars>
             <div className={styles.charts}>
-              { data.map((el, idx) => {
-                const { val, msg, suspicious, blocked } = el;
-                return (<DataBars
-                  key={ idx }
-                  style={{
-                    width: window.innerWidth / 28.5,
-                    height: '80%',
-                  }}
-                  data={{
-                    val,
-                    msg,
-                    suspicious,
-                    blocked,
-                    maxHeight: '200',
-                  }}
-                />);
+              { argusComponents.target[this.state.checked=='ID' ? 'MSG':this.state.checked].map((el, idx) => {
+              const { key,total,blocked } = el;
+              return (<DataBars
+                key={ idx }
+                style={{
+                  width: window.innerWidth / 28.5,
+                  height: '80%',
+                }}
+                data={{
+                  val:total,
+                  msg:key,
+                  suspicious:total - blocked,
+                  blocked: blocked,
+                  maxHeight: '200',
+                }}
+              />);
               })}
             </div>
           </Scrollbars>

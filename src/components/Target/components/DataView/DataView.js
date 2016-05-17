@@ -2,7 +2,7 @@ import React from 'react';
 
 const DataView = (data) => {
   const suspicious = data.total - data.blocked;
-  const width = window.innerWidth / 10;
+  const width = window.innerWidth / 12 + argusComponents.target.maxDomain;
   const rectH = window.innerWidth / 384;
   const lineH = window.innerWidth / 48;
   const startLine = window.innerWidth / 174.5;

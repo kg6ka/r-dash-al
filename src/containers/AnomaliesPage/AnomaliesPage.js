@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 const { func } = PropTypes;
-import data from './data.js';
+// import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
   FilterTable, MapsPopup,AnomaliesList } from 'components';
 import styles from './Anomalies.scss';
@@ -17,7 +17,7 @@ export default class AnomaliesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.state.anomalies = data;
+    this.state.anomalies = argusComponents.fleetActivity.bars;
   }
 
   onChangeSelect(range) {
@@ -42,6 +42,7 @@ export default class AnomaliesPage extends Component {
   }
 
   render() {
+    const data = argusComponents.fleetActivity.bars;
     return (
       <div className={layout.layout}>
         <div className="backBtn"></div>

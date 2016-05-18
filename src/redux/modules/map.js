@@ -9,33 +9,17 @@ const GET_MAP_FAILURE = 'argus/carsStatus/GET_MAP_FAILURE';
 const INITIAL_STATE = {
   locations: [
     {
-      id: 1,
       lat: 48.856614,
       lng: 2.3522219,
-      total: 20,
-      blocked: 5,
+      count: 20,
+      desc: ''
     },
     {
-      id: 2,
       lat: 35.856614,
       lng: 1.3522219,
-      total: 20,
-      blocked: 4,
-    },
-    {
-      id: 3,
-      lat: 20.856677,
-      lng: 1.3342212,
-      total: 20,
-      blocked: 0,
-    },
-    {
-      id: 4,
-      lat: 42.856619,
-      lng: 1.3522222,
-      total: 20,
-      blocked: 0,
-    },
+      count: 20,
+      desc: ''
+    }
   ],
   data: [],
   center: {},

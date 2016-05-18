@@ -265,15 +265,15 @@ function getApiData(tags) {
 
   // Group API for:
   //    Target
-//   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByEcu?from=0`).then((data)=>{
-//     target_buildData("anomaliesByEcu",data.data)
-//   })
-//   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByVehicle?from=0`).then((data)=>{
-//     target_buildData("anomaliesByVehicle",data.data)
-//   })
-//   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByMessage?from=0`).then((data)=>{
-//     target_buildData("anomaliesByMessage",data.data)
-//   })
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByEcu?from=0`).then((data)=>{
+    target_buildData("anomaliesByEcu",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByVehicle?from=0`).then((data)=>{
+    target_buildData("anomaliesByVehicle",data.data)
+  })
+  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByMessage?from=0`).then((data)=>{
+    target_buildData("anomaliesByMessage",data.data)
+  })
 
   // Group API for:
   //    anomaliesTable

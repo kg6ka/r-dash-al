@@ -12,6 +12,7 @@ const informationData = [
 export default class ConfidenceFilter extends Component {
 
   drawInformation(data, idx) {
+    const suspicPersent = data.total / this.props.max;
     const rectSide = window.innerWidth / 120;
     return (
       <g
@@ -29,7 +30,7 @@ export default class ConfidenceFilter extends Component {
         <rect
           x= "15%"
           y="3%"
-          width={ data.val / 100 * window.innerWidth / 7 }
+          width={ (window.innerWidth / 7) * suspicPersent }
           height={ window.innerWidth / 384 }
           fill={ data.color }
         />
@@ -39,7 +40,7 @@ export default class ConfidenceFilter extends Component {
           stroke="white"
           textAnchor="end"
         >
-          { data.val }
+          { data.total }
         </text>
       </g>
     );
@@ -58,7 +59,7 @@ export default class ConfidenceFilter extends Component {
           filter by confidence
         </text>
         <g transform="scale(1, 0.85)">
-          { informationData.map((el, idx) => this.drawInformation(el, idx)) }
+          { this.props.data.map((el, idx) => this.drawInformation(el, idx)) }
         </g>
       </svg>
     );

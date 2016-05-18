@@ -16,21 +16,21 @@ export default function AnomaliesListReducer(state = initialState, action) {
   switch (type) {
     case GETTING_ANOMALIES_LIST: {
       return {
-          ...state,
-          loading: true,
+        ...state,
+        loading: true,
       };
     }
     case GOT_ANOMALIES_LIST: {
       return {
-          ...state,
-          ...data,
-          loading: false,
+        ...state,
+        ...data,
+        loading: false,
       };
     }
     case GET_ANOMALIES_LIST_FAILURE:
       return {
-          ...state,
-          loading: false,
+        ...state,
+        loading: false,
       };
     default:
       return state;

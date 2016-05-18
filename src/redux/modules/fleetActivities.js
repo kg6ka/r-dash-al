@@ -18,7 +18,7 @@ export default function fleetActivitiesReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-      }
+      };
     }
     case GOT_FLEET_ACTIVITIES: {
       return {

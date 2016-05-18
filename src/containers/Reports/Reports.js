@@ -14,11 +14,11 @@ export default class Reports extends Component {
     }
 
     componentDidMount() {
-        window.setInterval(() => {
+        /*window.setInterval(() => {
             this.setState({
                 percent: Math.random(1),
             });
-        }, 5000);
+        }, 5000);*/
 
     }
     changeAlertsVisibilty =() => {

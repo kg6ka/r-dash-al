@@ -21,7 +21,6 @@ class AnomaliesList extends Component {
   }
 
   render() {
-    const anomalies = this.props.anomalies;
     return (
       <div className={styles.anomalies}>
         <header>Anomalies</header>

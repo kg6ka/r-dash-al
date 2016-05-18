@@ -114,7 +114,7 @@ export default class Categories extends Component {
 
   drawInformation(data, idx) {
     const rectX = window.innerWidth / 83.5;
-    const rectSide = window.innerWidth / 135;
+    const rectSide = window.innerWidth / 120;
     return (
       <g
         className={ styles.information }
@@ -136,7 +136,7 @@ export default class Categories extends Component {
           }) }
           x={ rectX + rectSide * 2 }
           y={ rectSide }
-          fill={ this.state.hovered === idx ? data.color : 'white' }
+          stroke={ this.state.hovered === idx ? data.color : 'white' }
         >
           { data.text }
         </text>
@@ -146,7 +146,7 @@ export default class Categories extends Component {
           }) }
           x={ window.innerWidth / 8 }
           y={ rectSide }
-          fill={ this.state.hovered === idx ? data.color : 'white' }
+          stroke={ this.state.hovered === idx ? data.color : 'white' }
         >
           { data.percent } %
         </text>
@@ -159,7 +159,7 @@ export default class Categories extends Component {
               <text
                 x={window.innerWidth / 90}
                 y={window.innerWidth / 151.8}
-                fill="#13aa38"
+                stroke="#13aa38"
               >
                 ^15%
               </text>

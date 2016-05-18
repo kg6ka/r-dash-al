@@ -1,12 +1,85 @@
+.content {
+  margin: 1.5% 0 0 3%;
+}
 
-@import url(./fonts/PTSans.css);
+.header {
+  text-shadow: 0 0 5px #2fc6f4;
+  font-family: 'telegrafico';
+  text-transform: uppercase;
+  color: #2fc6f4;
+  font-size: calc(100vw / 85);
+}
 
 .anomalies {
-  font-family: PTSans;
+  font-family: 'PTSans';
   color: white;
-  margin-top: 20px;
+  font-size: calc(100vw / 147);
+}
 
-  table thead tr{
+table.table {
+  margin-top: calc(100vw / 48);
+  position: relative;
+  width: 47vw;
+/*  display: block;
+  width: 100%;
+  overflow-x: scroll; */
+  background-color: #606973;
 
+  td {
+    text-align: center;
+  }
+
+  thead {
+    background-color: #374758;
+    th {
+      height: calc(100vw / 48);
+      font-size: calc(100vw / 160);
+    }
+  }
+
+  tbody {
+    background-color: #1D2429;
+    tr {
+      height: calc(100vw / 48);
+    }
   }
 }
+/* :global(.reactable-pagination) {
+  position: absolute;
+  top: 0;
+}
+
+:global(.reactable-th-id) {
+  width: 9%;
+}
+:global(.reactable-th-confidence) {
+  width: 8%;
+}
+:global(.reactable-th-blocked) {
+  width: 7%;
+}
+:global(.reactable-th-date) {
+  width: 8%;
+}
+:global(.reactable-th-time) {
+  width: 9%;
+}
+:global(.reactable-th-bus) {
+  width: 4%;
+}
+:global(.reactable-th-msg.id) {
+  width: 6%;
+}
+:global(.reactable-th-data) {
+  width: 18%;
+}
+:global(.reactable-th-category) {
+  width: 10%;
+}
+:global(.reactable-th-vehicle-id) {
+  width: 10.5%;
+}
+:global(.reactable-th-ruleset) {
+  width: 10.5%;
+}
+*/

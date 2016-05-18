@@ -1,3 +1,5 @@
+@import url(./fonts/PTSans.css);
+
 .alerts {
   font-family: PTSans;
   color: white;
@@ -19,36 +21,31 @@
   justify-content: space-between;
   padding: 8px 8px;
   align-items: center;
-  background-color: #161616;
+  font-size: 13px;
   .alertsNumber {
-    width: 50%;
     span {
-      text-shadow: 0 0 5px #2fc6f4;
-      text-transform: uppercase;
-      color: #2fc6f4;
-      font-size: 12px;
-      margin: 5%;
+      color: #68B3D9;
     }
   }
-  //.vehicle , .msg{
-  //  border: 1px solid gray;
-  //  padding: 1px 11px;
-  //  color: gray;
-  //  font-size: 10px;
-  //}
-  //.vehicle {
-  //  border-bottom-left-radius: 9px;
-  //  border-top-left-radius: 9px;
-  //}
-  //.msg {
-  //  border-bottom-right-radius: 9px;
-  //  border-top-right-radius: 9px;
-  //}
+  .vehicle , .msg{
+    border: 1px solid gray;
+    padding: 1px 11px;
+    color: gray;
+    font-size: 10px;
+  }
+  .vehicle {
+    border-bottom-left-radius: 9px;
+    border-top-left-radius: 9px;
+  }
+  .msg {
+    border-bottom-right-radius: 9px;
+    border-top-right-radius: 9px;
+  }
 }
 
 .row {
   background-color: #353736;
-  padding: 4px 8px;
+  padding: 8px;
   font-size: 12px;
   border-bottom: 1px solid black;
 }
@@ -71,10 +68,6 @@
   .number {
     font-size: 21px;
     color: #68B3D9;
-    font-family: modeka;
-  }
-  .numberinbtm {
-    font-size: 21px;
   }
   .resolve {
     color: #68B3D9;
@@ -85,28 +78,11 @@
     color: gray;
     font-size: 10px;
   }
+
   img.msg {
     width: 15px;
     height: 15px;
-    margin-right: 3px;
-    vertical-align: bottom;
-  }
-
-  .msgintop {
-    font-size: 21px;
-    color: #68B3D9;
-    font-family: modeka;
-    img {
-      width: 15px;
-      height: 15px;
-      margin-left: 8px;
-    }
-  }
-  img.msgintop {
-    width: 15px;
-    height: 15px;
     vertical-align: text-bottom;
-    margin-left: 6px;
   }
   img.car {
     width: 14px;
@@ -115,29 +91,3 @@
   }
 }
 
-.alertsFilter {
-  span {
-    width: 76.3296px;
-    height: 22.1695px;
-    display: inline-block;
-    border: 1px solid #858585;
-    font-size: calc(100vw / 137);
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    color: #858585;
-    line-height: calc(100vw / 87.3);
-    font-family: PTSans;
-    &:first-child {
-      border-radius: 30px 0 0 30px;
-    }
-    &:last-child {
-      border-radius: 0 30px 30px 0;
-    }
-    &.active {
-      border: 1px solid #2fc6f4;
-      background-color: #2fc6f4;
-      color: #000f4f;
-    }
-  }
-}

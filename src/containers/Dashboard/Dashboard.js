@@ -65,7 +65,6 @@ export default class Dashboard extends Component {
     ];
    
   const changeAlertsVisibilty = () => {
-    console.log("sar");
     this.setState({
       alertsVisibility: !this.state.alertsVisibility,
     });

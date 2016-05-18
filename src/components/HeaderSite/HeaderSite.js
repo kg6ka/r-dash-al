@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { MainMenu,ToggleMenu } from './components';
-import { Link } from 'react-router';
 import styles from './HeaderSite.scss';
 
 class HeaderSite extends Component {
@@ -17,7 +16,7 @@ class HeaderSite extends Component {
     render() {
         return <header className={styles.headerSite}>
             <ToggleMenu/>
-            <Link to="dashboard" className={styles.logo}><img src="/assets/images/logo.png"/></Link>
+            <a href="#home" className={styles.logo}><img src="/assets/images/logo.png"/></a>
             <div className={styles.center}>
                 <MainMenu/>
                 <a className={styles.update}>

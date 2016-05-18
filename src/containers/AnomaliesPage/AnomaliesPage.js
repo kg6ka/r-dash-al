@@ -3,7 +3,7 @@ const { func } = PropTypes;
 import { bindActionCreators } from 'redux';
 // import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
-  FilterTable, MapsPopup, AnomaliesList } from 'components';
+  FilterTable, MapsPopup, AnomaliesList, BackBtn } from 'components';
 import styles from './Anomalies.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -88,7 +88,9 @@ export default class AnomaliesPage extends Component {
     const data = argusComponents.fleetActivity.bars;
     return (
       <div className={layout.layout}>
-        <div className="backBtn"></div>
+        <div className={cx(layout.layoutCol100,layout.height20)}>
+          <BackBtn />
+        </div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50)}>
             <AnomaliesList anomalies={ this.state.anomalies } />
         </div>

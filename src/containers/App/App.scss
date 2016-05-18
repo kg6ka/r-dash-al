@@ -152,7 +152,9 @@ body {
     width: 50%;
    
 }
-
+.height20 {
+  height: calc(100vw/30);
+}
 .height50 {
    height: calc(100vw/5.9);
 }

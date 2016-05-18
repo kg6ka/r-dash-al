@@ -5,12 +5,11 @@ import styles from './BackBtn.scss';
 export default class BackBtn extends Component {
     render() {
         return (
-            <div className={styles.backBtn}>
-            <Link style={{color:'#337ab7',  fontSize: '17px'}}  to="/dashboard" > {"<"} </Link>
-            <span>Dashboard</span>
-                </div>
+        <div className={styles.backBtn}>
+            <Link to="/dashboard" >Dashboard</Link>
+            </div>
             );
-    }
+    } 
 }
 
 

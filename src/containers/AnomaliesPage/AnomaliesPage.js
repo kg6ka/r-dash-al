@@ -52,10 +52,10 @@ export default class AnomaliesPage extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.anomaliesList.data.length) {
+    if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
       this.setState({
         anomalies: props.anomaliesList.data,
-      })
+      });
     }
     if (props.categories.data.length) {
       this.setState({
@@ -77,7 +77,7 @@ export default class AnomaliesPage extends Component {
       max = rangeToData[1];
       min = rangeToData[0];
     }
-    const filterData = this.state.anomalies.filter((item) => new Date(item.time) > min && new Date(item.time) < max);
+    const filterData = this.props.anomaliesList.data.filter((item) => item.timestamp > min && item.timestamp < max);
 
     this.setState({
       anomalies: filterData,

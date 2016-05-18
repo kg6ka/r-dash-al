@@ -3,13 +3,14 @@ const { func } = PropTypes;
 import { bindActionCreators } from 'redux';
 // import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
-  FilterTable, MapsPopup,AnomaliesList } from 'components';
+  FilterTable, MapsPopup, AnomaliesList } from 'components';
 import styles from './Anomalies.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { getCategories } from './../../redux/modules/categories';
+import { getAnomaliesList } from './../../redux/modules/anomaliesList';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ export default class AnomaliesPage extends Component {
 
   componentDidMount() {
     this.props.getCategories('11111111-1111-1111-3333-000000000031');
+    this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
   }
 
   categoriesData(props) {
@@ -50,6 +52,11 @@ export default class AnomaliesPage extends Component {
   }
 
   componentWillReceiveProps(props) {
+    if (props.anomaliesList.data.length) {
+      this.setState({
+        anomalies: props.anomaliesList.data,
+      })
+    }
     if (props.categories.data.length) {
       this.setState({
         categories: this.categoriesData(props),
@@ -80,7 +87,6 @@ export default class AnomaliesPage extends Component {
   render() {
     const data = argusComponents.fleetActivity.bars;
     return (
-
       <div className={layout.layout}>
         <div className="backBtn"></div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50)}>
@@ -114,9 +120,10 @@ export default class AnomaliesPage extends Component {
 }
 
 export default connect(
-  ({ mapsPopup, categories }) => ({ mapsPopup, categories }),
+  ({ mapsPopup, categories, anomaliesList }) => ({ mapsPopup, categories, anomaliesList }),
     dispatch => bindActionCreators({
     openMapsPopup,
     getCategories,
+    getAnomaliesList,
   }, dispatch)
 )(AnomaliesPage);

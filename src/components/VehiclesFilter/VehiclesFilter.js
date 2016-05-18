@@ -3,7 +3,6 @@ import { Scrollbars, DataBars } from 'components';
 import styles from './VehiclesFilter.scss';
 
 const VehiclesFilter = () => {
-  console.log(argusComponents.target['Vehicle']);
   return (<div className={styles.msgFilter}>
       <div>
         <div className="glowText">Filter by vehicles</div>

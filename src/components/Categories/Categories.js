@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-const { string } = PropTypes;
+const { string, array } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
@@ -9,23 +9,11 @@ const externalLink =
   ' V 5.8333 H 8.3333327 v 2.5 z M 4.9999997,0 l 1.666673,1.6667 -2.500003,2.5' +
   ' 1.666663,1.6666 2.5,-2.5 L 10.000003,5 V 0 H 4.9999997 z';
 
-const informationData = [
-  { offset: window.innerWidth / 25.26, color: '#b2d733',
-    text: 'READ ONLY DIAGNOSTICS', percent: 55 },
-  { offset: window.innerWidth / 15.5, color: '#13aa38',
-    text: 'TIMING ANOMALY', percent: 20 },
-  { offset: window.innerWidth / 11.2, color: '#1156e4',
-    text: 'IRRATIONAL DATA', percent: 12 },
-  { offset: window.innerWidth / 8.73, color: '#904fff',
-    text: 'BAD DIAGNOSTICS', percent: 5 },
-  { offset: window.innerWidth / 7.16, color: '#fff',
-    text: 'BUS OFF', percent: 8 },
-];
-
 export default class Categories extends Component {
   static propTypes = {
     name: string,
     filter: string,
+    data: array,
   };
 
   constructor(props) {
@@ -34,13 +22,12 @@ export default class Categories extends Component {
       hovered: null,
       data: [],
     };
-    this.category = argusComponents.category.length ? argusComponents.category : informationData;
   }
 
   componentWillReceiveProps(props) {
-    if (props.data.length) {
+    if (props.data) {
       this.setState({
-        categories: props.data,
+        data: props.data,
       });
     }
   }
@@ -114,11 +101,11 @@ export default class Categories extends Component {
       .innerRadius((d, idx) => r - this.getOffset(idx));
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
-        { pie(this.state.data).map((d, idx) =>
+        { pie(this.state.data).map((el, idx) =>
           <path
             key={ `slice-${idx}` }
-            fill={ d.data.color }
-            d ={ arc(d, idx) }
+            fill={ el.data.color }
+            d ={ arc(el, idx) }
           />
         ) }
       </g>
@@ -192,13 +179,13 @@ export default class Categories extends Component {
           className="glowText"
           x="5%"
           y={ window.innerWidth / 54.6 }
-          fill={'#2fc6f4'}
+          fill="#2fc6f4"
           fontSize={ window.innerWidth / 120 }
         >
           {this.props.name}
         </text>
         <g transform={ this.props.filter ? 'scale(0.8, 0.85)' : null }>
-          { this.category.map((el, idx) => this.drawInformation(el, idx)) }
+          { this.state.data.map((el, idx) => this.drawInformation(el, idx)) }
         </g>
         <g
           className="pieChart"

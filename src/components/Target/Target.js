@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
+const { object } = PropTypes;
 import styles from './Target.scss';
 import { Designations } from '../FleetActivity/components';
 import { DataView } from './components';
@@ -8,6 +9,10 @@ import Scrollbar from 'react-custom-scrollbars';
 const buttonsNames = ['ECU', 'MSG', 'Vehicle'];
 
 export default class Target extends Component {
+  static propTypes = {
+    data: object,
+  };
+
   constructor(props) {
     super(props);
     this.state = {

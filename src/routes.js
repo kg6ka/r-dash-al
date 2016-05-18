@@ -7,10 +7,17 @@ export default () => (
     <Route component={App}>
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/anomalies" component={AnomaliesPage} />
-      <Route path="/" component={AuthorizedArea}>
-        <IndexRoute component={Home} />
+      <Route path="/" component={Dashboard}>
+        <IndexRoute component={Dashboard} />
       </Route>
-      <Route path ="login" component={Login} />
     </Route>
   </Router>
 );
+
+
+//       <Route path="/dashboard" component={Dashboard} />
+//       <Route path="/anomalies" component={AnomaliesPage} />
+//       <Route path="/" component={AuthorizedArea}>
+//         <IndexRoute component={Home} />
+//       </Route>
+//      <Route path ="login" component={Login} />

@@ -64,7 +64,7 @@ export default class Dashboard extends Component {
       { offset: window.innerWidth / 7.16, color: '#fff' },
     ];
    
-  changeAlertsVisibilty = () => {
+  const changeAlertsVisibilty = () => {
     this.setState({
       alertsVisibility: !this.state.alertsVisibility,
     });
@@ -154,7 +154,6 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div>
-        
         <div className={layout.layout}>
           <div className={cx(
             layout.layoutSideRight,

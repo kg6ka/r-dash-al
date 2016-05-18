@@ -40,20 +40,21 @@ export default function totalAnomaliesReducer(state = initialState, action) {
   }
 }
 
-export function getTotalAnomalies(tagId) {
+export function getTotalAnomalies(tagId, period) {
   return {
     type: GETTING_TOTAL_ANOMALIES,
     tagId,
+    period,
   };
 }
 
 export function* totalAnomaliesSaga() {
   while (1) {
-    const { tagId } = yield take(GETTING_TOTAL_ANOMALIES);
+    const { tagId, period } = yield take(GETTING_TOTAL_ANOMALIES);
     try {
       const { apiBaseUrl } = config;
       const totalAnomalies = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${dataFrom}/1/anomalies?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/anomalies?from=0`)
           .promise()
         ;
       const carsData = yield request

@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import styles from './ConfidenceFilter.scss';
 
-const informationData = [
-  { offset: window.innerWidth / 25.26, color: '#ffeeb2', val: 50 },
-  { offset: window.innerWidth / 15.5, color: '#ffe400', val: 60 },
-  { offset: window.innerWidth / 11.2, color: '#f07742', val: 100 },
-  { offset: window.innerWidth / 8.73, color: '#ff7f00', val: 93 },
-  { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
-];
+// const informationData = [
+//   { offset: window.innerWidth / 25.26, color: '#ffeeb2', val: 50 },
+//   { offset: window.innerWidth / 15.5, color: '#ffe400', val: 60 },
+//   { offset: window.innerWidth / 11.2, color: '#f07742', val: 100 },
+//   { offset: window.innerWidth / 8.73, color: '#ff7f00', val: 93 },
+//   { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
+// ];
 
 export default class ConfidenceFilter extends Component {
 
   drawInformation(data, idx) {
-    const rectSide = window.innerWidth / 120;
+    const rectSide = window.innerWidth / 10 + argusComponents.confidence.maxDomain;
     return (
       <g
         className={ styles.information }
@@ -39,7 +39,7 @@ export default class ConfidenceFilter extends Component {
           stroke="white"
           textAnchor="end"
         >
-          { data.val }
+          { data.total }
         </text>
       </g>
     );
@@ -58,7 +58,7 @@ export default class ConfidenceFilter extends Component {
           filter by confidence
         </text>
         <g transform="scale(1, 0.85)">
-          { informationData.map((el, idx) => this.drawInformation(el, idx)) }
+          { argusComponents.confidence.data.map((el, idx) => this.drawInformation(el, idx)) }
         </g>
       </svg>
     );

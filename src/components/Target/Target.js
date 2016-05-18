@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
+const { object } = PropTypes;
 import styles from './Target.scss';
 import { Designations } from '../FleetActivity/components';
 import { DataView } from './components';
@@ -8,6 +9,10 @@ import Scrollbar from 'react-custom-scrollbars';
 const buttonsNames = ['ECU', 'MSG', 'Vehicle'];
 
 export default class Target extends Component {
+  static propTypes = {
+    data: object,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -97,7 +102,7 @@ export default class Target extends Component {
           >
             <div className={styles.dataBlockInner}>
             { this.props.data[this.state.checked].map((el, idx) =>
-                <DataView key={ idx } name={ el.name } total={ el.total } blocked={ el.blocked } />
+                <DataView key={ idx } name={ el.key } total={ el.total } blocked={ el.blocked } />
             ) }
             </div>
           </Scrollbar>

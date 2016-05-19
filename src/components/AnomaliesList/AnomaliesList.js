@@ -121,9 +121,14 @@ moreInfo(){
                   <td>{i['Vehicle Id']}</td>
                   <td>{i.Ruleset}</td>
                   <td className={styles.moreInfo}>
-                    <div>{'MessageId ' }</div>
-                    <div>{'Name ' }</div>
-                    <div>{'Name ' }</div>
+                    <div>{'MessageId '}<span>PLA_Status</span></div>
+                    <div>{'Name | ' }</div>
+                    <div>{'Inteval | ' }</div>
+                    <div>{'Type | ' }</div>
+                    <div>{'ECU | ' }</div>
+                    <div>{'Location '}</div>
+                    <hr/>
+                    <div>{'Signal ... ' }</div>
                   </td>
                 </tr>
                })}

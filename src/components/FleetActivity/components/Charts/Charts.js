@@ -32,13 +32,13 @@ export default class Charts extends Component {
       .style({ fill: 'none' });
 
     d3.selectAll('.xAxis text')
-      .style({ stroke: '#8f9295' });
+      .style({ fill: '#8f9295' });
 
     d3.selectAll('.yAxis1 text')
-      .style({ stroke: '#ffbc16' });
+      .style({ fill: '#ffbc16' });
 
     d3.selectAll('.yAxis2 text')
-      .style({ stroke: '#2fc6f4' });
+      .style({ fill: '#2fc6f4' });
 
     d3.selectAll('.axisLine')
       .style({

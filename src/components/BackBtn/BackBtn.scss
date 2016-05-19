@@ -1,0 +1,22 @@
+
+
+.backBtn {
+    background-color: #1e252b;
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 2em;
+  a{
+    font-family: PTSans;
+    font-size: 17px;
+    text-decoration: blink;
+    color:white;
+    &:before{
+      font-size: 19px;
+      content: '<';
+      color: #2fc6f4;
+      margin-right: 0.6em;
+    }
+  }
+}

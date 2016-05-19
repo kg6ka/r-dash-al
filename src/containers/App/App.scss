@@ -85,7 +85,7 @@ body {
 
 
 .layout{
-    margin-top: 5em;
+  margin-top: 4.1em;
 }
 
 .layout,
@@ -152,7 +152,9 @@ body {
     width: 50%;
    
 }
-
+.height20 {
+  height: calc(100vw/30);
+}
 .height50 {
    height: calc(100vw/5.9);
 }
@@ -180,4 +182,7 @@ body {
 
 .borderLeftTop {
   box-shadow: -20px -5px 1px -20px white,-5px -20px 1px -20px white
+}
+.notActive {
+  display: none;
 }

@@ -17,3 +17,4 @@ export DataBars from './DataBars/DataBars';
 export Scrollbars from './Scrollbars/Scrollbars';
 export ConfidenceFilter from './ConfidenceFilter/ConfidenceFilter';
 export Modal from './Modal/Modal';
+export BackBtn from './BackBtn/BackBtn';

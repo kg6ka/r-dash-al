@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { MainMenu,ToggleMenu } from './components';
+import { Link } from 'react-router';
 import styles from './HeaderSite.scss';
 
 class HeaderSite extends Component {
@@ -16,7 +17,7 @@ class HeaderSite extends Component {
     render() {
         return <header className={styles.headerSite}>
             <ToggleMenu/>
-            <a href="#home" className={styles.logo}><img src="/assets/images/logo.png"/></a>
+            <Link to="dashboard" className={styles.logo}><img src="/assets/images/logo.png"/></Link>
             <div className={styles.center}>
                 <MainMenu/>
                 <a className={styles.update}>
@@ -24,7 +25,7 @@ class HeaderSite extends Component {
                     <span>{this.update_date}</span>
                 </a>
             </div>
-            <div className={styles.error} onClick={this.props.onClick}>{this.count_error}</div>
+            <div className={styles.error} onClick={this.props.onClick.bind(this)}>{this.count_error}</div>
             <a href="#home" className={styles.user}><img src={`/assets/images/${this.user_img}`}/></a>
         </header>;
     }

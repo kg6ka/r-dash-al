@@ -22,7 +22,7 @@ const INITIAL_STATE = {
     }
   ],
   data: [],
-  center: {},
+  center: {desc:'GERMANY',lng:0,lat:0},
 };
 
 export default function mapReducer(state = INITIAL_STATE, action) {

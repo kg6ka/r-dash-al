@@ -33,19 +33,23 @@ body {
 }
 
 :global(.carsStatus) {
-    width: calc(100vw / 2.8);
-    width: 45%;
+/*     width: calc(100vw / 2.8); */
+/*     width: 45%; */
+    max-width: 34vw;
+    margin:auto;
     height: calc(100vw / 5.7);
     font-family: 'PTSans';
-    display: inline-block;
+/*     display: inline-block; */
 }
 
 :global(.anomaliesBlock) {
-    width: calc(100vw / 2.2); 
-    width: 55%; 
+/*     width: calc(100vw / 2.2);  */
+/*     width: 55%;  */
+    max-width: 43vw;
+    margin: auto;
     height: calc(100vw / 5.7);
     font-family: 'PTSans';
-    display: inline-block;
+/*     display: inline-block; */
 }
 
 :global(.svgIcon) {
@@ -75,9 +79,11 @@ body {
 }
 
 :global(.fleetActivityBlock) {
-  width: calc(100vw / 1.71);
-  width: 100%;
+/*   width: calc(100vw / 1.71); */
+/*   width: 100%; */
   height: calc(100vw / 5.45);
+   > svg{   margin: auto;
+    display: block;}
 }
 
 
@@ -171,6 +177,9 @@ body {
     order:2;
 }
 
+.borderRight{
+      box-shadow: -31px 0px 0px -30px #3b3b3b;
+}
 .blue-shadow {
     box-shadow: 0px -33px 24px -24px #184451 inset;
     border-bottom-color: rgb(36, 135, 166);

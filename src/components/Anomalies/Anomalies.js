@@ -113,14 +113,6 @@ export default class Anomalies extends Component {
           height="100%"
           width="100%"
         >
-          <line
-            x1="0"
-            y1={ this.componentHeight * 0.12 }
-            x2="0"
-            y2={ this.componentHeight }
-            stroke="#535353"
-            strokeWidth="1"
-          />
           { this.drawTitle() }
           { this.leftText() }
           { this.drawAxisLine(this.screenWidth / 8.7 - offset, calcY, calcX, calcY) }

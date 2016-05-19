@@ -5,13 +5,13 @@
   background: linear-gradient(to bottom, #0b0a0a 92%, rgba(47, 198, 244, .25));
 }
 
-/* .fleetStatus {
-  width: calc(100vw / 1.23);
+.fleetStatus {
+
 }
 
-.fleetActivity {
-  width: calc(100vw / 1.7);
-} */
+.fleetActivitys {
+    max-width: 51em;
+}
 .fleetStatus,
 .fleetActivity  {
 /*   width: 100%; */

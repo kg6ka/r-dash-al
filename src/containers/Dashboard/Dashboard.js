@@ -170,7 +170,7 @@ export default class Dashboard extends Component {
             <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} onResolveClick={this.deleteAlert} />
           </div>
           <div className={cx(layout.layoutSideLeft, layout.layoutCol80)}>
-            <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
+            <div className={cx(layout.layoutCol50,styles.backgroundGradient)}>
               <CarsStatus
                 registeredCars={ this.state.registeredVehicles.registered }
                 percentRegistered={ this.state.registeredVehicles.percentRegistered }
@@ -178,6 +178,8 @@ export default class Dashboard extends Component {
                 uptodate={ this.state.registeredVehicles.updated }
                 updateData={'13.01.16'}
               />
+            </div>
+            <div className={cx(layout.borderRight,layout.layoutCol50,styles.backgroundGradient)}>
               <Anomalies
                 anomalies={ this.state.totalAnomalies.totalSum }
                 cars1={ this.state.totalAnomalies.cars1 }
@@ -193,8 +195,8 @@ export default class Dashboard extends Component {
               <Target
                 data={this.props.target}
               />
-            </div>
-            <div className={cx(styles.fleetStatus, layout.layoutSideLeft, layout.layoutCol70)}>
+            </div> 
+            <div className={cx(styles.fleetActivities, layout.layoutSideLeft, layout.layoutCol70)}>
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity
                   data={ this.state.fleetActivities }
@@ -207,7 +209,7 @@ export default class Dashboard extends Component {
                 />
               </div>
               <div className={cx(layout.layoutCol50, layout.height50)}>
-                <Map locations={this.props.map.data} lng={this.props.map.center.lng} lat={this.props.map.center.lat} />
+                <Map locations={this.props.map.data} desc={this.props.map.center.desc} lng={this.props.map.center.lng} lat={this.props.map.center.lat} />
               </div>
             </div>
           </div>

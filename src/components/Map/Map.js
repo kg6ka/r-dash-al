@@ -134,8 +134,8 @@ export default class Map extends Component {
 
       const map = new GMaps({
         el: '#map',
-        lat: locations[0].lat,
-        lng: locations[0].lng,
+        lat: props.lat,
+        lng: props.lng,
         zoom: 2,
         disableDefaultUI: true,
       });
@@ -174,7 +174,7 @@ export default class Map extends Component {
       <div className={styles.heatmapHeader}>
       <span>HEATMAP</span>
       <span className={styles.heatmapHeaderLine}> | </span>
-      <span>GERMANY</span>
+      <span>{this.props.desc}</span>
         </div>
       <p>Loading...</p>
       <div className={styles.map} id="map"></div>

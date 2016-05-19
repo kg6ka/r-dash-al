@@ -171,7 +171,6 @@ export default class AnomaliesPage extends Component {
   }
 
   confidenceFilter(type) {
-    debugger;
     const filterList = this.state.anomalies.filter((item) => item.likelihood.toString() === type);
     this.setState({
       anomalies: filterList,

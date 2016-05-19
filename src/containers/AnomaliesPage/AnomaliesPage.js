@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 const { func } = PropTypes;
 import { bindActionCreators } from 'redux';
-// import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
   FilterTable, MapsPopup, AnomaliesList } from 'components';
 import styles from './Anomalies.scss';
@@ -35,7 +34,7 @@ export default class AnomaliesPage extends Component {
     this.props.getCategories('11111111-1111-1111-3333-000000000031');
     this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
     this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031');
+    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getAnomaliesConfidence('11111111-1111-1111-3333-000000000031');
   }
 
@@ -76,6 +75,7 @@ export default class AnomaliesPage extends Component {
   componentWillReceiveProps(props) {
     if (this.props.routeParams.period !== props.routeParams.period) {
       this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
+      this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     }
 
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
@@ -163,6 +163,13 @@ export default class AnomaliesPage extends Component {
     });
   }
 
+  filterByCategory(type) {
+    const filterList = this.state.anomalies.filter((item) => item.detailedCause.toUpperCase() === type);
+    this.setState({
+      anomalies: filterList,
+    });
+  }
+
   render() {
     const data = argusComponents.fleetActivity.bars;
     return (
@@ -186,7 +193,7 @@ export default class AnomaliesPage extends Component {
             <VehiclesFilter />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
-            <Categories name="filter by category" filter="true" data={ this.state.categories } />
+            <Categories name="filter by category" filter="true" data={ this.state.categories } onChange={ ::this.filterByCategory } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderLeftTop)}>
             <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } />

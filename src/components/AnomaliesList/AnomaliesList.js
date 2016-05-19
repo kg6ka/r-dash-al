@@ -13,7 +13,7 @@ class AnomaliesList extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.anomalies.length > 0) {
+    if (props.anomalies.length !== this.props.anomalies.length) {
       this.setState({
         anomalies: props.anomalies,
       });

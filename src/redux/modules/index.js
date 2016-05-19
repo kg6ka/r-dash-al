@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import currentUser, { sagas as currentUserSagas } from './currentUser';
-import alerts from './alerts';
 import carsStatus, { sagas as carsStatusSagas } from './carsStatus.js';
 import totalAnomalies, { sagas as totalAnomaliesSagas } from './totalAnomalies.js';
 import fleetActivities, { sagas as fleetActivitiesSagas } from './fleetActivities.js';
@@ -13,7 +12,6 @@ import mapsPopup from './mapsPopup';
  
 export default combineReducers({
   currentUser,
-  alerts,
   map,
   categories,
   carsStatus,

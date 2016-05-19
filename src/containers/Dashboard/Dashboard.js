@@ -8,7 +8,7 @@ import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCategories } from './../../redux/modules/categories';
 import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
-import { getAlertsData, showAlerts } from './../../redux/modules/alertsList';
+import { getAlertsData, showAlerts, deleteAlert } from './../../redux/modules/alertsList';
 import { bindActionCreators } from 'redux';
 import styles from './Dashboard.scss';
 import layout from '../App/App.scss';
@@ -114,7 +114,12 @@ export default class Dashboard extends Component {
     }
   }
  changeAlertsVisibilty = () => {
+   console.log("alerts",this.props.alertsList);
    this.props.showAlerts(false);
+  }
+  deleteAlert = (alertsType,desc2) => {
+    console.log("delete");
+    this.props.deleteAlert(alertsType,desc2);
   }
 
   totalAnomaliesData(props) {
@@ -159,7 +164,7 @@ export default class Dashboard extends Component {
             this.props.alertsList.showAlerts ?  '' : layout.notActive
            )}
           >
-            <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} />
+            <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} onResolveClick={this.deleteAlert} />
           </div>
           <div className={cx(layout.layoutSideLeft, layout.layoutCol80)}>
             <div className={cx(styles.backgroundGradient, styles.fleetStatus)}>
@@ -230,6 +235,7 @@ export default connect(
     dispatch => bindActionCreators({
       getCarsStatus,
       showAlerts,
+      deleteAlert,
       getTotalAnomalies,
       getFleetActivities,
       getCategories,

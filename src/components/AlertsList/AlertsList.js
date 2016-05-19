@@ -39,7 +39,7 @@ class AlertsList extends Component {
                         messages={alert.count2}
                         vehicleId={alert.desc2}
                         date={new Date(alert.timestamp)}
-                        onClick={() => this.props.onResolveClick(alert.desc2)}
+                        onClick={() => this.props.onResolveClick('alertsVehicle',alert.desc2)}
                     />
                 ) :
                 alerts.map((alert,idx) =>
@@ -50,7 +50,7 @@ class AlertsList extends Component {
                         messages={alert.count2}
                         vehicleId={alert.desc2}
                         date={new Date(alert.timestamp)}
-                        onClick={() => this.props.onResolveClick(alert.desc2)}
+                        onClick={() => this.props.onResolveClick('alertsMessage',alert.desc2)}
                     />
                 )}
         </div>

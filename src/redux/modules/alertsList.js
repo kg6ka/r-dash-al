@@ -39,6 +39,20 @@ export default function carsStatusReducer(state = initialState, action) {
         ...state,
         showAlerts:action.bool
       }
+    case 'DELETE_MSG_ALERT':
+      return {
+        ...state,
+        alertsMessage: state.alertsMessage.filter((alert) => {
+          return alert.desc2 !== action.desc2;
+        }),
+      };
+    case 'DELETE_VEHICLE_ALERT':
+      return {
+        ...state,
+        alertsVehicle: state.alertsVehicle.filter((alert) => {
+          return alert.desc2 !== action.desc2;
+        }),
+      };
     default:
       return state;
   }
@@ -53,6 +67,17 @@ export function showAlerts(bool) {
   return {
     type: 'SHOW_ALERTS',
     bool
+  }
+}
+export function deleteAlert(alertsType, desc2) {
+  if(alertsType === 'alertsVehicle') {
+    return {
+      type: 'DELETE_VEHICLE_ALERT',
+      desc2
+    }
+  } else return {
+    type: 'DELETE_MSG_ALERT',
+    desc2
   }
 }
 

@@ -11,6 +11,9 @@ import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { getCategories } from './../../redux/modules/categories';
 import { getAnomaliesList } from './../../redux/modules/anomaliesList';
+import { getFleetActivities } from './../../redux/modules/fleetActivities';
+import { getCarsStatus } from './../../redux/modules/carsStatus';
+import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -22,24 +25,99 @@ export default class AnomaliesPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      bars: [],
+      confidence: {
+        data: [],
+      },
+    };
     this.state.anomalies = argusComponents.fleetActivity.bars;
   }
 
   componentDidMount() {
     this.props.getCategories('11111111-1111-1111-3333-000000000031');
     this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
+    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
+    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031');
+    this.props.getAnomaliesConfidence('11111111-1111-1111-3333-000000000031');
+  }
+
+  fleetActivitiesData(props) {
+    return props.carsStatus.activities.reduce((curValue, item, index) => {
+      const newBar = {
+        time: item.timestamp,
+        activitys: item.values[0].value,
+        suspicious: props.fleetActivities.data[index].values[0].value,
+        blocked: props.fleetActivities.data[index].values[1].value,
+      };
+      return [...curValue, newBar];
+    }, []);
   }
 
   componentWillReceiveProps(props) {
+    if (this.props.routeParams.period !== props.routeParams.period) {
+      this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
+    }
+
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
       this.setState({
         anomalies: props.anomaliesList.data,
       });
     }
+
+    if (props.fleetActivities.data.length !== 0
+      && props.carsStatus.activities.length !== 0) {
+      this.setState({
+        bars: this.fleetActivitiesData(props),
+      });
+    }
     if (props.categories.data.length) {
       this.setState({
         categories: this.categoriesData(props),
+      });
+    }
+
+    if (props.confidenceFilter.data.length) {
+      const confidence = {};
+
+      const informationData = [
+        { offset: window.innerWidth / 25.26, color: '#ffeeb2', val: 50 },
+        { offset: window.innerWidth / 15.5, color: '#ffe400', val: 60 },
+        { offset: window.innerWidth / 11.2, color: '#f07742', val: 100 },
+        { offset: window.innerWidth / 8.73, color: '#ff7f00', val: 93 },
+        { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
+        { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
+      ];
+
+      const items = props.confidenceFilter.data.map((item, index) => {
+        return {
+          total: item.total,
+          offset: informationData[index].offset,
+          color: informationData[index].color,
+          key: item.key,
+        };
+      });
+
+      confidence.data = items;
+
+      let max = 0;
+      for(let i; i < items.length; i++) {
+        if(confidence.data[i].total > max) {
+          max = confidence.data[i].total;
+        }
+      }
+
+      if(max > 500) max = 1000;
+      if(max <= 500) max = 500;
+      if(max <= 100) max = 100;
+      if(max <= 10) max = 10;
+      if(max <= 5) max = 5;
+
+      this.setState({
+        confidence: {
+          data: items,
+          maxDomain: max,
+        },
       });
     }
   }
@@ -58,9 +136,10 @@ export default class AnomaliesPage extends Component {
       max = rangeToData[1];
       min = rangeToData[0];
     }
-    const filterData =
-      this.state.anomalies.filter((item) => new Date(item.time) > min && new Date(item.time) < max);
-
+    
+    const filterData = this.props.anomaliesList.data.filter((item) =>
+                                              item.timestamp > min &&
+                                              item.timestamp < max);
     this.setState({
       anomalies: filterData,
     });
@@ -114,7 +193,7 @@ export default class AnomaliesPage extends Component {
             <Categories name="filter by category" filter="true" data={ this.state.categories } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderLeftTop)}>
-            <ConfidenceFilter />
+            <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } />
           </div>
           <MapsPopup />
         </div>
@@ -127,11 +206,28 @@ export default class AnomaliesPage extends Component {
 }
 
 export default connect(
-  ({ mapsPopup, categories, anomaliesList }) => ({ mapsPopup, categories, anomaliesList }),
+  ({
+    mapsPopup,
+    categories,
+    anomaliesList,
+    fleetActivities,
+    carsStatus,
+    confidenceFilter,
+  }) => ({
+    mapsPopup,
+    categories,
+    anomaliesList,
+    fleetActivities,
+    carsStatus,
+    confidenceFilter,
+  }),
     dispatch => bindActionCreators({
       openMapsPopup,
       getCategories,
       getAnomaliesList,
+      getFleetActivities,
+      getCarsStatus,
+      getAnomaliesConfidence,
     }, dispatch)
 )(AnomaliesPage);
 

@@ -23,7 +23,7 @@ export default function AnomaliesListReducer(state = initialState, action) {
     case GOT_ANOMALIES_LIST: {
       return {
         ...state,
-        anomalies: data.data,
+        ...data,
         loading: false,
       };
     }

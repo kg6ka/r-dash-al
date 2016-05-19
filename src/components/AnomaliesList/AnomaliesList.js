@@ -69,7 +69,6 @@ moreInfo(){
       event.currentTarget.setAttribute('open','')
 }
   render() {
-          console.log(this.state.anomalies)
     const anomalies = this.state.anomalies;
     return (
       <div className={styles.content}>

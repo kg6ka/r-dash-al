@@ -18,7 +18,7 @@ export default function fleetActivitiesReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-      }
+      };
     }
     case GOT_FLEET_ACTIVITIES: {
       return {
@@ -37,20 +37,21 @@ export default function fleetActivitiesReducer(state = initialState, action) {
   }
 }
 
-export function getFleetActivities(tagId) {
+export function getFleetActivities(tagId, period) {
   return {
     type: GETTING_FLEET_ACTIVITIES,
     tagId,
+    period,
   };
 }
 
 export function* fleetActivitiesSaga() {
   while (1) {
-    const { tagId } = yield take(GETTING_FLEET_ACTIVITIES);
+    const { tagId, period } = yield take(GETTING_FLEET_ACTIVITIES);
     try {
       const { apiBaseUrl } = config;
       const anomalies = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${dataFrom}/1/anomalies?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/anomalies?from=0`)
           .promise()
         ;
       const { body } = anomalies;

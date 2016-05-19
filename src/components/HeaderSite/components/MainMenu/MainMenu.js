@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import styles from '../../HeaderSite.scss';
 
 export default class MainMenu extends Component {
+  static contextTypes = {
+    router: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {index:0}
@@ -26,11 +30,11 @@ export default class MainMenu extends Component {
         url: '#contact-us',
         icon: 'data.png',
         items:[
-          {label: 'last month', action:'dataFrom:6h' },
-          {label: 'last week', action:'dataFrom:1h' },
-          {label: 'last 24 hrs', action:'dataFrom:10m' },
-          {label: 'last 1 hour', action:'dataFrom:30s' },
-          {label: 'last 10 minutes', action:'dataFrom:5s' },
+          {label: 'last month', action:'6h' },
+          {label: 'last week', action:'1h' },
+          {label: 'last 24 hrs', action:'10m' },
+          {label: 'last 1 hour', action:'30s' },
+          {label: 'last 10 minutes', action:'5s' },
         ]
     }
   ]
@@ -39,19 +43,9 @@ export default class MainMenu extends Component {
 
 
   handlerAction(item){
-	if(item == undefined) return;
-	
- 	let action_name = item.action.split(":")[0];
- 	let params = item.action.split(":");
- 	params.shift(1);
-	switch(action_name) {
-		case "dataFrom":
-		  updateApiData(params[0]);
-//           argusComponents.dataFrom = params[0];
-          this.data[2].label = item.label + ":";
-        break;
-	}
-	this.setState({index:0});	
+	  if(item == undefined) return;
+
+    this.context.router.push(`/anomalies/${item.action}`);
   }
 
   renderSubMenu(list,stepClass) {

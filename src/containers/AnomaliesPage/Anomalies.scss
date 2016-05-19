@@ -1,5 +1,5 @@
 .anomaliesContent {
-  margin-top: 5em;
+  margin-top: 4em;
 }
 
 .fleetActivity {
@@ -48,4 +48,34 @@
 
 .category {
   height: calc(100vw/6.34);
+}
+
+.anomaliesHeader {
+  width: 100vw;
+  display: block;
+  height: calc(100vw / 29);
+  font-size: calc(100vw / 85);
+  font-family: 'PTSans';
+  color: white;
+  background-color: rgba(30, 37, 42, 0.5);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.arrow {
+  color: #2fc6f4;
+}
+
+.backBtn {
+  margin-left: calc(100vw / 80);
+  height: 100%;
+  line-height: calc(100vw / 29);
+  vertical-align: middle;
+}
+
+.table {
+  font-size: calc(100vw / 137);
+}
+
+.anomaliesList {
+  background-color: #1e252a;
 }

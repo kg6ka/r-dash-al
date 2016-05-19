@@ -108,6 +108,30 @@ export default class Map extends Component {
         },
       ];
 
+      let max = 0,i = locations.length;
+      while(i--) {
+        if(locations[i].count > max)
+          max = locations[i].count;
+      }
+
+      const CountColor = 100;
+      let step = CountColor;
+      if(max < 1000) { max = 1000;  }
+      if(max < 100) { max = 100;  }
+      if(max <= 20)  { max = 20;  }
+
+
+
+
+      max = 20;
+      step = CountColor/max;
+      function colorFun(value) {
+        let num = value*step;
+
+        return `rgb(180, ${100- parseInt(num)}, 4)` ;
+      }
+
+
       const map = new GMaps({
         el: '#map',
         lat: locations[0].lat,
@@ -117,26 +141,41 @@ export default class Map extends Component {
       });
 
       map.setOptions({styles: mapStyle});
-
       // Adding a marker to the location we are showing
-      locations.map(value =>
-        map.addMarker({
+      locations.map(value => {
+        const marker = {
           lat: value.lat,
           lng: value.lng,
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 3,
-            fillColor: value.count > 6 ? '#fba120' : '#B40404',
+            fillColor:  colorFun((value.count >= 0) ? value.count : 0 ),
+            strokeColor: colorFun((value.count >= 0) ? value.count : 0 ),
+            // fillColor: value.count > 6 ? '#fba120' : '#B40404',
             strokeWeight: 6,
-            strokeColor: value.count > 6 ? '#fba120' : '#B40404',
+            // strokeColor: value.count > 6 ? '#fba120' : '#B40404',
           },
-        }));
+          infoWindow: {
+            content: `<div style="font-family: PTSans;">
+            <span>${value.desc}</span>
+             <span style="color: gray";> | </span>
+            <span style="color: #93030C;">${value.count}</span> 
+             </div>`
+      }
+        };
+        map.addMarker(marker);
+      });
     }
   }
 
   render() {
     return (
     <div className={styles.mapHolder}>
+      <div className={styles.heatmapHeader}>
+      <span>HEATMAP</span>
+      <span className={styles.heatmapHeaderLine}> | </span>
+      <span>GERMANY</span>
+        </div>
       <p>Loading...</p>
       <div className={styles.map} id="map"></div>
     </div>

@@ -3,7 +3,7 @@ const { func, object } = PropTypes;
 import { bindActionCreators } from 'redux';
 // import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
-  FilterTable, MapsPopup, AnomaliesList } from 'components';
+  FilterTable, MapsPopup, AnomaliesList,BackBtn } from 'components';
 import styles from './Anomalies.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -172,10 +172,7 @@ export default class AnomaliesPage extends Component {
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
         <div className={styles.anomaliesHeader}>
-          <div className={styles.backBtn}>
-            <span className={styles.arrow}>{"< "}</span>
-            <span>Anomalies report</span>
-          </div>
+        <BackBtn/>
         </div>
         <div
           className={cx(layout.layoutSideLeft, layout.layoutCol50)}

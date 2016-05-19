@@ -60,9 +60,13 @@ h1 {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  background-color: #FCFCFC;
+  background-color: transparent;
   position: relative;
   border-radius: 2px;
+
+  [style*='height: 38px']{
+    text-align: center;
+  }
 }
 
 .mapHolder p {
@@ -116,4 +120,20 @@ a.list-group-item span.createdAt {
   display: block;
   color: #969FA8;
   z-index: -1;
+}
+
+.heatmapHeader {
+  text-shadow: 0 0 5px #2fc6f4;
+  font-family: 'telegrafico';
+  text-transform: uppercase;
+  color: #2fc6f4;
+  position: absolute;
+  margin-bottom: -3em;
+  z-index: 1;
+  font-size: 21px;
+  margin-left: 13px;
+  margin-top: 3px;
+}
+.heatmapHeaderLine {
+  color: white;
 }

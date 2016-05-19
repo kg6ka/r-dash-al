@@ -170,6 +170,14 @@ export default class AnomaliesPage extends Component {
     });
   }
 
+  confidenceFilter(type) {
+    debugger;
+    const filterList = this.state.anomalies.filter((item) => item.likelihood.toString() === type);
+    this.setState({
+      anomalies: filterList,
+    });
+  }
+
   render() {
     const data = argusComponents.fleetActivity.bars;
     return (
@@ -196,7 +204,7 @@ export default class AnomaliesPage extends Component {
             <Categories name="filter by category" filter="true" data={ this.state.categories } onChange={ ::this.filterByCategory } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderLeftTop)}>
-            <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } />
+            <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } onChange={ ::this.confidenceFilter } />
           </div>
           <MapsPopup />
         </div>

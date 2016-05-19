@@ -19,29 +19,37 @@ export default class ConfidenceFilter extends Component {
         className={ styles.information }
         key={ idx }
         transform={ `translate(0, ${data.offset})` }
+        onClick={ this.props.onChange.bind(this, data.key) }
       >
-        <text
-          x="6%"
-          y={ rectSide }
-          stroke="white"
-        >
-          { idx + 1 }
-        </text>
         <rect
-          x= "15%"
-          y="3%"
-          width={ (window.innerWidth / 7) * suspicPersent }
-          height={ window.innerWidth / 384 }
-          fill={ data.color }
+          x="6%"
+          y="2%"
+          width="80%"
+          height={ window.innerWidth / 154 }
+          fillOpacity="0"
         />
-        <text
-          x="94%"
-          y={ rectSide }
-          stroke="white"
-          textAnchor="end"
-        >
-          { data.total }
-        </text>
+          <text
+            x="6%"
+            y={ rectSide }
+            stroke="white"
+          >
+            { idx + 1 }
+          </text>
+          <rect
+            x= "15%"
+            y="3%"
+            width={ (window.innerWidth / 7) * suspicPersent }
+            height={ window.innerWidth / 384 }
+            fill={ data.color }
+          />
+          <text
+            x="94%"
+            y={ rectSide }
+            stroke="white"
+            textAnchor="end"
+          >
+            { data.total }
+          </text>
       </g>
     );
   }

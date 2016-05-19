@@ -193,7 +193,7 @@ function getApiData(tags) {
   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/statuses/vehicles/counts/updated`).then((data) => {
     statusActivityAnomalies_buildData('updatedVehicles', data.data[0]);
   });
- 
+  
   // Group API for:
   //    heatmap
   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/heatmap?from=0`).then((data) => {

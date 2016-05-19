@@ -1,24 +1,16 @@
 const INITIAL_STATE = {
-  alerts: {
-    msg: [],
-    vehicle:[],
-  },
+  showAlerts: true
 };
-// {alerts : [{id:1,number:2,name:'dde',vehicleId:'231223',messages:20,date: new Date()},
-//     {id:2,number:3,name:'fee',vehicleId:'23fdd223',messages:10,date: new Date()}]};
 
-
-//{msg:[],vehicle:[]};
 
 const alerts = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'FETCH_ALERTS':
-      return state;
-    case 'SET_ALERTS':
-      return {
-        ...state,
-        alerts: action.data,
-      };
+    case 'SHOW_ALERTS':
+          return {
+              ...state,
+              showAlerts:action.bool
+          }
+
     case 'DELETE_ALERT':
       return {
         ...state,
@@ -30,5 +22,11 @@ const alerts = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+export function showAlerts(bool) {
+  return {
+    type: 'SHOW_ALERTS',
+    bool
+  }
+}
 
 export default alerts

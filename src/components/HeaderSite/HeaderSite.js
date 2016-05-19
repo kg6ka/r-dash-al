@@ -25,7 +25,7 @@ class HeaderSite extends Component {
                     <span>{this.update_date}</span>
                 </a>
             </div>
-            <div className={styles.error} onClick={this.props.onClick}>{this.count_error}</div>
+            <div className={styles.error} onClick={this.props.onClick.bind(this)}>{this.count_error}</div>
             <a href="#home" className={styles.user}><img src={`/assets/images/${this.user_img}`}/></a>
         </header>;
     }

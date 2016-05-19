@@ -8,7 +8,7 @@ import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCategories } from './../../redux/modules/categories';
 import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
-import { getAlertsData } from './../../redux/modules/alertsList';
+import { getAlertsData, showAlerts } from './../../redux/modules/alertsList';
 import { bindActionCreators } from 'redux';
 import styles from './Dashboard.scss';
 import layout from '../App/App.scss';
@@ -19,7 +19,6 @@ export default class Dashboard extends Component {
     super(props);
     this.state = {
       index: 1,
-      alertsVisibility: false,
       totalAnomalies: {
         suspiciousSum: 0,
         blockedSum: 0,
@@ -64,12 +63,7 @@ export default class Dashboard extends Component {
       { offset: window.innerWidth / 7.16, color: '#fff' },
     ];
    
-  const changeAlertsVisibilty = () => {
-    console.log("sar");
-    this.setState({
-      alertsVisibility: !this.state.alertsVisibility,
-    });
-  }
+
 
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);
 
@@ -119,6 +113,9 @@ export default class Dashboard extends Component {
       });
     }
   }
+ changeAlertsVisibilty = () => {
+   this.props.showAlerts(false);
+  }
 
   totalAnomaliesData(props) {
     const suspiciousAndBlockedSum = props.totalAnomalies.data.reduce((curValue, item) => {
@@ -159,7 +156,7 @@ export default class Dashboard extends Component {
           <div className={cx(
             layout.layoutSideRight,
             layout.layoutCol20,
-            (this.state.alertsVisibility) && styles.notActive
+            this.props.alertsList.showAlerts ?  '' : layout.notActive
            )}
           >
             <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} />
@@ -232,6 +229,7 @@ export default connect(
     }),
     dispatch => bindActionCreators({
       getCarsStatus,
+      showAlerts,
       getTotalAnomalies,
       getFleetActivities,
       getCategories,

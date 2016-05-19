@@ -16,7 +16,7 @@ class AlertsList extends Component {
     const alerts = this.props.alerts[this.state.type];
       return (
         <div className={styles.alerts} >
-          <div className={styles.close} onClick={this.props.onClick}>
+          <div className={styles.close} onClick={this.props.onClick.bind(this)}>
             <span>X</span>
           </div>
           <img className={styles.carImage} src={'/assets/images/alerts/car.png'} />

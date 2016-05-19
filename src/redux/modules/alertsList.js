@@ -10,6 +10,7 @@ const initialState = {
   alertsVehicle: [],
   alertsMessage: [],
   loading: false,
+  showAlerts: true
 };
 
 export default function carsStatusReducer(state = initialState, action) {
@@ -33,6 +34,11 @@ export default function carsStatusReducer(state = initialState, action) {
         ...state,
         loading: false,
       };
+    case 'SHOW_ALERTS':
+      return {
+        ...state,
+        showAlerts:action.bool
+      }
     default:
       return state;
   }
@@ -43,6 +49,13 @@ export function getAlertsData() {
     type: GETTING_ALERTS_DATA,
   };
 }
+export function showAlerts(bool) {
+  return {
+    type: 'SHOW_ALERTS',
+    bool
+  }
+}
+
 
 export function* alertsListSaga() {
   while (1) {

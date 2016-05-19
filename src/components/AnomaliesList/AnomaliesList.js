@@ -57,7 +57,7 @@ export default class AnomaliesList extends Component {
         Time: new Date(el.timestamp).toTimeString().split(' ')[0],
         Bus: el.source,
         'Msg.Id': el.messageId,
-        Data: el.data.join('-'),
+//         Data: el.data.join('-'),
         Category: el.cause,
         'Vehicle Id': el.vehicleId,
         Ruleset: el.rulesetId,
@@ -66,7 +66,7 @@ export default class AnomaliesList extends Component {
 
 moreInfo(){
 //     if(event.currentTarget.getAttribute('open') != )
-      event.currentTarget.setAttribute('open','')
+//       event.currentTarget.setAttribute('open','')
 }
   render() {
     const anomalies = this.state.anomalies;

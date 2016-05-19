@@ -35,8 +35,7 @@ table.table {
   td {
     padding: 0.5em;
      white-space: nowrap;
-
-    padding-bottom:2em;
+    vertical-align: top;
   }
 
   thead {
@@ -57,16 +56,33 @@ table.table {
   }
 }
 
-.moreInfo{
 
+// when moreInfo is "close"
+td.moreInfo{
+  display: none; 
+}
+
+// when moreInfo is "close"
+// 'tr shoud be tr.open'
+tbody tr td{
+  padding-bottom: 9.7em !important;
+}
+
+td.moreInfo{
     position: absolute !important;
     left: 0;
     right: 0;
     background: black;
     display: flex;
-      display:none;
-    margin-top: 30.1px;
+    flex-wrap: wrap;
+    margin-top: 3em;
     padding-bottom: 7px !important;
+    > div {
+      padding:.5em;
+    }
+    > div:first-child {
+      width:100%;
+    }
 }
 /* :global(.reactable-pagination) {
   position: absolute;

@@ -195,7 +195,7 @@ export default class AnomaliesPage extends Component {
           <MapsPopup />
         </div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50, styles.anomaliesList)}>
-            <AnomaliesList anomalies={ this.props.anomaliesList.anomalies } />
+            <AnomaliesList anomalies={ this.state.anomalies } />
         </div>
       </div>
     );

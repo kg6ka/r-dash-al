@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 const { string, number } = PropTypes;
 import { RegisteredCars, PercentColumn } from './components';
 
@@ -16,6 +17,7 @@ export default class CarsStatus extends Component {
     this.screenWidth = window.innerWidth;
     this.active = Math.round(props.active) ? Math.round(props.active) : 0;
     this.uptodate = Math.round(props.uptodate) ? Math.round(props.uptodate) : 0;
+    console.log(this);
   }
 
   componentWillReceiveProps(nextProps) {

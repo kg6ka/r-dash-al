@@ -1,15 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 const { array } = PropTypes;
 import styles from './AnomaliesList.scss';
-// import Reactable from 'reactable';
 import blocked from './images/blocked.svg';
+import signal from './images/signal.svg';
+import previous from './images/previous.svg';
+import filter from './images/filter.svg';
 import moment from 'moment';
-// var Table = require('rc-table');
-// require('./rc-table.css');
-
-// const Table = Reactable.Table;
-// const unsafe = Reactable.unsafe;
-// const Tr = Reactable.Tr;
 
 export default class AnomaliesList extends Component {
   static propTypes = {
@@ -20,6 +16,7 @@ export default class AnomaliesList extends Component {
     super(props);
     this.state = {
       anomalies: props.anomalies ? props.anomalies : [],
+      openIdx: null,
     };
     this.colors = {
       0: '',
@@ -41,7 +38,6 @@ export default class AnomaliesList extends Component {
 
   editingData = (data) =>
     data.map((el, idx) => {
-
       const side = window.innerWidth / 96;
       const confidence =
         `<div style="display: block;">
@@ -64,12 +60,18 @@ export default class AnomaliesList extends Component {
       };
     })
 
-moreInfo(){
-//     if(event.currentTarget.getAttribute('open') != )
-//       event.currentTarget.setAttribute('open','')
-}
+  moreInfo(data) {
+    let openIdx = data;
+    if (openIdx === this.state.openIdx) {
+      openIdx = null;
+    }
+    this.setState({
+      openIdx,
+    });
+  }
+
   render() {
-    const anomalies = this.state.anomalies;
+    const { anomalies, openIdx } = this.state;
     return (
       <div className={styles.content}>
         <div className={styles.header}>Anomalies list</div>
@@ -90,28 +92,30 @@ moreInfo(){
                 <th>Vehicle ID</th>
                 <th>Ruleset</th>
               </tr>
-                <tr>
-                <td>$</td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
-                <td><input type="search"/></td>
+              <tr>
+                <td>
+                  <img src={ filter } alt="filter" style={{ width: '1em' }} />
+                </td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
+                <td><input type="search" /></td>
               </tr>
             </thead>
             <tbody>
-              {(anomalies != undefined ? this.editingData(anomalies) : []).map((i,idx)=>{
-               return <tr key={idx} onClick={this.moreInfo}>
-                  <td >></td>
+              {this.editingData(anomalies).map((i, idx) =>
+                [<tr key={ idx } onClick={ this.moreInfo.bind(this, idx) }>
+                  <td className={ openIdx === idx ? styles.operArrow : styles.hideArrow }>></td>
                   <td>{i.ID}</td>
-                  <td dangerouslySetInnerHTML={{__html:i.Confidence}}></td>
-                  <td dangerouslySetInnerHTML={{__html:i.Blocked}}></td>
+                  <td dangerouslySetInnerHTML={{ __html: i.Confidence }}></td>
+                  <td dangerouslySetInnerHTML={{ __html: i.Blocked }}></td>
                   <td>{i.Date}</td>
                   <td>{i.Time}</td>
                   <td>{i.Bus}</td>
@@ -120,18 +124,43 @@ moreInfo(){
                   <td>{i.Category}</td>
                   <td>{i['Vehicle Id']}</td>
                   <td>{i.Ruleset}</td>
-                  <td className={styles.moreInfo}>
-                    <div>{'MessageId '}<span>PLA_Status</span></div>
-                    <div>{'Name | ' }</div>
-                    <div>{'Inteval | ' }</div>
-                    <div>{'Type | ' }</div>
-                    <div>{'ECU | ' }</div>
-                    <div>{'Location '}</div>
-                    <hr/>
-                    <div>{'Signal ... ' }</div>
+                </tr>,
+                <tr className={ openIdx === idx ? styles.moreInfo : styles.hideInfo }>
+                  <td colSpan="12" className={styles.detail}>
+                    <div className="wrapper">
+                      <div className={styles.msgTitle}>Message {i['Msg.Id']}</div>
+                      <div className={styles.msgRow}>
+                        <div>{'Name  |  PLA_Status_01' }</div>
+                        <div>{'Interval  |  4ms.' }</div>
+                        <div>{'Type  |  Event periodic' }</div>
+                        <div>{'ECU  |  Tmnt version 4.7.1.04' }</div>
+                        <div>{'Location | Wolfsburg'}</div>
+                      </div>
+                      <hr />
+                      <div className={styles.signalTitle}>Signal Values 1/20</div>
+                      <div className={styles.camZoom}>
+                        <div>
+                          <img
+                            className={styles.signalIcon}
+                            src={ signal }
+                            alt="signal"
+                          />
+                          CamZoomActiveState = 0
+                        </div>
+                        <div>
+                          <img
+                            className={styles.prevIcon}
+                            src={ previous }
+                            alt="previous"
+                          />
+                          Previous Value = <span style={{ color: 'red' }}>245</span>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="#">Show all</a>
                   </td>
-                </tr>
-               })}
+                </tr>]
+              )}
             </tbody>
           </table>
         </div>

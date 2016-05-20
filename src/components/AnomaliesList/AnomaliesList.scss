@@ -59,13 +59,13 @@ table.table {
 
 // when moreInfo is "close"
 td.moreInfo{
-  display: none; 
+  display: none !important; 
 }
 
 // when moreInfo is "close"
 // 'tr shoud be tr.open'
 tbody tr td{
-  padding-bottom: 9.7em !important;
+/*   padding-bottom: 9.7em !important; */
 }
 
 td.moreInfo{

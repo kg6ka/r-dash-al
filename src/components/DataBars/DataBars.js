@@ -16,7 +16,7 @@ export default class DataBars extends Component {
     const { style: { width, height },
       data: { val, msg, suspicious, blocked } } = this.props;
     return (
-      <svg width={ width } height={ height } className={styles.chart}>
+      <svg width={ width } height={ height } className={styles.chart} onClick={ this.props.onChange }>
         <rect
           x="30%"
           y={`${100 - this.calcPercent(blocked)}%`}

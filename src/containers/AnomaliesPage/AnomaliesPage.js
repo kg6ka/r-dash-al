@@ -170,6 +170,19 @@ export default class AnomaliesPage extends Component {
     });
   }
 
+  filterByMessage(data, filter) {
+    let filterData;
+    if (filter === 'ID') {
+      filterData = this.state.anomalies.filter((item) => item.messageId === data.key);
+    } else {
+      filterData = this.state.anomalies.filter((item) => item.targetEcus.indexOf(data.key) !== -1);
+    }
+
+    this.setState({
+      anomalies: filterData,
+    });
+  }
+
   confidenceFilter(type) {
     const filterList = this.state.anomalies.filter((item) => item.likelihood.toString() === type);
     this.setState({
@@ -194,7 +207,7 @@ export default class AnomaliesPage extends Component {
             <FilterTable data={ data } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
-            <MSGfilter />
+            <MSGfilter onChange={ ::this.filterByMessage } />
           </div>
           <div className={cx(layout.layoutCol50,layout.height50)}>
             <VehiclesFilter />

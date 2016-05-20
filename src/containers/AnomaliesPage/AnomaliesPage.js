@@ -169,7 +169,7 @@ export default class AnomaliesPage extends Component {
   }
 
   filterByCategory(type) {
-    const filterList = this.state.anomalies.filter((item) => item.cause === type.trim().replace(' ', '_').toUpperCase());
+    const filterList = this.state.anomalies.filter((item) => item.cause === type.trim().replace(/ /g, '_').toUpperCase());
     this.setState({
       anomalies: filterList,
     });

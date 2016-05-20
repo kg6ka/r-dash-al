@@ -86,8 +86,9 @@ export default class AnomaliesPage extends Component {
 
     if (props.fleetActivities.data.length !== 0
       && props.carsStatus.activities.length !== 0) {
+      const result = this.fleetActivitiesData(props);
       this.setState({
-        bars: this.fleetActivitiesData(props),
+        bars: result,
       });
     }
     if (props.categories.data.length) {
@@ -191,7 +192,6 @@ export default class AnomaliesPage extends Component {
   }
 
   render() {
-    const data = argusComponents.fleetActivity.bars;
     return (
       <div className={layout.layout}>
         <div className="backBtn"></div>
@@ -204,7 +204,7 @@ export default class AnomaliesPage extends Component {
         >
 
           <div className={cx(styles.backgroundGradient)}>
-            <FilterTable data={ data } onChange={::this.onChangeSelect} />
+            <FilterTable data={ this.state.bars } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
             <MSGfilter onChange={ ::this.filterByMessage } />

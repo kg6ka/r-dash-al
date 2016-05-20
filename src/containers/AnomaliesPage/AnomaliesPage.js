@@ -195,6 +195,13 @@ export default class AnomaliesPage extends Component {
     });
   }
 
+  filterByVehicles(data) {
+    const filterList = this.state.anomalies.filter((item) => item.vehicleId.toString() === data.key);
+    this.setState({
+      anomalies: filterList,
+    });
+  }
+
   render() {
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
@@ -211,7 +218,7 @@ export default class AnomaliesPage extends Component {
             <MSGfilter onChange={ ::this.filterByMessage } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
-            <VehiclesFilter />
+            <VehiclesFilter onChange={ ::this.filterByVehicles } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
             <Categories name="filter by category" filter="true" data={ this.state.categories } onChange={ ::this.filterByCategory } />

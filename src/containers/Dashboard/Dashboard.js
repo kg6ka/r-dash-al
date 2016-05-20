@@ -170,7 +170,7 @@ export default class Dashboard extends Component {
             <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} onResolveClick={this.deleteAlert} />
           </div>
           <div className={cx(layout.layoutSideLeft, layout.layoutCol80)}>
-            <div className={cx(layout.layoutCol50,styles.backgroundGradient)}>
+            <div className={cx(layout.layoutCol45,styles.backgroundGradient)}>
               <CarsStatus
                 registeredCars={ this.state.registeredVehicles.registered }
                 percentRegistered={ this.state.registeredVehicles.percentRegistered }
@@ -179,7 +179,7 @@ export default class Dashboard extends Component {
                 updateData={'13.01.16'}
               />
             </div>
-            <div className={cx(layout.borderRight,layout.layoutCol50,styles.backgroundGradient)}>
+            <div className={cx(layout.borderRight,layout.layoutCol55,styles.backgroundGradient)}>
               <Anomalies
                 anomalies={ this.state.totalAnomalies.totalSum }
                 cars1={ this.state.totalAnomalies.cars1 }

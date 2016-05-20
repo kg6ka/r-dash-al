@@ -90,7 +90,7 @@ export default class MSGfilter extends Component {
         <div className={styles.scroll}>
           <Scrollbars>
             <div className={styles.charts}>
-              { argusComponents.target[this.state.checked=='ID' ? 'MSG':this.state.checked].map((el, idx) => {
+              { argusComponents.target[this.state.checked == 'ID' ? 'MSG':this.state.checked].map((el, idx) => {
               const { key,total,blocked } = el;
               return (<DataBars
                 key={ idx }
@@ -98,6 +98,7 @@ export default class MSGfilter extends Component {
                   width: window.innerWidth / 28.5,
                   height: '80%',
                 }}
+                onChange={ this.props.onChange.bind(this, el, this.state.checked) }
                 data={{
                   val:total,
                   msg:key,

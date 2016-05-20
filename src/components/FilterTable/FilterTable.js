@@ -16,17 +16,15 @@ export default class FilterTable extends Component {
     this.state = {
       listHide: true,
       currentValue: 'March 02, 17:21 - March 03, 00:30',
+      data: [],
+      first: 0,
+      second: 0,
     };
   }
-
-  componentDidMount() {
-    this.drawCharts();
-    this.chartsDecoration();
-  }
   
-  componentDidUpdate(prevProps, prevState)  {
-    if (prevProps.data.length !== this.props.data.length) {
-      this.drawCharts();
+  componentWillReceiveProps(props)  {
+    if (props.data.length !== this.props.data.length) {
+      this.drawCharts(props.data);
       this.chartsDecoration();
     }
   }
@@ -60,8 +58,11 @@ export default class FilterTable extends Component {
       .style({ stroke: '#8f9295', 'stroke-size': 1, 'stroke-opacity': 0.3 });
   }
 
-  drawCharts() {
-    const { data } = this.props;
+  drawCharts(data) {
+    this.setState({
+      first: new Date(data[0].time),
+      second: new Date(data[data.length - 1].time),
+    });
     const charts = d3.select('.charts');
     const margin = 30;
     const width = window.innerWidth * 0.51;
@@ -118,7 +119,7 @@ export default class FilterTable extends Component {
       .attr('height', height + 10);
 
     const x = d3.time.scale()
-      .domain([timeTicks[0],timeTicks[timeTicks.length-1]])
+      .domain([timeTicks[0], timeTicks[timeTicks.length-1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
@@ -234,6 +235,10 @@ export default class FilterTable extends Component {
 
     function brushend() {
       const s = brush.extent();
+      this.setState({
+        first: s[0],
+        second: s[1],
+      });
       this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());
     }
@@ -286,22 +291,12 @@ export default class FilterTable extends Component {
         <div className={componentStyle.close}>&times;</div>
         <div className={componentStyle.dataList}>
           <div>
-            {this.state.currentValue}
+            { `${this.state.first} - ${this.state.second}` }
             <span
               className={componentStyle.showListItem}
               onClick={::this.listOnClick}
             >></span>
           </div>
-          <ul className={cx({
-            [componentStyle.hiddenList]: this.state.listHide,
-            [componentStyle.showList]: !this.state.listHide,
-            [componentStyle.list]: true,
-          })}
-          >
-            { this.props.data.map((item, idx) =>
-              <li key={ idx } onClick={ this.itemClick.bind(this, item) }>{ item.time }</li>
-            ) }
-          </ul>
         </div>
         <div className={componentStyle.expandImage}>
           <svg

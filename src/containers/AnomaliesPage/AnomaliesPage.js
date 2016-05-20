@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 const { func, object } = PropTypes;
 import { bindActionCreators } from 'redux';
-// import data from './data.js';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
   FilterTable, MapsPopup, AnomaliesList,BackBtn } from 'components';
 import styles from './Anomalies.scss';
@@ -38,7 +37,7 @@ export default class AnomaliesPage extends Component {
     this.props.getCategories('11111111-1111-1111-3333-000000000031');
     this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
     this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031');
+    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getAnomaliesConfidence('11111111-1111-1111-3333-000000000031');
   }
 
@@ -57,6 +56,7 @@ export default class AnomaliesPage extends Component {
   componentWillReceiveProps(props) {
     if (this.props.routeParams.period !== props.routeParams.period) {
       this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
+      this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     }
 
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
@@ -67,8 +67,9 @@ export default class AnomaliesPage extends Component {
 
     if (props.fleetActivities.data.length !== 0
       && props.carsStatus.activities.length !== 0) {
+      const result = this.fleetActivitiesData(props);
       this.setState({
-        bars: this.fleetActivitiesData(props),
+        bars: result,
       });
     }
     if (props.categories.data.length) {
@@ -147,11 +148,11 @@ export default class AnomaliesPage extends Component {
 
   categoriesData(props) {
     const old = [
-      { offset: window.innerWidth / 25.26, color: '#b2d733' },
-      { offset: window.innerWidth / 15.5, color: '#13aa38' },
-      { offset: window.innerWidth / 11.2, color: '#1156e4' },
-      { offset: window.innerWidth / 8.73, color: '#904fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
+      {offset: window.innerWidth / 25.26, color: '#b2d733'},
+      {offset: window.innerWidth / 15.5, color: '#13aa38'},
+      {offset: window.innerWidth / 11.2, color: '#1156e4'},
+      {offset: window.innerWidth / 8.73, color: '#904fff'},
+      {offset: window.innerWidth / 7.16, color: '#fff'},
     ];
 
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);
@@ -167,8 +168,34 @@ export default class AnomaliesPage extends Component {
     }, []);
   }
 
+  filterByCategory(type) {
+    const filterList = this.state.anomalies.filter((item) => item.cause === type.trim().replace(' ', '_').toUpperCase());
+    this.setState({
+      anomalies: filterList,
+    });
+  }
+
+  filterByMessage(data, filter) {
+    let filterData;
+    if (filter === 'ID') {
+      filterData = this.state.anomalies.filter((item) => item.messageId === data.key);
+    } else {
+      filterData = this.state.anomalies.filter((item) => item.targetEcus.indexOf(data.key) !== -1);
+    }
+
+    this.setState({
+      anomalies: filterData,
+    });
+  }
+
+  confidenceFilter(type) {
+    const filterList = this.state.anomalies.filter((item) => item.likelihood.toString() === type);
+    this.setState({
+      anomalies: filterList,
+    });
+  }
+
   render() {
-    const data = argusComponents.fleetActivity.bars;
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
         <div className={styles.anomaliesHeader}>
@@ -178,19 +205,19 @@ export default class AnomaliesPage extends Component {
           className={cx(layout.layoutSideLeft, layout.layoutCol50)}
         >
           <div className={cx(styles.backgroundGradient)}>
-            <FilterTable data={ data } onChange={::this.onChangeSelect} />
+            <FilterTable data={ this.state.bars } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
-            <MSGfilter />
+            <MSGfilter onChange={ ::this.filterByMessage } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
             <VehiclesFilter />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
-            <Categories name="filter by category" filter="true" data={ this.state.categories } />
+            <Categories name="filter by category" filter="true" data={ this.state.categories } onChange={ ::this.filterByCategory } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderLeftTop)}>
-            <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } />
+            <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } onChange={ ::this.confidenceFilter } />
           </div>
           <MapsPopup />
         </div>
@@ -228,7 +255,3 @@ export default connect(
     }, dispatch)
 )(AnomaliesPage);
 
-
-/*
-onClick={ this.props.openMapsPopup }
-*/

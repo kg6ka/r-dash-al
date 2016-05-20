@@ -16,17 +16,13 @@ export default class FilterTable extends Component {
     this.state = {
       listHide: true,
       currentValue: 'March 02, 17:21 - March 03, 00:30',
+      data: [],
     };
   }
-
-  componentDidMount() {
-    this.drawCharts();
-    this.chartsDecoration();
-  }
   
-  componentDidUpdate(prevProps, prevState)  {
-    if (prevProps.data.length !== this.props.data.length) {
-      this.drawCharts();
+  componentWillReceiveProps(props)  {
+    if (props.data.length !== this.props.data.length) {
+      this.drawCharts(props.data);
       this.chartsDecoration();
     }
   }
@@ -60,8 +56,7 @@ export default class FilterTable extends Component {
       .style({ stroke: '#8f9295', 'stroke-size': 1, 'stroke-opacity': 0.3 });
   }
 
-  drawCharts() {
-    const { data } = this.props;
+  drawCharts(data) {
     const charts = d3.select('.charts');
     const margin = 30;
     const width = window.innerWidth * 0.51;
@@ -118,7 +113,7 @@ export default class FilterTable extends Component {
       .attr('height', height + 10);
 
     const x = d3.time.scale()
-      .domain([timeTicks[0],timeTicks[timeTicks.length-1]])
+      .domain([timeTicks[0], timeTicks[timeTicks.length-1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()

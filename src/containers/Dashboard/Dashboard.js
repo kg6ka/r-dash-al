@@ -45,7 +45,7 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', );
+    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getTotalAnomalies('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getCategories('11111111-1111-1111-3333-000000000031');

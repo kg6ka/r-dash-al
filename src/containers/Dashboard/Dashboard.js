@@ -83,7 +83,7 @@ export default class Dashboard extends Component {
       });
     }
 
-    if (this.props.routeParams.period !== props.routeParams.period) {
+    if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.props.getTotalAnomalies('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
       this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
     }

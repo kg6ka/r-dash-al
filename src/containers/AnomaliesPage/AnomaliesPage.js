@@ -54,7 +54,7 @@ export default class AnomaliesPage extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (this.props.routeParams.period !== props.routeParams.period) {
+    if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
       this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     }

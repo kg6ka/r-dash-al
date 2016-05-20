@@ -54,7 +54,7 @@ export default class MainMenu extends Component {
     return <ul className={styles[stepClass]}>
             {list.map((item,i)=>
               <li key={i} >
-                <a onClick={(event)=>this.handlerAction(item)} >
+                <a href={`${location.pathname}#${item.action}`} >
                   {item.label}
                 </a>
               </li>

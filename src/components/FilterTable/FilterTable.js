@@ -17,6 +17,8 @@ export default class FilterTable extends Component {
       listHide: true,
       currentValue: 'March 02, 17:21 - March 03, 00:30',
       data: [],
+      first: 0,
+      second: 0,
     };
   }
   
@@ -57,6 +59,10 @@ export default class FilterTable extends Component {
   }
 
   drawCharts(data) {
+    this.setState({
+      first: new Date(data[0].time),
+      second: new Date(data[data.length - 1].time),
+    });
     const charts = d3.select('.charts');
     const margin = 30;
     const width = window.innerWidth * 0.51;
@@ -229,6 +235,10 @@ export default class FilterTable extends Component {
 
     function brushend() {
       const s = brush.extent();
+      this.setState({
+        first: s[0],
+        second: s[1],
+      });
       this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());
     }
@@ -281,22 +291,12 @@ export default class FilterTable extends Component {
         <div className={componentStyle.close}>&times;</div>
         <div className={componentStyle.dataList}>
           <div>
-            {this.state.currentValue}
+            { `${this.state.first} - ${this.state.second}` }
             <span
               className={componentStyle.showListItem}
               onClick={::this.listOnClick}
             >></span>
           </div>
-          <ul className={cx({
-            [componentStyle.hiddenList]: this.state.listHide,
-            [componentStyle.showList]: !this.state.listHide,
-            [componentStyle.list]: true,
-          })}
-          >
-            { this.props.data.map((item, idx) =>
-              <li key={ idx } onClick={ this.itemClick.bind(this, item) }>{ item.time }</li>
-            ) }
-          </ul>
         </div>
         <div className={componentStyle.expandImage}>
           <svg

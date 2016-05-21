@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Scrollbars, DataBars } from 'components';
 import styles from './VehiclesFilter.scss';
 
-const VehiclesFilter = () => {
+export default class VehiclesFilter extends Component {
+  render() {
   return (<div className={styles.msgFilter}>
       <div>
         <div className="glowText">Filter by vehicles</div>
@@ -25,12 +26,13 @@ const VehiclesFilter = () => {
                   blocked: blocked,
                   maxHeight: '400',
                 }}
+                onChange={ this.props.onChange.bind(this, el) }
               />);
             })}
           </div>
         </Scrollbars>
       </div>
     </div>);
-};
+  };
+}
 
-export default VehiclesFilter;

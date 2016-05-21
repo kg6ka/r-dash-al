@@ -1,3 +1,4 @@
+
 .alerts {
   font-family: PTSans;
   color: white;
@@ -119,8 +120,7 @@
 
 .alertsFilter {
   span {
-    width: 76.3296px;
-    height: 22.1695px;
+      width: calc(100vw / 23);
     display: inline-block;
     border: 1px solid #858585;
     font-size: calc(100vw / 137);

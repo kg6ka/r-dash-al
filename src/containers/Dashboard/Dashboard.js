@@ -45,7 +45,7 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', );
+    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getTotalAnomalies('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
     this.props.getCategories('11111111-1111-1111-3333-000000000031');
@@ -83,7 +83,7 @@ export default class Dashboard extends Component {
       });
     }
 
-    if (this.props.routeParams.period !== props.routeParams.period) {
+    if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.props.getTotalAnomalies('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
       this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
     }
@@ -170,7 +170,7 @@ export default class Dashboard extends Component {
             <AlertsList alerts={this.props.alertsList} onClick={this.changeAlertsVisibilty} onResolveClick={this.deleteAlert} />
           </div>
           <div className={cx(layout.layoutSideLeft, layout.layoutCol80)}>
-            <div className={cx(layout.layoutCol50,styles.backgroundGradient)}>
+            <div className={cx(layout.layoutCol45,styles.backgroundGradient)}>
               <CarsStatus
                 registeredCars={ this.state.registeredVehicles.registered }
                 percentRegistered={ this.state.registeredVehicles.percentRegistered }
@@ -179,7 +179,7 @@ export default class Dashboard extends Component {
                 updateData={'13.01.16'}
               />
             </div>
-            <div className={cx(layout.borderRight,layout.layoutCol50,styles.backgroundGradient)}>
+            <div className={cx(layout.borderRight,layout.layoutCol55,styles.backgroundGradient)}>
               <Anomalies
                 anomalies={ this.state.totalAnomalies.totalSum }
                 cars1={ this.state.totalAnomalies.cars1 }

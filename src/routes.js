@@ -5,7 +5,7 @@ import { App, Home, AuthorizedArea, Login, Dashboard, AnomaliesPage } from 'cont
 export default () => (
   <Router history={browserHistory}>
     <Route component={App}>
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/dashboard(/:period)" component={Dashboard} />
       <Route path="/anomalies(/:period)" component={AnomaliesPage} />
       <Route path="/" component={Dashboard}>
         <IndexRoute component={Dashboard} />

@@ -29,7 +29,7 @@ export default class AnomaliesList extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.anomalies !== this.state.anomalies) {
+    if (props.anomalies.length !== this.props.anomalies.length) {
       this.setState({
         anomalies: props.anomalies,
       });

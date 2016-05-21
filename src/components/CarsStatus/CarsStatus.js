@@ -15,14 +15,16 @@ export default class CarsStatus extends Component {
   constructor(props) {
     super(props);
     this.screenWidth = window.innerWidth;
-    this.active = Math.round(props.active) ? Math.round(props.active) : 0;
-    this.uptodate = Math.round(props.uptodate) ? Math.round(props.uptodate) : 0;
-    console.log(this);
+    this.state = {};
+    this.state.active = Math.round(props.active) ? Math.round(props.active) : 0;
+    this.state.uptodate = Math.round(props.uptodate) ? Math.round(props.uptodate) : 0;
   }
 
   componentWillReceiveProps(nextProps) {
-    this.active = Math.round(nextProps.active);
-    this.uptodate = Math.round(nextProps.uptodate);
+    this.setState({
+      active: Math.round(nextProps.active),
+      uptodate: Math.round(nextProps.uptodate),
+    });
   }
 
   render() {
@@ -49,14 +51,14 @@ export default class CarsStatus extends Component {
           <g transform={ translateString1 }>
             <PercentColumn
               className={'activeVehicles'}
-              percent={ this.active }
+              percent={ this.state.active }
               lable={['Active', 'Vehicles']}
             />
           </g>
           <g transform={ translateString2 }>
             <PercentColumn
               className={'upToDateVehicles'}
-              percent={ this.uptodate }
+              percent={ this.state.uptodate }
               lable={['Up to Date', 'Vehicles']}
               description={['Last Update', `${updateData}`]}
             />

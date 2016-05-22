@@ -78,12 +78,12 @@ export default class AnomaliesPage extends Component {
   }
 
   fleetActivitiesData(props) {
-    return props.carsStatus.activities.reduce((curValue, item, index) => {
+    return props.fleetActivities.data.reduce((curValue, item, index) => {
       const newBar = {
         time: item.timestamp,
-        activitys: item.values[0].value,
-        suspicious: props.fleetActivities.data[index].values[0].value,
-        blocked: props.fleetActivities.data[index].values[1].value,
+        activitys: props.carsStatus.activities[0].values[0].value,
+        suspicious: item.values[0].value,
+        blocked: item.values[1].value,
       };
       return [...curValue, newBar];
     }, []);

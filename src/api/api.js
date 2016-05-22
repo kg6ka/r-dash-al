@@ -143,7 +143,9 @@ function target() {
       if(target.Vehicle[i].total > max)
         max = target.Vehicle[i].total;
     }
-    if(max > 500)  max = 1000;
+
+    if(max > 1000)  max = 10000;
+    if(max <= 1000)  max = 1000;
     if(max <= 500)  max = 500;
     if(max <= 100)  max = 100;
     if(max <= 10)   max = 10;

@@ -123,7 +123,7 @@ export default class Map extends Component {
 
 
 
-      max = 20;
+//       max = 20;
       step = CountColor/max;
       function colorFun(value) {
         let num = value*step;

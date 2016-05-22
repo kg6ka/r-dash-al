@@ -45,7 +45,7 @@ export function getFleetActivities(tagId, period,from) {
     from
   };
 }
-
+ 
 export function* fleetActivitiesSaga() {
   while (1) {
     const { tagId, period,from } = yield take(GETTING_FLEET_ACTIVITIES);

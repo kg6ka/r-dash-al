@@ -172,7 +172,7 @@ export default class Dashboard extends Component {
       suspiciousSum: suspiciousAndBlockedSum.suspiciousSum - suspiciousAndBlockedSum.blockedSum,
       blockedSum: suspiciousAndBlockedSum.blockedSum,
       totalSum,
-      suspiciousPercent: suspiciousAndBlockedSum.suspiciousSum / totalSum * 100,
+      suspiciousPercent: (suspiciousAndBlockedSum.suspiciousSum - suspiciousAndBlockedSum.blockedSum) / totalSum * 100,
       blockedPercent: suspiciousAndBlockedSum.blockedSum / totalSum * 100,
       cars1: props.totalAnomalies.cars1,
       cars2: props.totalAnomalies.cars2,
@@ -181,12 +181,12 @@ export default class Dashboard extends Component {
   }
 
   fleetActivitiesData(props) {
-    return props.carsStatus.activities.reduce((curValue, item, index) => {
+    return props.fleetActivities.data.reduce((curValue, item, index) => {
       const newBar = {
         time: item.timestamp,
-        activitys: item.values[0].value,
-        suspicious: props.fleetActivities.data[index].values[0].value,
-        blocked: props.fleetActivities.data[index].values[1].value,
+        activitys: props.carsStatus.activities[0].values[0].value,
+        suspicious: item.values[0].value,
+        blocked: item.values[1].value,
       };
       return [...curValue, newBar];
     }, []);

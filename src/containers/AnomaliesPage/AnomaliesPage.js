@@ -30,18 +30,42 @@ export default class AnomaliesPage extends Component {
       confidence: {
         data: [],
       },
+      anomalies:[]
     };
-    this.state.anomalies = argusComponents.fleetActivity.bars;
+
   }
 
   getNewProps() {
-    this.props.getCategories();
-    this.props.getAnomaliesList(this.props.getTags.data[0].tagId);
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId,
-      this.props.location.hash.substring(1) || '5s');
-    this.props.getFleetActivities(this.props.getTags.data[0].tagId,
-      this.props.location.hash.substring(1) || '5s');
-    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId);
+
+     let action = this.props.location.hash.substring(1)  || '10m';
+     let relativeTime = new Date();
+     let period = '';
+     switch (action) {
+       case '10m': period = '5s';
+                   relativeTime = relativeTime-60000 * 10;
+                break;
+       case '1h': period = '30s';
+                 relativeTime = relativeTime-60000 * 60;
+                break;
+       case '1d': period = '10m';
+                  relativeTime = relativeTime-60000 * 60 *24;
+                  break;
+       case '1w': period = '1h';
+                 relativeTime = relativeTime-60000 * 60 *24 *7;
+                 break;
+       case '1m': period = '6h';
+                  relativeTime = relativeTime-60000 * 60 *24 *7 * 4;
+                 break;
+    }
+
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period,relativeTime);
+
+    this.props.getCategories(this.props.getTags.data[0].tagId,relativeTime);
+    this.props.getAnomaliesList(this.props.getTags.data[0].tagId,relativeTime);
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId,period,relativeTime);
+
+    this.props.getFleetActivities(this.props.getTags.data[0].tagId,period,relativeTime);
+    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId,relativeTime);
   }
 
   componentDidMount() {
@@ -67,19 +91,10 @@ export default class AnomaliesPage extends Component {
 
   componentWillReceiveProps(props) {
     if (props.getTags.data.length !== this.props.getTags.data.length) {
-      this.props.getCategories();
-      this.props.getAnomaliesList(props.getTags.data[0].tagId);
-      this.props.getCarsStatus(props.getTags.data[0].tagId,
-        this.props.location.hash.substring(1) || '5s');
-      this.props.getFleetActivities(props.getTags.data[0].tagId,
-        this.props.location.hash.substring(1) || '5s');
-      this.props.getAnomaliesConfidence(props.getTags.data[0].tagId);
+      this.getNewProps();
     }
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
-      this.props.getCarsStatus(props.getTags.data[0].tagId,
-        props.location.hash.substring(1) || '5s');
-      this.props.getFleetActivities(props.getTags.data[0].tagId,
-        this.props.location.hash.substring(1) || '5s');
+      this.getNewProps();
     }
 
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {

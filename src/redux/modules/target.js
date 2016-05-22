@@ -57,11 +57,11 @@ export function* targetSaga() {
           .promise()
         ;
       const msg = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=${from}`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=${from}`)
           .promise()
         ;
       const vehicle = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=${from}`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=${from}`)
           .promise()
         ;
       const body = {

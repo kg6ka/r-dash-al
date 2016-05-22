@@ -66,7 +66,7 @@ export default class Dashboard extends Component {
                   relativeTime = relativeTime-60000 * 60 *24 *7 * 4;
                  break;
     }
-this.props.getTags.data[0].tagId="11111111-1111-1111-3333-000000000444"
+
     this.props.getCarsStatus(this.props.getTags.data[0].tagId, period,relativeTime);
     this.props.getTotalAnomalies(this.props.getTags.data[0].tagId, period,relativeTime);
     this.props.getFleetActivities(this.props.getTags.data[0].tagId, period,relativeTime);

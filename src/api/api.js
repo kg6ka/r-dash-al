@@ -277,14 +277,14 @@ function getApiData(tags) {
 
   // Group API for:
   //    anomaliesTable
-  http(`${config.apiBaseUrl}/v1/tags/${tags}/anomalies?from=0`).then((data)=>{
-    argusApi.anomaliesDetails = data.data;
-    anomaliesTable();
-  })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByConfidence?from=0`).then((data)=>{
-    argusApi.anomaliesByConfidence = data.data;
-    confidence();
-  })
+//   http(`${config.apiBaseUrl}/v1/tags/${tags}/anomalies?from=0`).then((data)=>{
+//     argusApi.anomaliesDetails = data.data;
+//     anomaliesTable();
+//   })
+//   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByConfidence?from=0`).then((data)=>{
+//     argusApi.anomaliesByConfidence = data.data;
+//     confidence();
+//   })
 
 }
 

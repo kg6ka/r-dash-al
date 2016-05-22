@@ -37,20 +37,21 @@ export default function AnomaliesListReducer(state = initialState, action) {
   }
 }
 
-export function getAnomaliesList(tagId) {
+export function getAnomaliesList(tagId,from) {
   return {
     type: GETTING_ANOMALIES_LIST,
     tagId,
+    from
   };
 }
 
 export function* anomaliesListSaga() {
   while (1) {
-    const { tagId } = yield take(GETTING_ANOMALIES_LIST);
+    const { tagId,from } = yield take(GETTING_ANOMALIES_LIST);
     try {
       const { apiBaseUrl } = config;
       const anomalies = yield request
-          .get(`${apiBaseUrl}/v1/tags/${tagId}/anomalies?from=0`)
+          .get(`${apiBaseUrl}/v1/tags/${tagId}/anomalies?from=${from}`)
           .promise()
         ;
       const { body } = anomalies;

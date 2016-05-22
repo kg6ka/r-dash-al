@@ -46,15 +46,33 @@ export default class Dashboard extends Component {
   }
 
   getNewProps() {
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId,
-      this.props.location.hash.substring(1) || '5s');
-    this.props.getTotalAnomalies(this.props.getTags.data[0].tagId,
-      this.props.location.hash.substring(1) || '5s');
-    this.props.getFleetActivities(this.props.getTags.data[0].tagId,
-      this.props.location.hash.substring(1) || '5s');
-    this.props.getCategories(this.props.getTags.data[0].tagId);
-    this.props.getTarget(this.props.getTags.data[0].tagId);
-    this.props.getMap(this.props.getTags.data[0].tagId);
+     let action = this.props.location.hash.substring(1)  || '10m';
+     let relativeTime = new Date();
+     let period = '';
+     switch (action) {
+       case '10m': period = '5s';
+                   relativeTime = relativeTime-60000 * 10;
+                break;
+       case '1h': period = '30s';
+                 relativeTime = relativeTime-60000 * 60;
+                break;
+       case '1d': period = '10m';
+                  relativeTime = relativeTime-60000 * 60 *24;
+                  break;
+       case '1w': period = '1h';
+                 relativeTime = relativeTime-60000 * 60 *24 *7;
+                 break;
+       case '1m': period = '6h';
+                  relativeTime = relativeTime-60000 * 60 *24 *7 * 4;
+                 break;
+    }
+this.props.getTags.data[0].tagId="11111111-1111-1111-3333-000000000444"
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period,relativeTime);
+    this.props.getTotalAnomalies(this.props.getTags.data[0].tagId, period,relativeTime);
+    this.props.getFleetActivities(this.props.getTags.data[0].tagId, period,relativeTime);
+    this.props.getCategories(this.props.getTags.data[0].tagId,relativeTime);
+    this.props.getTarget(this.props.getTags.data[0].tagId,relativeTime);
+    this.props.getMap(this.props.getTags.data[0].tagId,relativeTime);
     this.props.getAlertsData();
   }
 
@@ -97,10 +115,11 @@ export default class Dashboard extends Component {
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
-      this.props.getTotalAnomalies(this.props.getTags.data[0].tagId,
-        props.location.hash.substring(1) || '5s');
-      this.props.getFleetActivities(this.props.getTags.data[0].tagId,
-        props.location.hash.substring(1) || '5s');
+        this.getNewProps();
+//       this.props.getTotalAnomalies(this.props.getTags.data[0].tagId,
+//         props.location.hash.substring(1) || '5s');
+//       this.props.getFleetActivities(this.props.getTags.data[0].tagId,
+//         props.location.hash.substring(1) || '5s');
     }
 
     if (props.carsStatus.activities.length) {
@@ -116,7 +135,7 @@ export default class Dashboard extends Component {
       this.setState({
         registeredVehicles: result,
       });
-      debugger;
+
 
       if (props.fleetActivities.data.length) {
         this.setState({
@@ -148,9 +167,9 @@ export default class Dashboard extends Component {
         blockedSum: curValue.blockedSum + item.values[1].value,
       };
     }, { suspiciousSum: 0, blockedSum: 0 });
-    const totalSum = suspiciousAndBlockedSum.suspiciousSum + suspiciousAndBlockedSum.blockedSum;
+    const totalSum = suspiciousAndBlockedSum.suspiciousSum;
     return {
-      suspiciousSum: suspiciousAndBlockedSum.suspiciousSum,
+      suspiciousSum: suspiciousAndBlockedSum.suspiciousSum - suspiciousAndBlockedSum.blockedSum,
       blockedSum: suspiciousAndBlockedSum.blockedSum,
       totalSum,
       suspiciousPercent: suspiciousAndBlockedSum.suspiciousSum / totalSum * 100,

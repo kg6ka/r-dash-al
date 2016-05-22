@@ -51,20 +51,21 @@ export default function mapReducer(state = INITIAL_STATE, action) {
   }
 }
 
-export function getMap(tagId) {
+export function getMap(tagId,from) {
   return {
     type: GETTING_MAP,
     tagId,
+    from
   };
 }
 
 export function* mapSaga() {
   while (1) {
-    const { tagId } = yield take(GETTING_MAP);
+    const { tagId,from } = yield take(GETTING_MAP);
     try {
       const { apiBaseUrl } = config;
       const map = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/heatmap?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/heatmap?from=${from}`)
           .promise()
         ;
       const { body } = map;

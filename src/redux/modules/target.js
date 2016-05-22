@@ -39,28 +39,29 @@ export default function targetReducer(state = initialState, action) {
   }
 }
 
-export function getTarget(tagId) {
+export function getTarget(tagId,from) {
   return {
     type: GETTING_TARGETS,
     tagId,
+    from
   };
 }
 
 export function* targetSaga() {
   while (1) {
-    const { tagId } = yield take(GETTING_TARGETS);
+    const { tagId,from } = yield take(GETTING_TARGETS);
     try {
       const { apiBaseUrl } = config;
       const ecu = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByEcu?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByEcu?from=${from}`)
           .promise()
         ;
       const msg = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=${from}`)
           .promise()
         ;
       const vehicle = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=${from}`)
           .promise()
         ;
       const body = {

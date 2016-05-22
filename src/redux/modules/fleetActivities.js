@@ -54,6 +54,7 @@ export function* fleetActivitiesSaga() {
           .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/anomalies?from=0`)
           .promise()
         ;
+
       const { body } = anomalies;
       yield put({ type: GOT_FLEET_ACTIVITIES, data: body });
     } catch (err) {

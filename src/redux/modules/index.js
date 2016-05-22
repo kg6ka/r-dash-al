@@ -9,6 +9,7 @@ import map, { sagas as mapSagas } from './map.js';
 import alertsList, { sagas as alertsSagas } from './alertsList';
 import anomaliesList, { sagas as anomaliesListSagas } from './anomaliesList';
 import confidenceFilter, { sagas as confidenceFilterSagas } from './confidenceFilter';
+import getTags, { sagas as getTagsSagas } from './getTags';
 import mapsPopup from './mapsPopup';
 
 export default combineReducers({
@@ -23,6 +24,7 @@ export default combineReducers({
   alertsList,
   anomaliesList,
   confidenceFilter,
+  getTags,
 });
 
 export const sagas = [
@@ -36,4 +38,5 @@ export const sagas = [
   ...alertsSagas,
   ...anomaliesListSagas,
   ...confidenceFilterSagas,
+  ...getTagsSagas,
 ];

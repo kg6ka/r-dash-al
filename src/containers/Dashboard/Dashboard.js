@@ -8,6 +8,7 @@ import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCategories } from './../../redux/modules/categories';
 import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
+import { getCurrentTags } from './../../redux/modules/getTags';
 import { getAlertsData, showAlerts, deleteAlert } from './../../redux/modules/alertsList';
 import { bindActionCreators } from 'redux';
 import styles from './Dashboard.scss';
@@ -44,16 +45,26 @@ export default class Dashboard extends Component {
     };
   }
 
+  getNewProps() {
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId,
+      this.props.location.hash.substring(1) || '5s');
+    this.props.getTotalAnomalies(this.props.getTags.data[0].tagId,
+      this.props.location.hash.substring(1) || '5s');
+    this.props.getFleetActivities(this.props.getTags.data[0].tagId,
+      this.props.location.hash.substring(1) || '5s');
+    this.props.getCategories(this.props.getTags.data[0].tagId);
+    this.props.getTarget(this.props.getTags.data[0].tagId);
+    this.props.getMap(this.props.getTags.data[0].tagId);
+    this.props.getAlertsData();
+  }
+
   componentDidMount() {
-    window.setInterval(() => {
-      this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-      this.props.getTotalAnomalies('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-      this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-      this.props.getCategories('11111111-1111-1111-3333-000000000031');
-      this.props.getTarget('11111111-1111-1111-3333-000000000031');
-      this.props.getMap('11111111-1111-1111-3333-000000000031');
-      this.props.getAlertsData();
-    }, 10000);
+    if (!this.props.getTags.data.length) {
+      this.props.getCurrentTags();
+    } else {
+      this.getNewProps();
+    }
+    window.setInterval(this.getNewProps.bind(this), 10000);
   }
 
   categoriesData(props) {
@@ -86,8 +97,10 @@ export default class Dashboard extends Component {
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
-      this.props.getTotalAnomalies('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
-      this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
+      this.props.getTotalAnomalies(this.props.getTags.data[0].tagId,
+        props.location.hash.substring(1) || '5s');
+      this.props.getFleetActivities(this.props.getTags.data[0].tagId,
+        props.location.hash.substring(1) || '5s');
     }
 
     if (props.carsStatus.activities.length) {
@@ -103,6 +116,7 @@ export default class Dashboard extends Component {
       this.setState({
         registeredVehicles: result,
       });
+      debugger;
 
       if (props.fleetActivities.data.length) {
         this.setState({
@@ -230,6 +244,7 @@ export default connect(
     target,
     map,
     alertsList,
+    getTags,
     }) => ({
       carsStatus,
       totalAnomalies,
@@ -238,6 +253,7 @@ export default connect(
       target,
       map,
       alertsList,
+      getTags,
     }),
     dispatch => bindActionCreators({
       getCarsStatus,
@@ -249,5 +265,6 @@ export default connect(
       getTarget,
       getMap,
       getAlertsData,
+      getCurrentTags,
     }, dispatch)
 )(Dashboard);

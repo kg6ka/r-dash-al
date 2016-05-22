@@ -34,11 +34,13 @@ export default class AnomaliesPage extends Component {
   }
 
   componentDidMount() {
-    this.props.getCategories('11111111-1111-1111-3333-000000000031');
-    this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
-    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-    this.props.getAnomaliesConfidence('11111111-1111-1111-3333-000000000031');
+    window.setInterval(() => {
+      this.props.getCategories('11111111-1111-1111-3333-000000000031');
+      this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
+      this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
+      this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
+      this.props.getAnomaliesConfidence('11111111-1111-1111-3333-000000000031');
+    }, 10000);
   }
 
   fleetActivitiesData(props) {

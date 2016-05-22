@@ -13,6 +13,7 @@ import { getAnomaliesList } from './../../redux/modules/anomaliesList';
 import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
+import { getCurrentTags } from './../../redux/modules/getTags';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -29,34 +30,71 @@ export default class AnomaliesPage extends Component {
       confidence: {
         data: [],
       },
+      anomalies:[]
     };
-    this.state.anomalies = argusComponents.fleetActivity.bars;
+
+  }
+
+  getNewProps() {
+
+     let action = this.props.location.hash.substring(1)  || '10m';
+     let relativeTime = new Date();
+     let period = '';
+     switch (action) {
+       case '10m': period = '5s';
+                   relativeTime = relativeTime-60000 * 10;
+                break;
+       case '1h': period = '30s';
+                 relativeTime = relativeTime-60000 * 60;
+                break;
+       case '1d': period = '10m';
+                  relativeTime = relativeTime-60000 * 60 *24;
+                  break;
+       case '1w': period = '1h';
+                 relativeTime = relativeTime-60000 * 60 *24 *7;
+                 break;
+       case '1m': period = '6h';
+                  relativeTime = relativeTime-60000 * 60 *24 *7 * 4;
+                 break;
+    }
+
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period,relativeTime);
+
+    this.props.getCategories(this.props.getTags.data[0].tagId,relativeTime);
+    this.props.getAnomaliesList(this.props.getTags.data[0].tagId,relativeTime);
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId,period,relativeTime);
+
+    this.props.getFleetActivities(this.props.getTags.data[0].tagId,period,relativeTime);
+    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId,relativeTime);
   }
 
   componentDidMount() {
-    this.props.getCategories('11111111-1111-1111-3333-000000000031');
-    this.props.getAnomaliesList('11111111-1111-1111-3333-000000000031');
-    this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-    this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
-    this.props.getAnomaliesConfidence('11111111-1111-1111-3333-000000000031');
+    if (!this.props.getTags.data.length) {
+      this.props.getCurrentTags();
+    } else {
+      this.getNewProps();
+    }
+    window.setInterval(this.getNewProps.bind(this), 10000);
   }
 
   fleetActivitiesData(props) {
-    return props.carsStatus.activities.reduce((curValue, item, index) => {
+    return props.fleetActivities.data.reduce((curValue, item, index) => {
       const newBar = {
         time: item.timestamp,
-        activitys: item.values[0].value,
-        suspicious: props.fleetActivities.data[index].values[0].value,
-        blocked: props.fleetActivities.data[index].values[1].value,
+        activitys: props.carsStatus.activities[0].values[0].value,
+        suspicious: item.values[0].value,
+        blocked: item.values[1].value,
       };
       return [...curValue, newBar];
     }, []);
   }
 
   componentWillReceiveProps(props) {
-    if (this.props.routeParams.period !== props.routeParams.period) {
-      this.props.getCarsStatus('11111111-1111-1111-3333-000000000031', props.routeParams.period || '5s');
-      this.props.getFleetActivities('11111111-1111-1111-3333-000000000031', this.props.routeParams.period || '5s');
+    if (props.getTags.data.length !== this.props.getTags.data.length) {
+      this.getNewProps();
+    }
+    if (props.location.hash && this.props.location.hash !== props.location.hash) {
+      this.getNewProps();
     }
 
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
@@ -244,6 +282,7 @@ export default connect(
     fleetActivities,
     carsStatus,
     confidenceFilter,
+    getTags,
   }) => ({
     mapsPopup,
     categories,
@@ -251,6 +290,7 @@ export default connect(
     fleetActivities,
     carsStatus,
     confidenceFilter,
+    getTags,
   }),
     dispatch => bindActionCreators({
       openMapsPopup,
@@ -259,6 +299,7 @@ export default connect(
       getFleetActivities,
       getCarsStatus,
       getAnomaliesConfidence,
+      getCurrentTags,
     }, dispatch)
 )(AnomaliesPage);
 

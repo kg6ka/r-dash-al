@@ -39,21 +39,22 @@ export default function carsStatusReducer(state = initialState, action) {
   }
 }
 
-export function getCarsStatus(tagId, period) {
+export function getCarsStatus(tagId, period,from) {
   return {
     type: GETTING_CARS_STATUS,
     tagId,
     period,
+    from
   };
 }
 
 export function* carsStatusSaga() {
   while (1) {
-    const { tagId, period } = yield take(GETTING_CARS_STATUS);
+    const { tagId, period,from } = yield take(GETTING_CARS_STATUS);
     try {
       const { apiBaseUrl } = config;
       const activities = yield request
-          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/activeVehiclesStatus?from=0`)
+          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/activeVehiclesStatus?from=${from}`)
           .promise()
         ;
       const registeredVehicles = yield request

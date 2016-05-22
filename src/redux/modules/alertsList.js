@@ -37,7 +37,7 @@ export default function carsStatusReducer(state = initialState, action) {
     case 'SHOW_ALERTS':
       return {
         ...state,
-        showAlerts:action.bool
+        showAlerts:!state.showAlerts
       }
     case 'DELETE_MSG_ALERT':
       return {
@@ -84,7 +84,9 @@ export function deleteAlert(alertsType, desc2) {
 
 export function* alertsListSaga() {
   while (1) {
+    console.log("alertsListSaga");
     try {
+      yield take(GETTING_ALERTS_DATA);
       const { apiBaseUrl } = config;
       const alertsVehicle = yield request
           .get(`${apiBaseUrl}/v1/alerts/vehicle`)

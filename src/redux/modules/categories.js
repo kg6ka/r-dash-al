@@ -37,20 +37,21 @@ export default function categoriesReducer(state = initialState, action) {
   }
 }
 
-export function getCategories(tagId) {
+export function getCategories(tagId,from) {
   return {
     type: GETTING_CATEGORIES,
     tagId,
+    from
   };
 }
 
 export function* categoriesSaga() {
   while (1) {
-    const { tagId } = yield take(GETTING_CATEGORIES);
+    const { tagId, from } = yield take(GETTING_CATEGORIES);
     try {
       const { apiBaseUrl } = config;
       const categories = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByCause?from=0`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByCause?from=${from}`)
           .promise()
         ;
       const { body } = categories;

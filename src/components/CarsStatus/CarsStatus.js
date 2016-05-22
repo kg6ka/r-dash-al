@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 const { string, number } = PropTypes;
 import { RegisteredCars, PercentColumn } from './components';
 

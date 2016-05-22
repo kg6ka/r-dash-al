@@ -143,7 +143,9 @@ function target() {
       if(target.Vehicle[i].total > max)
         max = target.Vehicle[i].total;
     }
-    if(max > 500)  max = 1000;
+
+    if(max > 1000)  max = 10000;
+    if(max <= 1000)  max = 1000;
     if(max <= 500)  max = 500;
     if(max <= 100)  max = 100;
     if(max <= 10)   max = 10;
@@ -277,14 +279,14 @@ function getApiData(tags) {
 
   // Group API for:
   //    anomaliesTable
-  http(`${config.apiBaseUrl}/v1/tags/${tags}/anomalies?from=0`).then((data)=>{
-    argusApi.anomaliesDetails = data.data;
-    anomaliesTable();
-  })
-  http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByConfidence?from=0`).then((data)=>{
-    argusApi.anomaliesByConfidence = data.data;
-    confidence();
-  })
+//   http(`${config.apiBaseUrl}/v1/tags/${tags}/anomalies?from=0`).then((data)=>{
+//     argusApi.anomaliesDetails = data.data;
+//     anomaliesTable();
+//   })
+//   http(`${config.apiBaseUrl}/v1/metrics/tags/${tags}/bars/all/2/anomaliesByConfidence?from=0`).then((data)=>{
+//     argusApi.anomaliesByConfidence = data.data;
+//     confidence();
+//   })
 
 }
 

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 const { array } = PropTypes;
 import d3 from 'd3';
+import moment from 'moment';
 import cx from 'classnames';
 import componentStyle from './FilterTable.scss';
 import expand from './../FleetActivity/images/expand.svg';
@@ -60,8 +61,8 @@ export default class FilterTable extends Component {
 
   drawCharts(data) {
     this.setState({
-      first: new Date(data[0].time),
-      second: new Date(data[data.length - 1].time),
+      first: moment(new Date(data[0].time)).format("MMMM Do YYYY, h:mm:ss"),
+      second: moment(new Date(data[data.length - 1].time)).format("MMMM Do YYYY, h:mm:ss"),
     });
     const charts = d3.select('.charts');
     const margin = 30;
@@ -83,7 +84,7 @@ export default class FilterTable extends Component {
     timeTicks.push(new Date(data[quantity].time)); // get last time anytime
 
     tickValuesCars = [0,0.5,1,1.5,2];
-    const registered = argusComponents.fleetActivity.registered;
+    const registered = 1;//argusComponents.fleetActivity.registered;
 
     if(registered > 2)     tickValuesCars = [0,2.5,5,7.5,10];
    
@@ -235,9 +236,10 @@ export default class FilterTable extends Component {
 
     function brushend() {
       const s = brush.extent();
+
       this.setState({
-        first: s[0],
-        second: s[1],
+        first: moment(s[0]).format("MMMM Do YYYY, h:mm:ss"),
+        second: moment(s[1]).format("MMMM Do YYYY, h:mm:ss"),
       });
       this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());

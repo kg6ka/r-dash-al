@@ -71,13 +71,24 @@
     }
   }
 
-  .number {
+  .topdiv {
     font-size: 21px;
     color: #68B3D9;
     font-family: modeka;
+
+    img {
+      width: 15px;
+      height: 15px;
+      margin-left: 8px;
+    }
   }
-  .numberinbtm {
-    font-size: 21px;
+  .btmdiv {
+    img {
+      width: 15px;
+      height: 15px;
+      margin-right: 3px;
+      vertical-align: bottom;
+    }
   }
   .resolve {
     color: #68B3D9;
@@ -88,34 +99,7 @@
     color: gray;
     font-size: 10px;
   }
-  img.msg {
-    width: 15px;
-    height: 15px;
-    margin-right: 3px;
-    vertical-align: bottom;
-  }
 
-  .msgintop {
-    font-size: 21px;
-    color: #68B3D9;
-    font-family: modeka;
-    img {
-      width: 15px;
-      height: 15px;
-      margin-left: 8px;
-    }
-  }
-  img.msgintop {
-    width: 15px;
-    height: 15px;
-    vertical-align: text-bottom;
-    margin-left: 6px;
-  }
-  img.car {
-    width: 14px;
-    height: 14px;
-    margin-left: 5px;
-  }
 }
 
 .alertsFilter {

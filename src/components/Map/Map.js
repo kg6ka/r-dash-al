@@ -123,7 +123,7 @@ export default class Map extends Component {
 
 
 
-      max = 20;
+//       max = 20;
       step = CountColor/max;
       function colorFun(value) {
         let num = value*step;
@@ -151,9 +151,7 @@ export default class Map extends Component {
             scale: 3,
             fillColor:  colorFun((value.count >= 0) ? value.count : 0 ),
             strokeColor: colorFun((value.count >= 0) ? value.count : 0 ),
-            // fillColor: value.count > 6 ? '#fba120' : '#B40404',
             strokeWeight: 6,
-            // strokeColor: value.count > 6 ? '#fba120' : '#B40404',
           },
           infoWindow: {
             content: `<div style="font-family: PTSans;">

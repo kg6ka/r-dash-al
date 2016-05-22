@@ -130,14 +130,13 @@ export default class AnomaliesList extends Component {
                     <div className="wrapper">
                       <div className={styles.msgTitle}>Message {i['Msg.Id']}</div>
                       <div className={styles.msgRow}>
-                        <div>{'Name  |  PLA_Status_01' }</div>
-                        <div>{'Interval  |  4ms.' }</div>
-                        <div>{'Type  |  Event periodic' }</div>
-                        <div>{'ECU  |  Tmnt version 4.7.1.04' }</div>
-                        <div>{'Location | Wolfsburg'}</div>
+                        <div><span className={styles.namespan}>{'Name  |'}</span>{'  PLA_Status_01' }</div>
+                        <div><span className={styles.namespan}>{'Interval  |'}</span>{'  4ms.' }</div>
+                        <div><span className={styles.namespan}>{'Type  |'}</span>{'  Event periodic' }</div>
+                        <div><span className={styles.namespan}>{'ECU  |'}</span>{'  Tmnt version 4.7.1.04' }</div>
+                        <div><span className={styles.namespan}>{'Location |'}</span>{' Wolfsburg'}</div>
                       </div>
-                      <hr />
-                      <div className={styles.signalTitle}>Signal Values 1/20</div>
+                      <div className={styles.signalTitle}>Signal Values 1<span>/</span>20</div>
                       <div className={styles.camZoom}>
                         <div>
                           <img

@@ -46,7 +46,6 @@ export default class Dashboard extends Component {
   }
 
   getNewProps() {
-    debugger;
     this.props.getCarsStatus(this.props.getTags.data[0].tagId,
       this.props.location.hash.substring(1) || '5s');
     this.props.getTotalAnomalies(this.props.getTags.data[0].tagId,

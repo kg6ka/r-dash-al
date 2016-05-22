@@ -15,7 +15,7 @@
   color: white;
   font-size: calc(100vw / 147);
   width: 47vw;
-  height: 84vh;
+/*   height: 84vh; */
 }
 
 .table {
@@ -35,10 +35,8 @@
 
   tr {
     height: 2.1vw;
-    &:nth-child(2) {
-      background-color: #28323A;
-    }
   }
+
 
   td {
     padding: 0.5em;
@@ -49,6 +47,9 @@
 
   thead {
     background-color: #374758;
+    tr:nth-child(2) {
+      background-color: #28323A;
+    }
     th {
       font-size: calc(100vw / 160);
       white-space: nowrap;

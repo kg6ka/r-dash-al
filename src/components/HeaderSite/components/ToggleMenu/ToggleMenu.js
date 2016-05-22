@@ -76,8 +76,8 @@ export default class ToggleMenu extends Component {
         <div className={styles.menuToggleIcon} onClick={this.menuToggle}></div>
         <div className={styles.toggleMenuContent}>
     		<ul className={styles.menuToggle}>{this.data.map((link,i)=>
-              <li key={i} >
-                  <Link to={link.url}>{link.label}</Link>
+              <li key={i}>
+                  <Link to={link.url} >{link.label}</Link>
                   { this.renderSubMenu(link.items,'child') }
               </li>
           )}

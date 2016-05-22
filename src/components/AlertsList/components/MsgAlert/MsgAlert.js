@@ -4,7 +4,7 @@ import styles from '../../Alerts.scss';
 const MsgAlert = ( { onClick, name, number, messages, vehicleId, date }) => (
     <div className={styles.row}>
         <div className={styles.divInRow}>
-      <span className={styles.msgintop}>
+      <span className={styles.topdiv}>
            {messages}
           <img  src={'/assets/images/alerts/Alerts.png'} />
         </span>
@@ -17,9 +17,10 @@ const MsgAlert = ( { onClick, name, number, messages, vehicleId, date }) => (
             </div>
         </div>
         <div className={styles.divInRow}>
-             <span className={styles.numberinbtm}>
-          {number}
-                 <img className={styles.car} src={'/assets/images/alerts/icon-car.svg'} />
+             <span className={styles.btmdiv}>
+                  <img src={'/assets/images/alerts/icon-car.svg'} />
+              {number}
+
       </span>
 
             <span className={styles.date}>{date.toDateString()}</span>

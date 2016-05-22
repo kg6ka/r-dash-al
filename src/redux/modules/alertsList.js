@@ -86,6 +86,7 @@ export function* alertsListSaga() {
   while (1) {
     console.log("alertsListSaga");
     try {
+      yield take(GETTING_ALERTS_DATA);
       const { apiBaseUrl } = config;
       const alertsVehicle = yield request
           .get(`${apiBaseUrl}/v1/alerts/vehicle`)

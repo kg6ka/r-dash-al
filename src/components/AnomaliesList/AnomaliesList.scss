@@ -24,7 +24,7 @@
   width: 47vw;
 /*width: 100%;
   overflow-x: scroll; */
-  background-color: #606973;
+  background-color: #404244;
   [type="search"]{
     display:block;
     width:100%;
@@ -34,7 +34,10 @@
   }
 
   tr {
-    height: 2.5vw;
+    height: 2.1vw;
+    &:nth-child(2) {
+      background-color: #28323A;
+    }
   }
 
   td {
@@ -110,6 +113,13 @@
   display: inline-flex;
   width: 100%;
   justify-content: space-around;
+  border-bottom: 1px solid gray;
+  padding-bottom: 13px;
+  border-bottom-style: outset;
+
+  .namespan {
+    color: gray;
+  }
 }
 
 .moreInfo{
@@ -120,12 +130,16 @@
 .signalTitle {
   text-align: left;
   margin: 0.5em 0 1em 1em;
+
+  span {
+    color: #2fc6f4;
+  }
 }
 
 .camZoom {
   float: left;
   background-color: #2b3641;
-  width: 33%;
+  width: 27%;
   div {
     padding: 0.5em 0;
     float: left;

@@ -68,10 +68,10 @@ export default class Charts extends Component {
     let jmpTime = (data[quantity].time - data[0].time) / 7;
     let tick = 0;
     for (let i = 0; i < 7; i++) {
-      timeTicks.push(new Date(tick));
+      timeTicks.push(new Date(data[0].time + tick));
       tick = Math.round(tick + jmpTime);
     }
-    timeTicks.push(new Date(data[quantity].time - data[0].time)); // get last time anytime
+    timeTicks.push(new Date(data[quantity].time)); // get last time anytime
 
 //     let tick = -1000 * 60 *120;
 //     for (let i = 0; i < 7; i++) {

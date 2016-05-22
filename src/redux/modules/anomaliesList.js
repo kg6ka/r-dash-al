@@ -50,7 +50,7 @@ export function* anomaliesListSaga() {
     const { tagId,from } = yield take(GETTING_ANOMALIES_LIST);
     try {
       const { apiBaseUrl } = config;
-      const anomaliesList = yield request
+      const anomalies = yield request
           .get(`${apiBaseUrl}/v1/tags/${tagId}/anomalies?from=${from}`)
           .promise()
         ;

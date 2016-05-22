@@ -37,7 +37,7 @@ export default function carsStatusReducer(state = initialState, action) {
     case 'SHOW_ALERTS':
       return {
         ...state,
-        showAlerts:action.bool
+        showAlerts:!state.showAlerts
       }
     case 'DELETE_MSG_ALERT':
       return {

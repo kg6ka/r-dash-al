@@ -82,7 +82,7 @@ export default class Dashboard extends Component {
     } else {
       this.getNewProps();
     }
-    window.setInterval(this.getNewProps.bind(this), 10000);
+    window.setInterval(this.getNewProps.bind(this), 5000);
   }
 
   categoriesData(props) {

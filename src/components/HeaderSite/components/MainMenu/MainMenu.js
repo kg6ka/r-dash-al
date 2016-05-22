@@ -45,7 +45,8 @@ export default class MainMenu extends Component {
   handlerAction(item){
 	  if(item == undefined) return;
 
-    this.context.router.push(`/anomalies/${item.action}`);
+    location.hash = item.action;
+    this.data[2].label = item.label + ":";
   }
 
   renderSubMenu(list,stepClass) {
@@ -54,7 +55,7 @@ export default class MainMenu extends Component {
     return <ul className={styles[stepClass]}>
             {list.map((item,i)=>
               <li key={i} >
-                <a href={`${location.pathname}#${item.action}`} >
+                <a onClick={this.handlerAction.bind(this,item)} >
                   {item.label}
                 </a>
               </li>

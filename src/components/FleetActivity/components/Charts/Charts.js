@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 const { array, string } = PropTypes;
 import d3 from 'd3';
-import styles from '../../FleetActivity.scss';
+// import styles from '../../FleetActivity.scss';
 import blueCar from '../../images/blueCar.svg';
 
 export default class Charts extends Component {
@@ -16,9 +16,10 @@ export default class Charts extends Component {
     this.drawCharts();
     this.chartsDecoration();
   }
-  componentDidUpdate(prevProps, prevState)  {
+
+  componentDidUpdate() {
     this.drawCharts();
-    this.chartsDecoration();  
+    this.chartsDecoration();
   }
 
   chartsDecoration() {
@@ -62,10 +63,8 @@ export default class Charts extends Component {
     let tickValuesCars = [];
     let tickValuesSuspicious = [];
 
-
-
     const timeTicks = [];
-    let jmpTime = (data[quantity].time - data[0].time) / 7;
+    const jmpTime = (data[quantity].time - data[0].time) / 7;
     let tick = 0;
     for (let i = 0; i < 7; i++) {
       timeTicks.push(new Date(data[0].time + tick));
@@ -81,46 +80,44 @@ export default class Charts extends Component {
 //     timeTicks.push(new Date(data[quantity].time - data[0].time)); // get last time anytime
 
 
-    tickValuesCars = [0,0.5,1,1.5,2];
+    tickValuesCars = [0, 0.5, 1, 1.5, 2];
     const registered = 1;// argusComponents.fleetActivity.registered;
 
-    if(registered > 2)     tickValuesCars = [0,2.5,5,7.5,10];
-   
-    if(registered >= 10)   tickValuesCars = [0,25,50,75,100];
-   
-    if(registered >= 100)  tickValuesCars = [0,250,500,750,1000];
-        
-    if(registered >= 1000) tickValuesCars = [0,2500,5000,7500,10000];
+    if (registered > 2) tickValuesCars = [0, 2.5, 5, 7.5, 10];
 
+    if (registered >= 10) tickValuesCars = [0, 25, 50, 75, 100];
 
-    tickValuesSuspicious = [0, 5, 10, 15,20];
+    if (registered >= 100) tickValuesCars = [0, 250, 500, 750, 1000];
+
+    if (registered >= 1000) tickValuesCars = [0, 2500, 5000, 7500, 10000];
+
+    tickValuesSuspicious = [0, 5, 10, 15, 20];
     let maxSuspicious = 0;
     for (let i = 0; i < data.length; i++) {
-      if(data[i].suspicious > maxSuspicious)
+      if (data[i].suspicious > maxSuspicious) {
         maxSuspicious = data[i].suspicious;
+      }
     }
 
 //     if(maxSuspicious > 2)     tickValuesSuspicious = [0,2.5,5,7.5,10];
-   
-    if(maxSuspicious >= 10)   tickValuesSuspicious = [0,25,50,75,100];
-   
-    if(maxSuspicious >= 100)  tickValuesSuspicious = [0,250,500,750,1000];
-        
-    if(maxSuspicious >= 1000) tickValuesSuspicious = [0,2500,5000,7500,10000];
-               
-//     console.log(data);
-    charts.selectAll("svg").remove();
-    charts.selectAll("image").remove();
-    charts.selectAll("text").remove();
-        
+
+    if (maxSuspicious >= 10) tickValuesSuspicious = [0, 25, 50, 75, 100];
+
+    if (maxSuspicious >= 100) tickValuesSuspicious = [0, 250, 500, 750, 1000];
+
+    if (maxSuspicious >= 1000) tickValuesSuspicious = [0, 2500, 5000, 7500, 10000];
+
+    charts.selectAll('svg').remove();
+    charts.selectAll('image').remove();
+    charts.selectAll('text').remove();
+
     const svg = charts
       .append('svg')
       .attr('width', width)
       .attr('height', height);
 
-
     const x = d3.time.scale()
-      .domain([timeTicks[0],timeTicks[timeTicks.length-1]])
+      .domain([timeTicks[0], timeTicks[timeTicks.length - 1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
@@ -145,10 +142,10 @@ export default class Charts extends Component {
       .tickValues(tickValuesCars)
       .tickPadding(window.innerWidth / 128)
       .tickFormat(d => {
-        if (d < 1000)
+        if (d < 1000) {
           return d;
-        else
-          return `${d / 1000} K`;
+        }
+        return `${d / 1000} K`;
       });
 
     const xAxis = d3.svg.axis()
@@ -195,16 +192,21 @@ export default class Charts extends Component {
       .append('g')
       .attr('class', 'bar1')
       .selectAll('.barItem')
-        .data(data.slice(0,quantity))
+        .data(data.slice(0, quantity))
         .enter()
         .append('rect')
         .attr('class', 'barItem')
         .attr('x', d => x(new Date(d.time)))
         .attr('y', d => y1(d.suspicious))
-        .attr('width', (axisWidth - margin) / quantity)
+        .attr('width', (d) => {
+          let rectWidth = (axisWidth - margin) / quantity;
+          if (x(new Date(d.time)) + rectWidth > axisWidth) {
+            rectWidth = axisWidth - x(new Date(d.time) - margin);
+          }
+          return rectWidth;
+        })
         .attr('height', d => axisHeigth - y1(d.suspicious))
         .attr('fill', `url(#${color1})`);
-
 
     svg.selectAll('.bar2')
       .data(['bar2'])
@@ -218,11 +220,15 @@ export default class Charts extends Component {
         .attr('class', 'barItem')
         .attr('x', (d) => x(new Date(d.time)))
         .attr('y', d => y1(d.blocked))
-        .attr('width', (axisWidth - margin) / quantity)
+        .attr('width', (d) => {
+          let rectWidth = (axisWidth - margin) / quantity;
+          if (x(new Date(d.time)) + rectWidth > axisWidth) {
+            rectWidth = axisWidth - x(new Date(d.time) - margin);
+          }
+          return rectWidth;
+        })
         .attr('height', d => axisHeigth - y1(d.blocked))
         .attr('fill', `url(#${color2})`);
-
-
 
     charts.append('text')
       .text('#')

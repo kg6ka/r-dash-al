@@ -1,9 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+const { array } = PropTypes;
 import expand from './images/expand.svg';
 // import data from './data.js';
 import { Charts, Designations } from './components';
 
 class FleetActivity extends Component {
+  static propTypes = {
+    data: array,
+  };
+
   render() {
     const width = window.innerWidth / 1.79;
     const height = window.innerWidth / 5.45;
@@ -62,7 +67,7 @@ class FleetActivity extends Component {
             strokeWidth="1"
           ></line>
           <image
-            x={ window.innerWidth / 1.71 - pictureSide * 2 }
+            x="95%"
             y={ pictureSide }
             xlinkHref={ expand }
             width={ pictureSide }
@@ -109,6 +114,6 @@ class FleetActivity extends Component {
       </div>
     );
   }
-};
+}
 
 export default FleetActivity;

@@ -58,6 +58,30 @@ export default class Target extends Component {
   }
 
   render() {
+    let max = 0;
+    for(var i in this.props.data.ECU) {
+      if(this.props.data.ECU[i].total > max)
+        max = this.props.data.ECU[i].total;
+    }
+
+    for(var i in this.props.data.MSG) {
+      if(this.props.data.MSG[i].total > max)
+        max = this.props.data.MSG[i].total;
+    }
+
+    for(var i in this.props.data.Vehicle) {
+      if(this.props.data.Vehicle[i].total > max)
+        max = this.props.data.Vehicle[i].total;
+    }
+
+    if(max > 1000)  max = 10000;
+    if(max <= 1000)  max = 1000;
+    if(max <= 500)  max = 500;
+    if(max <= 100)  max = 100;
+    if(max <= 10)   max = 10;
+    if(max <= 5)    max = 5;
+
+    let maxDomain = max;
     return (
       <div className={ styles.content }>
         <div
@@ -102,7 +126,7 @@ export default class Target extends Component {
           >
             <div className={styles.dataBlockInner}>
             { this.props.data[this.state.checked].map((el, idx) =>
-                <DataView key={ idx } name={ el.key } total={ el.total } blocked={ el.blocked } />
+                <DataView maxDomain={maxDomain} key={ idx } name={ el.key } total={ el.total } blocked={ el.blocked } />
             ) }
             </div>
           </Scrollbar>

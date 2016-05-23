@@ -84,7 +84,7 @@ export default class FilterTable extends Component {
     timeTicks.push(new Date(data[quantity].time)); // get last time anytime
 
     tickValuesCars = [0,0.5,1,1.5,2];
-    const registered = argusComponents.fleetActivity.registered;
+    const registered = this.props.total;
 
     if(registered > 2)     tickValuesCars = [0,2.5,5,7.5,10];
    

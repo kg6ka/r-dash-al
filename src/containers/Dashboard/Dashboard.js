@@ -161,6 +161,7 @@ export default class Dashboard extends Component {
   }
 
   fleetActivitiesData(props) {
+    props.carsStatus.activities.length = props.fleetActivities.data.length;
     return props.carsStatus.activities.reduce((curValue, item, index) => {
       const newBar = {
         time: item.timestamp,
@@ -215,6 +216,7 @@ export default class Dashboard extends Component {
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity
                   data={ this.state.fleetActivities }
+                  registered={ this.props.carsStatus.registeredVehicles[0].count }
                 />
               </div>
               <div className={cx(styles.fleetActivity, layout.layoutCol50,layout.height50)}>

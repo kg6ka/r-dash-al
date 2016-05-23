@@ -27,7 +27,10 @@ export default class AnomaliesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bars: [],
+      bars: {
+        result: [],
+        total: 0,
+      },
       confidence: {
         data: [],
       },
@@ -51,11 +54,12 @@ export default class AnomaliesPage extends Component {
       this.props.getCurrentTags();
     } else {
       this.getNewProps();
+      //window.setInterval(this.getNewProps.bind(this), 10000);
     }
-    window.setInterval(this.getNewProps.bind(this), 10000);
   }
 
   fleetActivitiesData(props) {
+    props.carsStatus.activities.length = props.fleetActivities.data.length;
     return props.carsStatus.activities.reduce((curValue, item, index) => {
       const newBar = {
         time: item.timestamp,
@@ -76,6 +80,8 @@ export default class AnomaliesPage extends Component {
       this.props.getFleetActivities(props.getTags.data[0].tagId,
         this.props.location.hash.substring(1) || '5s');
       this.props.getAnomaliesConfidence(props.getTags.data[0].tagId);
+      this.props.getTarget(props.getTags.data[0].tagId);
+      //window.setInterval(this.getNewProps.bind(this), 10000);
     }
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.props.getCarsStatus(props.getTags.data[0].tagId,
@@ -94,7 +100,10 @@ export default class AnomaliesPage extends Component {
       && props.carsStatus.activities.length !== 0) {
       const result = this.fleetActivitiesData(props);
       this.setState({
-        bars: result,
+        bars: {
+          result,
+          total: props.carsStatus.registeredVehicles[0].count,
+        },
       });
     }
     if (props.categories.data.length) {
@@ -237,7 +246,7 @@ export default class AnomaliesPage extends Component {
           className={cx(layout.layoutSideLeft, layout.layoutCol50)}
         >
           <div className={cx(styles.backgroundGradient)}>
-            <FilterTable data={ this.state.bars } onChange={::this.onChangeSelect} />
+            <FilterTable data={ this.state.bars.result } total={ this.state.bars.total } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
             <MSGfilter data={ this.props.target} onChange={ ::this.filterByMessage } />

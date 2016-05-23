@@ -70,6 +70,7 @@ class FleetActivity extends Component {
           />
           <Charts
             data={ this.props.data }
+            registered={ this.props.registered }
             color1={'suspiciousGradient'}
             color2={'blockedGradient'}
             color3={'transmittingGradient'}

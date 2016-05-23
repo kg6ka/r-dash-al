@@ -8,7 +8,11 @@ const GET_CARS_STATUS_FAILURE = 'argus/carsStatus/GET_CARS_STATUS_FAILURE';
 
 const initialState = {
   activities: [],
-  registeredVehicles: [],
+  registeredVehicles: [
+    {
+      count: 0,
+    }
+  ],
   updatedVehicles: [],
   loading: false,
 };
@@ -64,6 +68,7 @@ export function* carsStatusSaga() {
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/statuses/vehicles/counts/updated`)
           .promise()
         ;
+      
       const body = {
         activities: [...activities.body.data],
         registeredVehicles: [...registeredVehicles.body.data],

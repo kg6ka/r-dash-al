@@ -116,7 +116,6 @@ export default class Dashboard extends Component {
       this.setState({
         registeredVehicles: result,
       });
-      debugger;
 
       if (props.fleetActivities.data.length) {
         this.setState({

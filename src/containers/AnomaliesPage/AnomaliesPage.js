@@ -14,6 +14,7 @@ import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
 import { getCurrentTags } from './../../redux/modules/getTags';
+import { getTarget } from './../../redux/modules/target';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -42,6 +43,7 @@ export default class AnomaliesPage extends Component {
     this.props.getFleetActivities(this.props.getTags.data[0].tagId,
       this.props.location.hash.substring(1) || '5s');
     this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId);
+    this.props.getTarget(this.props.getTags.data[0].tagId);
   }
 
   componentDidMount() {
@@ -238,10 +240,10 @@ export default class AnomaliesPage extends Component {
             <FilterTable data={ this.state.bars } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
-            <MSGfilter onChange={ ::this.filterByMessage } />
+            <MSGfilter data={ this.props.target} onChange={ ::this.filterByMessage } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
-            <VehiclesFilter onChange={ ::this.filterByVehicles } />
+            <VehiclesFilter data={ this.props.target } onChange={ ::this.filterByVehicles } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
             <Categories name="filter by category" filter="true" data={ this.state.categories } onChange={ ::this.filterByCategory } />
@@ -268,6 +270,7 @@ export default connect(
     carsStatus,
     confidenceFilter,
     getTags,
+    target,
   }) => ({
     mapsPopup,
     categories,
@@ -276,6 +279,7 @@ export default connect(
     carsStatus,
     confidenceFilter,
     getTags,
+    target,
   }),
     dispatch => bindActionCreators({
       openMapsPopup,
@@ -285,6 +289,7 @@ export default connect(
       getCarsStatus,
       getAnomaliesConfidence,
       getCurrentTags,
+      getTarget,
     }, dispatch)
 )(AnomaliesPage);
 

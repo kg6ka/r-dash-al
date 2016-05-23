@@ -11,7 +11,7 @@ export default class VehiclesFilter extends Component {
       <div className={styles.scroll}>
         <Scrollbars>
           <div className={styles.charts}>
-            { argusComponents.target['Vehicle'].map((el, idx) => {
+            { this.props.data.Vehicle.map((el, idx) => {
               const { key, total, blocked } = el;
               return (<DataBars
                 key={ idx }

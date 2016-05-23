@@ -68,7 +68,7 @@ export function* carsStatusSaga() {
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/statuses/vehicles/counts/updated`)
           .promise()
         ;
-      
+
       const body = {
         activities: [...activities.body.data],
         registeredVehicles: [...registeredVehicles.body.data],

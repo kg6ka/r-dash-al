@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 const { node } = PropTypes;
 import { connect } from 'react-redux';
-import { showAlerts } from './../../redux/modules/alertsList';
 import { bindActionCreators } from 'redux';
+
+import { showAlerts } from './../../redux/modules/alertsList';
+import { getCurrentTags } from './../../redux/modules/getTags';
 import styles from './App.scss';
 
 import { HeaderSite } from 'components';
@@ -10,16 +12,22 @@ import { HeaderSite } from 'components';
 class App extends Component {
   static propTypes = {
     children: node,
+  };
+
+  componentDidMount() {
+    if(!this.props.getTags.data.length) {
+      this.props.getCurrentTags();
+    }
   }
   changeAlertsVisibilty = () => {
     this.props.showAlerts(true);
   }
   
   render() {
-    const { children } = this.props;
+    const { children, getTags } = this.props;
     return (
       <div>
-        <HeaderSite onClick={this.changeAlertsVisibilty}/>
+        <HeaderSite onClick={this.changeAlertsVisibilty} tags={ getTags.data } />
         { children }
       </div>
     );
@@ -27,12 +35,15 @@ class App extends Component {
 }
 
 export default connect(({
-        alertsList
+        alertsList,
+        getTags,
     }) => ({
-      alertsList
+      alertsList,
+      getTags,
     }),
     dispatch => bindActionCreators({
-      showAlerts
+      showAlerts,
+      getCurrentTags,
     }, dispatch))(App);
 
 

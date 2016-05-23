@@ -18,14 +18,6 @@ export default class MainMenu extends Component {
           {label: 'Israel', action:'', icon: 'Germany.png', }
         ]
     }, {
-        label: 'polo 2016',
-        url: '#about',
-        icon: 'polo-logo.png',
-		items:[
-          {label: 'Polo 2016', action:'' },
-          {label: 'Golf 2016', action:'' }
-        ]
-    }, {
         label: 'last 10 minutes:',
         url: '#contact-us',
         icon: 'data.png',
@@ -62,9 +54,42 @@ export default class MainMenu extends Component {
            </ul>;
   }
 
+  componentWillReceiveProps(props) {
+    if (props.tags.length !== this.props.tags.length) {
+      this.setState({
+        index: 0,
+      });
+    }
+  }
+
+  renderTagMenu(data) {
+    if(!data.length) return;
+    return <li className={styles['polo 2016']}>
+      <a className='polo 2016'>
+        <img src='/assets/images/menu-icons/polo-logo.png' />
+        {this.props.tags[this.state.index].name}
+      </a>
+      <ul className={styles.child}>
+        {data.map((item,i) =>
+            <li key={i} >
+              <a  onClick={ ::this.changeItemMenu.bind(this, i) }>
+                {item.name}
+              </a>
+            </li>
+        )}
+      </ul>
+    </li>;
+  }
+
+  changeItemMenu(index) {
+    this.setState({
+      index,
+    });
+  }
 
   render() {
     return  <ul className={styles.mainMenu}>
+      { this.renderTagMenu(this.props.tags) }
           {this.data.map((link,i)=>
               <li key={i} >
                   <a  className={link.label}>

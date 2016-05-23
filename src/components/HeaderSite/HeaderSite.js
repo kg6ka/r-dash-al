@@ -19,7 +19,7 @@ class HeaderSite extends Component {
             <ToggleMenu/>
             <Link to="dashboard" className={styles.logo}><img src="/assets/images/logo.png"/></Link>
             <div className={styles.center}>
-                <MainMenu/>
+                <MainMenu tags={ this.props.tags } />
                 <a className={styles.update}>
                     <span>{this.update_label}</span>
                     <span>{this.update_date}</span>

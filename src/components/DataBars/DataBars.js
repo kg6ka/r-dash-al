@@ -9,7 +9,7 @@ export default class DataBars extends Component {
   };
 
   calcPercent(val) {
-    return (val * 100 / this.props.data.maxHeight - 14);
+    return (val * 100 / this.props.data.maxHeight  - 14);
   }
 
   render() {

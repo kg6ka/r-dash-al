@@ -370,15 +370,15 @@ function defaultData() {
 
 window.updateApiData = function (dataFrom) {
   argusComponents.dataFrom = dataFrom;
-  getApiData('1111');
+  getApiData('11111111-1111-1111-3333-000000000031');
 };
 
 window.setInterval(() => {
-  getApiData('1111');
+  getApiData('11111111-1111-1111-3333-000000000031');
   store.dispatch({
     type: '0',
   });
 }, 10000);
 
 defaultData();
-getApiData('1111');
+getApiData('11111111-1111-1111-3333-000000000031');

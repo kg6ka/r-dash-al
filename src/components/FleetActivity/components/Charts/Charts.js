@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 const { array, string } = PropTypes;
 import d3 from 'd3';
-// import styles from '../../FleetActivity.scss';
 import blueCar from '../../images/blueCar.svg';
 
 export default class Charts extends Component {
@@ -79,6 +78,7 @@ export default class Charts extends Component {
 //     }
 //     timeTicks.push(new Date(data[quantity].time - data[0].time)); // get last time anytime
 
+    tickValuesCars = [0, 0.5, 1, 1.5, 2];
     const registered = 2;// argusComponents.fleetActivity.registered;
 
     if (registered > 2) tickValuesCars = [0, 2.5, 5, 7.5, 10];

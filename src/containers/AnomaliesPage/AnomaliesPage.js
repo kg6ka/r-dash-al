@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 const { func, object } = PropTypes;
 import { bindActionCreators } from 'redux';
 import { Categories, MSGfilter, VehiclesFilter, ConfidenceFilter,
-  FilterTable, MapsPopup, AnomaliesList,BackBtn } from 'components';
+  FilterTable, MapsPopup, AnomaliesList, BackBtn } from 'components';
 import styles from './Anomalies.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -21,6 +21,12 @@ export default class AnomaliesPage extends Component {
     getCategories: func,
     getAnomaliesList: func,
     anomaliesList: object,
+    getTags: func,
+    getCurrentTags: func,
+    location: object,
+    getCarsStatus: func,
+    getFleetActivities: func,
+    getAnomaliesConfidence: func,
   };
 
   constructor(props) {
@@ -30,42 +36,8 @@ export default class AnomaliesPage extends Component {
       confidence: {
         data: [],
       },
-      anomalies:[]
+      anomalies: [],
     };
-
-  }
-
-  getNewProps() {
-
-     let action = this.props.location.hash.substring(1)  || '10m';
-     let relativeTime = new Date();
-     let period = '';
-     switch (action) {
-       case '10m': period = '5s';
-                   relativeTime = relativeTime-60000 * 10;
-                break;
-       case '1h': period = '30s';
-                 relativeTime = relativeTime-60000 * 60;
-                break;
-       case '1d': period = '10m';
-                  relativeTime = relativeTime-60000 * 60 *24;
-                  break;
-       case '1w': period = '1h';
-                 relativeTime = relativeTime-60000 * 60 *24 *7;
-                 break;
-       case '1m': period = '6h';
-                  relativeTime = relativeTime-60000 * 60 *24 *7 * 4;
-                 break;
-    }
-
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period,relativeTime);
-
-    this.props.getCategories(this.props.getTags.data[0].tagId,relativeTime);
-    this.props.getAnomaliesList(this.props.getTags.data[0].tagId,relativeTime);
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId,period,relativeTime);
-
-    this.props.getFleetActivities(this.props.getTags.data[0].tagId,period,relativeTime);
-    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId,relativeTime);
   }
 
   componentDidMount() {
@@ -75,18 +47,6 @@ export default class AnomaliesPage extends Component {
       this.getNewProps();
     }
     window.setInterval(this.getNewProps.bind(this), 10000);
-  }
-
-  fleetActivitiesData(props) {
-    return props.fleetActivities.data.reduce((curValue, item, index) => {
-      const newBar = {
-        time: item.timestamp,
-        activitys: props.carsStatus.activities[0].values[0].value,
-        suspicious: item.values[0].value,
-        blocked: item.values[1].value,
-      };
-      return [...curValue, newBar];
-    }, []);
   }
 
   componentWillReceiveProps(props) {
@@ -128,29 +88,29 @@ export default class AnomaliesPage extends Component {
         { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
       ];
 
-      const items = props.confidenceFilter.data.map((item, index) => {
-        return {
+      const items = props.confidenceFilter.data.map((item, index) =>
+        ({
           total: item.total,
           offset: informationData[index].offset,
           color: informationData[index].color,
           key: item.key,
-        };
-      });
+        })
+      );
 
       confidence.data = items;
 
       let max = 0;
-      for(let i; i < items.length; i++) {
-        if(confidence.data[i].total > max) {
+      for (let i; i < items.length; i++) {
+        if (confidence.data[i].total > max) {
           max = confidence.data[i].total;
         }
       }
 
-      if(max > 500) max = 1000;
-      if(max <= 500) max = 500;
-      if(max <= 100) max = 100;
-      if(max <= 10) max = 10;
-      if(max <= 5) max = 5;
+      if (max > 500) max = 1000;
+      if (max <= 500) max = 500;
+      if (max <= 100) max = 100;
+      if (max <= 10) max = 10;
+      if (max <= 5) max = 5;
 
       this.setState({
         confidence: {
@@ -175,22 +135,63 @@ export default class AnomaliesPage extends Component {
       max = rangeToData[1];
       min = rangeToData[0];
     }
-    
+
     const filterData = this.props.anomaliesList.data.filter((item) =>
-                                              item.timestamp > min &&
-                                              item.timestamp < max);
+      item.timestamp > min && item.timestamp < max);
     this.setState({
       anomalies: filterData,
     });
   }
 
+  getNewProps() {
+    const action = this.props.location.hash.substring(1) || '10m';
+    let relativeTime = new Date();
+    let period = '';
+    switch (action) {
+      case '10m': period = '5s';
+        relativeTime = relativeTime - 60000 * 10;
+        break;
+      case '1h': period = '30s';
+        relativeTime = relativeTime - 60000 * 60;
+        break;
+      case '1d': period = '10m';
+        relativeTime = relativeTime - 60000 * 60 * 24;
+        break;
+      case '1w': period = '1h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
+        break;
+      case '1m': period = '6h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        break;
+    }
+
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
+    this.props.getCategories(this.props.getTags.data[0].tagId, relativeTime);
+    this.props.getAnomaliesList(this.props.getTags.data[0].tagId, relativeTime);
+    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
+    this.props.getFleetActivities(this.props.getTags.data[0].tagId, period, relativeTime);
+    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId, relativeTime);
+  }
+
+  fleetActivitiesData(props) {
+    return props.fleetActivities.data.reduce((curValue, item) => {
+      const newBar = {
+        time: item.timestamp,
+        activitys: props.carsStatus.activities[0].values[0].value,
+        suspicious: item.values[0].value,
+        blocked: item.values[1].value,
+      };
+      return [...curValue, newBar];
+    }, []);
+  }
+
   categoriesData(props) {
     const old = [
-      {offset: window.innerWidth / 25.26, color: '#b2d733'},
-      {offset: window.innerWidth / 15.5, color: '#13aa38'},
-      {offset: window.innerWidth / 11.2, color: '#1156e4'},
-      {offset: window.innerWidth / 8.73, color: '#904fff'},
-      {offset: window.innerWidth / 7.16, color: '#fff'},
+      { offset: window.innerWidth / 25.26, color: '#b2d733' },
+      { offset: window.innerWidth / 15.5, color: '#13aa38' },
+      { offset: window.innerWidth / 11.2, color: '#1156e4' },
+      { offset: window.innerWidth / 8.73, color: '#904fff' },
+      { offset: window.innerWidth / 7.16, color: '#fff' },
     ];
 
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);
@@ -207,7 +208,8 @@ export default class AnomaliesPage extends Component {
   }
 
   filterByCategory(type) {
-    const filterList = this.state.anomalies.filter((item) => item.cause === type.trim().replace(/ /g, '_').toUpperCase());
+    const filterList = this.state.anomalies.filter((item) =>
+      item.cause === type.trim().replace(/ /g, '_').toUpperCase());
     this.setState({
       anomalies: filterList,
     });
@@ -234,7 +236,8 @@ export default class AnomaliesPage extends Component {
   }
 
   filterByVehicles(data) {
-    const filterList = this.state.anomalies.filter((item) => item.vehicleId.toString() === data.key);
+    const filterList = this.state.anomalies.filter((item) =>
+      item.vehicleId.toString() === data.key);
     this.setState({
       anomalies: filterList,
     });
@@ -244,7 +247,7 @@ export default class AnomaliesPage extends Component {
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
         <div className={styles.anomaliesHeader}>
-        <BackBtn/>
+        <BackBtn />
         </div>
         <div
           className={cx(layout.layoutSideLeft, layout.layoutCol50)}
@@ -259,10 +262,19 @@ export default class AnomaliesPage extends Component {
             <VehiclesFilter onChange={ ::this.filterByVehicles } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
-            <Categories name="filter by category" filter="true" data={ this.state.categories } onChange={ ::this.filterByCategory } />
+            <Categories
+              name="filter by category"
+              filter="true"
+              data={ this.state.categories }
+              onChange={ ::this.filterByCategory }
+            />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderLeftTop)}>
-            <ConfidenceFilter max={ this.state.confidence.maxDomain } data={ this.state.confidence.data } onChange={ ::this.confidenceFilter } />
+            <ConfidenceFilter
+              max={ this.state.confidence.maxDomain }
+              data={ this.state.confidence.data }
+              onChange={ ::this.confidenceFilter }
+            />
           </div>
           <MapsPopup />
         </div>
@@ -302,4 +314,3 @@ export default connect(
       getCurrentTags,
     }, dispatch)
 )(AnomaliesPage);
-

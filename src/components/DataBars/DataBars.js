@@ -1,22 +1,28 @@
 import React, { Component, PropTypes } from 'react';
-const { object } = PropTypes;
+const { object, func } = PropTypes;
 import styles from './DataBars.scss';
 
 export default class DataBars extends Component {
   static propTypes = {
     style: object,
     data: object,
+    onChange: func,
   };
 
   calcPercent(val) {
-    return (val * 100 / this.props.data.maxHeight  - 14);
+    return (val * 100 / this.props.data.maxHeight - 14);
   }
 
   render() {
     const { style: { width, height },
       data: { val, msg, suspicious, blocked } } = this.props;
     return (
-      <svg width={ width } height={ height } className={styles.chart} onClick={ this.props.onChange }>
+      <svg
+        width={ width }
+        height={ height }
+        className={styles.chart}
+        onClick={ this.props.onChange }
+      >
         <rect
           x="30%"
           y={`${100 - this.calcPercent(blocked)}%`}

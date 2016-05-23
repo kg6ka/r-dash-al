@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-const { string, array } = PropTypes;
+const { string, array, func } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
@@ -14,6 +14,7 @@ export default class Categories extends Component {
     name: string,
     filter: string,
     data: array,
+    onChange: func,
   };
 
   constructor(props) {

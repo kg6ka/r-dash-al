@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-const { string, number } = PropTypes;
+const { number } = PropTypes;
 import logo from './images/volkswagen_logo.svg';
 import metalBtn from '../images/metalBtn.svg';
 import d3 from 'd3';

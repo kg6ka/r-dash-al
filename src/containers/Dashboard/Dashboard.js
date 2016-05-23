@@ -88,10 +88,10 @@ export default class Dashboard extends Component {
     if (props.carsStatus.activities.length) {
       const result = {
         registered: props.carsStatus.registeredVehicles[0].count,
-        activity: props.carsStatus.activities[props.carsStatus.activities.length - 1].values[0].value
-        / props.carsStatus.registeredVehicles[0].count * 100,
+        activity: props.carsStatus.activities[props.carsStatus.activities.length - 1]
+          .values[0].value / props.carsStatus.registeredVehicles[0].count * 100,
         updated: props.carsStatus.updatedVehicles[0].count
-        / props.carsStatus.registeredVehicles[0].count * 100,
+          / props.carsStatus.registeredVehicles[0].count * 100,
         percentRegistered: 12,
       };
 

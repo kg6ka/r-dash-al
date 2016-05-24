@@ -11,7 +11,7 @@ const initialState = {
   registeredVehicles: [
     {
       count: 0,
-    }
+    },
   ],
   updatedVehicles: [],
   loading: false,

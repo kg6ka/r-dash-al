@@ -154,7 +154,7 @@ export default class AnomaliesPage extends Component {
   }
 
   getNewProps(props) {
-    const action = props.location.hash.substring(1) || '10m';
+    const action = props.location.hash ? props.location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
     let period = '';
     switch (action) {

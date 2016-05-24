@@ -11,14 +11,11 @@ export default class Charts extends Component {
     color3: string,
   };
 
-  componentDidMount() {
-    this.drawCharts();
-    this.chartsDecoration();
-  }
-
-  componentDidUpdate() {
-    this.drawCharts();
-    this.chartsDecoration();
+  componentWillReceiveProps(props) {
+    if (props.data.length !== this.props.data.length) {
+      this.drawCharts();
+      this.chartsDecoration();
+    }
   }
 
   chartsDecoration() {

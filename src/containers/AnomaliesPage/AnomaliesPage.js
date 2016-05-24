@@ -22,7 +22,7 @@ export default class AnomaliesPage extends Component {
     getCategories: func,
     getAnomaliesList: func,
     anomaliesList: object,
-    getTags: func,
+    getTags: object,
     getCurrentTags: func,
     location: object,
     getCarsStatus: func,

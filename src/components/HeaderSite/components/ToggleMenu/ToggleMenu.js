@@ -19,7 +19,7 @@ export default class ToggleMenu extends Component {
         ],
       }, {
         label: 'Configuration',
-        url: '/dashboard',
+        url: '/',
         items: [
           { label: 'Group Parameters', url: '' },
           { label: 'Group Config', url: '' },
@@ -28,7 +28,7 @@ export default class ToggleMenu extends Component {
         ],
       }, {
         label: 'Admin',
-        url: '/dashboard',
+        url: '/',
         items: [
           { label: 'CRUD', url: '' },
           { label: 'Alerts and Reports', url: '' },
@@ -56,7 +56,7 @@ export default class ToggleMenu extends Component {
       <ul className={stepClass}>
         { list.map((item, i) =>
             <li key={i} >
-              <Link to={item.url}>
+              <Link to={item.url} activeClassName={styles.currentUrl}>
                 { item.label }
               </Link>
             </li>
@@ -72,11 +72,13 @@ export default class ToggleMenu extends Component {
         <div className={styles.toggleMenuContent}>
           <ul className={styles.menuToggle}>
             { this.data.map((link, i) =>
-                <li key={i}>
-                    <Link to={link.url} >{ link.label }</Link>
-                    { link.items ? this.renderSubMenu(link.items, 'child') : null }
-                </li>
-              )}
+              <li key={i}>
+                <Link to={ link.url } activeClassName={styles.currentUrl}>
+                  { link.label }
+                  </Link>
+                { link.items ? this.renderSubMenu(link.items, 'child') : null }
+              </li>
+            )}
           </ul>
         </div>
       </div>

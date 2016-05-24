@@ -202,4 +202,18 @@
   z-index: 1500;
   -webkit-transition: left 500ms;
   transition: left 500ms;
+
+  a:hover {
+    box-shadow: 0 0 0 10em rgba(255, 255, 255, 0.25) inset;
+  }
+}
+
+.currentUrl {
+  color: #2fc6f4 !important;
+  text-shadow: 0 0 5px #2fc6f4;
+
+  &:hover {
+    color: #04a5f6 !important;
+    text-shadow: 0 0 2px #04a5f6;
+  }
 }

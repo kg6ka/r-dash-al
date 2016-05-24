@@ -1,21 +1,25 @@
 import React, { PropTypes, Component } from 'react';
-const { array } = PropTypes;
+const { array, func } = PropTypes;
 import styles from './AnomaliesList.scss';
 import blocked from './images/blocked.svg';
 import signal from './images/signal.svg';
 import previous from './images/previous.svg';
 import filter from './images/filter.svg';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { openMapsPopup } from 'redux/modules/mapsPopup';
+import { bindActionCreators } from 'redux';
 
 export default class AnomaliesList extends Component {
   static propTypes = {
     anomalies: array,
+    openMapsPopup: func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      anomalies: props.anomalies ? props.anomalies : [],
+      anomalies: props.anomalies || [],
       openIdx: null,
     };
     this.colors = {
@@ -147,7 +151,13 @@ export default class AnomaliesList extends Component {
                           {'  Tmnt version 4.7.1.04' }
                         </div>
                         <div>
-                          <span className={styles.namespan}>{'Location |'}</span>{' Wolfsburg'}
+                          <span className={styles.namespan}>{'Location | '}</span>
+                          <span
+                            className={styles.location}
+                            onClick={ this.props.openMapsPopup }
+                          >
+                            {'Wolfsburg'}
+                          </span>
                         </div>
                       </div>
                       <div className={styles.signalTitle}>Signal Values 1<span>/</span>20</div>
@@ -181,3 +191,10 @@ export default class AnomaliesList extends Component {
     );
   }
 }
+
+export default connect(
+  ({ mapsPopup }) => ({ mapsPopup }),
+    dispatch => bindActionCreators({
+      openMapsPopup,
+    }, dispatch)
+)(AnomaliesList);

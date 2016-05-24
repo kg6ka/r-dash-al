@@ -44,7 +44,7 @@ export default class MainMenu extends Component {
         { list.map((item, i) =>
           <li key={i} >
             <a onClick={ this.handlerAction.bind(this, item) } >
-              {item.label}
+              { item.label }
             </a>
           </li>
         )}

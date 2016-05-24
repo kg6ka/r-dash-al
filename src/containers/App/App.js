@@ -8,7 +8,7 @@ import { getCurrentTags } from './../../redux/modules/getTags';
 import styles from './App.scss';
 
 import { HeaderSite } from 'components';
-  
+
 class App extends Component {
   static propTypes = {
     children: node,
@@ -22,7 +22,7 @@ class App extends Component {
   changeAlertsVisibilty = () => {
     this.props.showAlerts(true);
   }
-  
+
   render() {
     const { children, getTags } = this.props;
     return (
@@ -45,6 +45,5 @@ export default connect(({
       showAlerts,
       getCurrentTags,
     }, dispatch))(App);
-
 
 

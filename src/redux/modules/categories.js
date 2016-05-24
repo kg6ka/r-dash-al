@@ -37,7 +37,7 @@ export default function categoriesReducer(state = initialState, action) {
   }
 }
 
-export function getCategories(tagId,from) {
+export function getCategories(tagId, from) {
   return {
     type: GETTING_CATEGORIES,
     tagId,
@@ -65,4 +65,3 @@ export function* categoriesSaga() {
 export const sagas = [
   categoriesSaga,
 ];
-

@@ -21,7 +21,7 @@ export default class AnomaliesPage extends Component {
     getCategories: func,
     getAnomaliesList: func,
     anomaliesList: object,
-    getTags: func,
+    getTags: object,
     getCurrentTags: func,
     location: object,
     getCarsStatus: func,
@@ -165,12 +165,14 @@ export default class AnomaliesPage extends Component {
         break;
     }
 
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getCategories(this.props.getTags.data[0].tagId, relativeTime);
-    this.props.getAnomaliesList(this.props.getTags.data[0].tagId, relativeTime);
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getFleetActivities(this.props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId, relativeTime);
+    if (this.props.getTags.data[0]) {
+      this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
+      this.props.getCategories(this.props.getTags.data[0].tagId, relativeTime);
+      this.props.getAnomaliesList(this.props.getTags.data[0].tagId, relativeTime);
+      this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
+      this.props.getFleetActivities(this.props.getTags.data[0].tagId, period, relativeTime);
+      this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId, relativeTime);
+    }
   }
 
   fleetActivitiesData(props) {

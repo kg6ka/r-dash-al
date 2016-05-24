@@ -8,11 +8,16 @@ export default class MainMenu extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {index: 0};
+    this.state = {
+      index: 0,
+      country: 0,
+      last: 0,
+    };
     this.data = [{
       label: 'germany',
       url: '#home',
       icon: 'Germany.png',
+      type: 'country',
       items: [
         {label: 'Germany', action: '', icon: 'Germany.png'},
         {label: 'Israel', action: '', icon: 'Germany.png'},
@@ -21,6 +26,7 @@ export default class MainMenu extends Component {
       label: 'last 10 minutes:',
       url: '#contact-us',
       icon: 'data.png',
+      type: 'last',
       items: [
         {label: 'last month', action: '6h'},
         {label: 'last week', action: '1h'},
@@ -32,18 +38,20 @@ export default class MainMenu extends Component {
     ];
   }
 
-  handlerAction(item) {
+  handlerAction(item, type, index) {
     if (item === undefined) return;
-    location.hash = item.action;
-    this.data[2].label = `${item.label}:`;
+    this.setState({
+      [type]: index,
+    });
+
   }
 
-  renderSubMenu(list, stepClass) {
+  renderSubMenu(list, stepClass, type) {
     return (
       <ul className={styles[stepClass]}>
         { list.map((item, i) =>
           <li key={i} >
-            <a onClick={ this.handlerAction.bind(this, item) } >
+            <a onClick={ this.handlerAction.bind(this, item, type, i) } >
               { item.label }
             </a>
           </li>
@@ -92,9 +100,9 @@ export default class MainMenu extends Component {
               <li key={i} >
                   <a  className={link.label}>
                     <img src={`/assets/images/menu-icons/${link.icon}`}/>
-                    {link.label}
+                    { link.items[this.state[link.type]].label }
                   </a>
-                  { this.renderSubMenu(link.items,'child') }
+                  { this.renderSubMenu(link.items, 'child', link.type) }
               </li>
           )}
       </ul>;

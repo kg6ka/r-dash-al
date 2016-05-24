@@ -14,6 +14,7 @@ import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
 import { getCurrentTags } from './../../redux/modules/getTags';
+import { getTarget } from './../../redux/modules/target';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -32,7 +33,10 @@ export default class AnomaliesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bars: [],
+      bars: {
+        result: [],
+        total: 0,
+      },
       confidence: {
         data: [],
       },
@@ -44,17 +48,17 @@ export default class AnomaliesPage extends Component {
     if (!this.props.getTags.data.length) {
       this.props.getCurrentTags();
     } else {
-      this.getNewProps();
+      this.getNewProps(this.props);
+      //window.setInterval(this.getNewProps.bind(this), 10000);
     }
-    window.setInterval(this.getNewProps.bind(this), 10000);
   }
 
   componentWillReceiveProps(props) {
     if (props.getTags.data.length !== this.props.getTags.data.length) {
-      this.getNewProps();
+      this.getNewProps(props);
     }
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
-      this.getNewProps();
+      this.getNewProps(props);
     }
 
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
@@ -67,7 +71,10 @@ export default class AnomaliesPage extends Component {
       && props.carsStatus.activities.length !== 0) {
       const result = this.fleetActivitiesData(props);
       this.setState({
-        bars: result,
+        bars: {
+          result,
+          total: props.carsStatus.registeredVehicles[0].count,
+        },
       });
     }
     if (props.categories.data.length) {
@@ -143,8 +150,8 @@ export default class AnomaliesPage extends Component {
     });
   }
 
-  getNewProps() {
-    const action = this.props.location.hash.substring(1) || '10m';
+  getNewProps(props) {
+    const action = props.location.hash.substring(1) || '10m';
     let relativeTime = new Date();
     let period = '';
     switch (action) {
@@ -165,24 +172,31 @@ export default class AnomaliesPage extends Component {
         break;
     }
 
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getCategories(this.props.getTags.data[0].tagId, relativeTime);
-    this.props.getAnomaliesList(this.props.getTags.data[0].tagId, relativeTime);
-    this.props.getCarsStatus(this.props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getFleetActivities(this.props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getAnomaliesConfidence(this.props.getTags.data[0].tagId, relativeTime);
+    this.props.getCarsStatus(props.getTags.data[0].tagId, period, relativeTime);
+    this.props.getCategories(props.getTags.data[0].tagId, relativeTime);
+    this.props.getAnomaliesList(props.getTags.data[0].tagId, relativeTime);
+    this.props.getCarsStatus(props.getTags.data[0].tagId, period, relativeTime);
+    this.props.getFleetActivities(props.getTags.data[0].tagId, period, relativeTime);
+    this.props.getAnomaliesConfidence(props.getTags.data[0].tagId, relativeTime);
+    this.props.getTarget(props.getTags.data[0].tagId, relativeTime);
   }
 
   fleetActivitiesData(props) {
-    return props.fleetActivities.data.reduce((curValue, item) => {
+    const resultArray = [];
+    for(let i = 0; props.fleetActivities.data.length > i; i++) {
+      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i]) {
+        break;
+      }
       const newBar = {
-        time: item.timestamp,
+        time: props.fleetActivities.data[i].timestamp,
         activitys: props.carsStatus.activities[0].values[0].value,
-        suspicious: item.values[0].value,
-        blocked: item.values[1].value,
+        suspicious: props.fleetActivities.data[0].values[0].value,
+        blocked: props.fleetActivities.data[0].values[1].value,
       };
-      return [...curValue, newBar];
-    }, []);
+      resultArray.push(newBar);
+    }
+    debugger;
+    return resultArray;
   }
 
   categoriesData(props) {
@@ -253,13 +267,13 @@ export default class AnomaliesPage extends Component {
           className={cx(layout.layoutSideLeft, layout.layoutCol50)}
         >
           <div className={cx(styles.backgroundGradient)}>
-            <FilterTable data={ this.state.bars } onChange={::this.onChangeSelect} />
+            <FilterTable data={ this.state.bars.result } total={ this.state.bars.total } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
-            <MSGfilter onChange={ ::this.filterByMessage } />
+            <MSGfilter data={ this.props.target} onChange={ ::this.filterByMessage } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
-            <VehiclesFilter onChange={ ::this.filterByVehicles } />
+            <VehiclesFilter data={ this.props.target } onChange={ ::this.filterByVehicles } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
             <Categories
@@ -295,6 +309,7 @@ export default connect(
     carsStatus,
     confidenceFilter,
     getTags,
+    target,
   }) => ({
     mapsPopup,
     categories,
@@ -303,6 +318,7 @@ export default connect(
     carsStatus,
     confidenceFilter,
     getTags,
+    target,
   }),
     dispatch => bindActionCreators({
       openMapsPopup,
@@ -312,5 +328,6 @@ export default connect(
       getCarsStatus,
       getAnomaliesConfidence,
       getCurrentTags,
+      getTarget,
     }, dispatch)
 )(AnomaliesPage);

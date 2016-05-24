@@ -13,7 +13,7 @@ const initialState = {
 };
 
 export default function getTagsReducer(state = initialState, action) {
-  const { type, ...data } = action;
+  const { type, data } = action;
   switch (type) {
     case GETTING_TAGS: {
       return {
@@ -24,7 +24,7 @@ export default function getTagsReducer(state = initialState, action) {
     case GOT_TAGS:
       return {
         ...state,
-        ...data.data,
+        ...data,
         loading: false,
       };
     case GET_TAGS_FAILURE:

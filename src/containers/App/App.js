@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import styles from './App.scss';
 
 import { HeaderSite } from 'components';
-  
+
 class App extends Component {
   static propTypes = {
     children: node,
@@ -14,26 +14,19 @@ class App extends Component {
   changeAlertsVisibilty = () => {
     this.props.showAlerts(true);
   }
-  
+
   render() {
     const { children } = this.props;
     return (
       <div>
-        <HeaderSite onClick={this.changeAlertsVisibilty}/>
+        <HeaderSite onClick={this.changeAlertsVisibilty} />
         { children }
       </div>
     );
   }
 }
 
-export default connect(({
-        alertsList
-    }) => ({
-      alertsList
-    }),
-    dispatch => bindActionCreators({
-      showAlerts
-    }, dispatch))(App);
-
-
-
+export default connect(
+  ({ alertsList }) => ({ alertsList }),
+    dispatch => bindActionCreators({ showAlerts }, dispatch)
+)(App);

@@ -8,7 +8,7 @@ export default class ToggleMenu extends Component {
     this.data = [
       {
         label: 'Main',
-        url: '/',
+        url: '/dashboard',
       }, {
         label: 'Reports',
         url: '',
@@ -19,7 +19,7 @@ export default class ToggleMenu extends Component {
         ],
       }, {
         label: 'Configuration',
-        url: '/dashboard',
+        url: '/',
         items: [
           { label: 'Group Parameters', url: '' },
           { label: 'Group Config', url: '' },

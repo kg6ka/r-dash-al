@@ -8,7 +8,10 @@ const GET_TAGS_FAILURE = 'argus/getTags/GET_TAGS_FAILURE';
 
 
 const initialState = {
-  data: [],
+  data: [{
+    tagId: 0,
+    name: 'Polo 2016',
+  }],
   loading: false,
 };
 

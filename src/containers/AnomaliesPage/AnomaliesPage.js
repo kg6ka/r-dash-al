@@ -45,17 +45,20 @@ export default class AnomaliesPage extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.getTags.data.length) {
+    if (!this.props.getTags.data.length || !this.props.getTags.data[0].tagId) {
       this.props.getCurrentTags();
     } else {
       this.getNewProps(this.props);
-      //window.setInterval(this.getNewProps.bind(this), 10000);
+      window.setInterval(this.getNewProps.bind(this, this.props), 10000);
     }
   }
 
   componentWillReceiveProps(props) {
-    if (props.getTags.data.length !== this.props.getTags.data.length) {
+    if (props.getTags.data.length > 0 &&
+      this.props.getTags.data.length > 0 &&
+      props.getTags.data[0].tagId !== this.props.getTags.data[0].tagId) {
       this.getNewProps(props);
+      window.setInterval(this.getNewProps.bind(this, props), 10000);
     }
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.getNewProps(props);
@@ -152,7 +155,7 @@ export default class AnomaliesPage extends Component {
 
   getNewProps(props) {
     const action = props.location.hash.substring(1) || '10m';
-    let relativeTime = new Date();
+    let relativeTime = new Date().getTime();
     let period = '';
     switch (action) {
       case '10m': period = '5s';
@@ -183,7 +186,7 @@ export default class AnomaliesPage extends Component {
 
   fleetActivitiesData(props) {
     const resultArray = [];
-    for(let i = 0; props.fleetActivities.data.length > i; i++) {
+    for (let i = 0; props.fleetActivities.data.length > i; i++) {
       if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i]) {
         break;
       }
@@ -195,7 +198,6 @@ export default class AnomaliesPage extends Component {
       };
       resultArray.push(newBar);
     }
-    debugger;
     return resultArray;
   }
 
@@ -270,7 +272,7 @@ export default class AnomaliesPage extends Component {
             <FilterTable data={ this.state.bars.result } total={ this.state.bars.total } onChange={::this.onChangeSelect} />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
-            <MSGfilter data={ this.props.target} onChange={ ::this.filterByMessage } />
+            <MSGfilter data={ this.props.target } onChange={ ::this.filterByMessage } />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50)}>
             <VehiclesFilter data={ this.props.target } onChange={ ::this.filterByVehicles } />

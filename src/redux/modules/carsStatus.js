@@ -48,13 +48,13 @@ export function getCarsStatus(tagId, period,from) {
     type: GETTING_CARS_STATUS,
     tagId,
     period,
-    from
+    from,
   };
 }
 
 export function* carsStatusSaga() {
   while (1) {
-    const { tagId, period,from } = yield take(GETTING_CARS_STATUS);
+    const { tagId, period, from } = yield take(GETTING_CARS_STATUS);
     try {
       const { apiBaseUrl } = config;
       const activities = yield request

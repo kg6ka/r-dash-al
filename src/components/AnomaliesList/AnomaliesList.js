@@ -57,7 +57,14 @@ export default class AnomaliesList extends Component {
         Time: new Date(el.timestamp).toTimeString().split(' ')[0],
         Bus: el.source,
         'Msg.Id': el.messageId,
-        Data: el.data.map(i => i.toString(16)).join('-').toUpperCase(),
+        Data: el.data.map(i => {
+          const hex = i.toString(16);
+          if (hex.toString().length < 2) {
+            return `0${hex}`;
+          }
+          return hex;
+        }
+        ).join('-').toUpperCase(),
         Category: el.cause,
         'Vehicle Id': el.vehicleId,
         Ruleset: el.rulesetId,

@@ -55,7 +55,6 @@ export default class RegisteredCars extends Component {
       .innerRadius(this.innerRadius)
       .outerRadius(this.outerRadius + window.innerWidth / 192)
       .endAngle(360)();
-
     return (
       <g transform={this.translateGroup}>
         <radialGradient id="registeredGradient">

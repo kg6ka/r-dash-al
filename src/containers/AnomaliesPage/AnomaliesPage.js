@@ -159,22 +159,23 @@ export default class AnomaliesPage extends Component {
     let period = '';
     switch (action) {
       case '10m': period = '5s';
-        relativeTime = relativeTime - 60000 * 10;
+        relativeTime = (relativeTime / 1000) - 60 * 10;
         break;
       case '1h': period = '30s';
-        relativeTime = relativeTime - 60000 * 60;
+        relativeTime = (relativeTime / 1000) - 60 * 60;
         break;
       case '1d': period = '10m';
-        relativeTime = relativeTime - 60000 * 60 * 24;
+        relativeTime = (relativeTime / 1000) - 60 * 60 * 24;
         break;
       case '1w': period = '1h';
-        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
+        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7;
         break;
       case '1m': period = '6h';
-        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7 * 4;
         break;
     }
 
+    relativeTime = Math.round(relativeTime);
     this.props.getCarsStatus(props.getTags.data[0].tagId, period, relativeTime);
     this.props.getCategories(props.getTags.data[0].tagId, relativeTime);
     this.props.getAnomaliesList(props.getTags.data[0].tagId, relativeTime);

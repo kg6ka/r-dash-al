@@ -66,30 +66,28 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.getTags.data.length || !this.props.getTags.data[0].tagId) {
+    if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
-      this.getNewProps(this.props);
-      window.setInterval(this.getNewProps.bind(this.props), 10000);
+      this.getNewProps(this.props.getTags.currentTag);
+      //window.setInterval(this.getNewProps.bind(this.props.getTags.currentTag), 10000);
     }
   }
 
   componentWillReceiveProps(props) {
-    if (props.categories.data.length) {
+    if (props.categories.data.length && this.props.categories.data.length !== props.categories.data.length) {
       this.setState({
         categories: this.categoriesData(props),
       });
     }
 
-    if (props.getTags.data.length > 0 &&
-      this.props.getTags.data.length > 0 &&
-      props.getTags.data[0].tagId !== this.props.getTags.data[0].tagId) {
-      this.getNewProps(props);
-      window.setInterval(this.getNewProps.bind(this, props), 10000);
+    if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
+      this.getNewProps(props.getTags.currentTag);
+      //window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 10000);
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
-      this.getNewProps(props);
+      this.getNewProps(props.getTags.currentTag);
     }
 
     if (props.carsStatus.activities.length) {
@@ -121,34 +119,35 @@ export default class Dashboard extends Component {
     }
   }
 
-  getNewProps(props) {
-    const action = props.location.hash ? props.location.hash.substring(1) : '10m';
+  getNewProps(tagId) {
+    const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
     let period = '';
     switch (action) {
       case '10m': period = '5s';
-        relativeTime = relativeTime - 60000 * 10;
+        relativeTime = (relativeTime / 1000) - 60 * 10;
         break;
       case '1h': period = '30s';
-        relativeTime = relativeTime - 60000 * 60;
+        relativeTime = (relativeTime / 1000) - 60 * 60;
         break;
       case '1d': period = '10m';
-        relativeTime = relativeTime - 60000 * 60 * 24;
+        relativeTime = (relativeTime / 1000) - 60 * 60 * 24;
         break;
       case '1w': period = '1h';
-        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
+        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7;
         break;
       case '1m': period = '6h';
-        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7 * 4;
         break;
     }
 
-    this.props.getCarsStatus(props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getTotalAnomalies(props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getFleetActivities(props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getCategories(props.getTags.data[0].tagId, relativeTime);
-    this.props.getTarget(props.getTags.data[0].tagId, relativeTime);
-    this.props.getMap(props.getTags.data[0].tagId, relativeTime);
+    relativeTime = Math.round(relativeTime);
+    this.props.getCarsStatus(tagId, period, relativeTime);
+    this.props.getTotalAnomalies(tagId, period, relativeTime);
+    this.props.getFleetActivities(tagId, period, relativeTime);
+    this.props.getCategories(tagId, relativeTime);
+    this.props.getTarget(tagId, relativeTime);
+    this.props.getMap(tagId, relativeTime);
     this.props.getAlertsData();
   }
 

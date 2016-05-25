@@ -1,6 +1,6 @@
 import { take, put } from 'redux-saga/effects';
 import request from 'superagent-es6-promise';
-import config, { dataFrom } from 'config';
+import config from 'config';
 
 const GETTING_ALERTS_DATA = 'argus/carsStatus/GETTING_ALERTS_DATA';
 const GOT_ALERTS_DATA = 'argus/carsStatus/GOT_ALERTS_DATA';
@@ -13,7 +13,7 @@ const initialState = {
   showAlerts: true
 };
 
-export default function carsStatusReducer(state = initialState, action) {
+export default function alertsListReducer(state = initialState, action) {
   const { type, data } = action;
   switch (type) {
     case GETTING_ALERTS_DATA: {

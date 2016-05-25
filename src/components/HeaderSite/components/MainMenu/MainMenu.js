@@ -40,6 +40,9 @@ export default class MainMenu extends Component {
 
   handlerAction(item, type, index) {
     if (item === undefined) return;
+    if (type === 'last') {
+      location.hash = item.action;
+    }
     this.setState({
       [type]: index,
     });
@@ -78,7 +81,7 @@ export default class MainMenu extends Component {
       <ul className={styles.child}>
         {data.map((item,i) =>
             <li key={i} >
-              <a  onClick={ ::this.changeItemMenu.bind(this, i) }>
+              <a  onClick={ ::this.changeItemMenu.bind(this, item, i) }>
                 {item.name}
               </a>
             </li>
@@ -87,7 +90,9 @@ export default class MainMenu extends Component {
     </li>;
   }
 
-  changeItemMenu(index) {
+  changeItemMenu(item, index) {
+    this.props.changeTag(item.tagId);
+    history.replaceState(null, '', `/${this.props.currentName}/${item.tagId}`);
     this.setState({
       index,
     });

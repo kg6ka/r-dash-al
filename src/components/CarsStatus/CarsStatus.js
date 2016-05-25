@@ -13,10 +13,11 @@ export default class CarsStatus extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      active: props.active ? Math.round(props.active) : 0,
+      uptodate: props.uptodate ? Math.round(props.uptodate) : 0,
+    };
     this.screenWidth = window.innerWidth;
-    this.state = {};
-    this.state.active = Math.round(props.active) ? Math.round(props.active) : 0;
-    this.state.uptodate = Math.round(props.uptodate) ? Math.round(props.uptodate) : 0;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,19 +49,21 @@ export default class CarsStatus extends Component {
           </text>
           <RegisteredCars registered={ registeredCars } percent={ percentRegistered } />
           <g transform={ translateString1 }>
-            <PercentColumn
-              className={'activeVehicles'}
-              percent={ this.state.active }
-              lable={['Active', 'Vehicles']}
-            />
+            { !isNaN(this.state.active) ?
+              <PercentColumn
+                className={'activeVehicles'}
+                percent={ this.state.active }
+                lable={['Active', 'Vehicles']}
+              /> : null }
           </g>
           <g transform={ translateString2 }>
-            <PercentColumn
-              className={'upToDateVehicles'}
-              percent={ this.state.uptodate }
-              lable={['Up to Date', 'Vehicles']}
-              description={['Last Update', `${updateData}`]}
-            />
+            { this.state.uptodate ?
+              <PercentColumn
+                className={'upToDateVehicles'}
+                percent={ this.state.uptodate }
+                lable={['Up to Date', 'Vehicles']}
+                description={['Last Update', `${updateData}`]}
+              /> : null }
           </g>
         </svg>
       </div>

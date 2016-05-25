@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-const { array, string } = PropTypes;
+const { array, string, number } = PropTypes;
 import d3 from 'd3';
 import blueCar from '../../images/blueCar.svg';
 
@@ -9,6 +9,7 @@ export default class Charts extends Component {
     color1: string,
     color2: string,
     color3: string,
+    registered: number,
   };
 
   componentWillReceiveProps(props) {
@@ -75,7 +76,7 @@ export default class Charts extends Component {
 //     }
 //     timeTicks.push(new Date(data[quantity].time - data[0].time)); // get last time anytime
 
-    tickValuesCars = [0,0.5,1,1.5,2];
+    tickValuesCars = [0, 0.5, 1, 1.5, 2];
     const registered = this.props.registered;
 
     if (registered >= 10) tickValuesCars = [0, 25, 50, 75, 100];

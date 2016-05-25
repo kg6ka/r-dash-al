@@ -57,7 +57,7 @@ export default class AnomaliesList extends Component {
         Time: new Date(el.timestamp).toTimeString().split(' ')[0],
         Bus: el.source,
         'Msg.Id': el.messageId,
-//         Data: el.data.join('-'),
+        Data: el.data.map(i => i.toString(16)).join('-').toUpperCase(),
         Category: el.cause,
         'Vehicle Id': el.vehicleId,
         Ruleset: el.rulesetId,
@@ -114,9 +114,9 @@ export default class AnomaliesList extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.editingData(anomalies).map((i, idx) =>
+              { this.editingData(anomalies).map((i, idx) =>
                 [<tr key={ idx } onClick={ this.moreInfo.bind(this, idx) }>
-                  <td className={ openIdx === idx ? styles.operArrow : styles.hideArrow }>></td>
+                  <td className={ openIdx === idx ? styles.openArrow : styles.hideArrow }>></td>
                   <td>{i.ID}</td>
                   <td dangerouslySetInnerHTML={{ __html: i.Confidence }}></td>
                   <td dangerouslySetInnerHTML={{ __html: i.Blocked }}></td>
@@ -183,7 +183,7 @@ export default class AnomaliesList extends Component {
                     <a href="#">Show all</a>
                   </td>
                 </tr>]
-              )}
+              ) }
             </tbody>
           </table>
         </div>

@@ -158,6 +158,8 @@ export default class Dashboard extends Component {
       { offset: window.innerWidth / 11.2, color: '#1156e4' },
       { offset: window.innerWidth / 8.73, color: '#904fff' },
       { offset: window.innerWidth / 7.16, color: '#fff' },
+      { offset: window.innerWidth / 7.16, color: '#fff' },
+      { offset: window.innerWidth / 7.16, color: '#fff' },
     ];
 
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);

@@ -45,21 +45,20 @@ export default class AnomaliesPage extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.getTags.data.length || !this.props.getTags.data[0].tagId) {
+    if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
-      this.getNewProps(this.props);
-      window.setInterval(this.getNewProps.bind(this, this.props), 10000);
+      this.getNewProps(this.props.getTags.currentTag);
+      //window.setInterval(this.getNewProps.bind(this.props.getTags.currentTag), 10000);
     }
   }
 
   componentWillReceiveProps(props) {
-    if (props.getTags.data.length > 0 &&
-      this.props.getTags.data.length > 0 &&
-      props.getTags.data[0].tagId !== this.props.getTags.data[0].tagId) {
-      this.getNewProps(props);
-      window.setInterval(this.getNewProps.bind(this, props), 10000);
+    if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
+      this.getNewProps(props.getTags.currentTag);
+      //window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 10000);
     }
+
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.getNewProps(props);
     }
@@ -94,6 +93,8 @@ export default class AnomaliesPage extends Component {
         { offset: window.innerWidth / 15.5, color: '#ffe400', val: 60 },
         { offset: window.innerWidth / 11.2, color: '#f07742', val: 100 },
         { offset: window.innerWidth / 8.73, color: '#ff7f00', val: 93 },
+        { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
+        { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
         { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
         { offset: window.innerWidth / 7.16, color: '#ff7f00', val: 48 },
       ];
@@ -153,8 +154,8 @@ export default class AnomaliesPage extends Component {
     });
   }
 
-  getNewProps(props) {
-    const action = props.location.hash ? props.location.hash.substring(1) : '10m';
+  getNewProps(tagId) {
+    const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
     let period = '';
     switch (action) {
@@ -176,13 +177,13 @@ export default class AnomaliesPage extends Component {
     }
 
     relativeTime = Math.round(relativeTime);
-    this.props.getCarsStatus(props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getCategories(props.getTags.data[0].tagId, relativeTime);
-    this.props.getAnomaliesList(props.getTags.data[0].tagId, relativeTime);
-    this.props.getCarsStatus(props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getFleetActivities(props.getTags.data[0].tagId, period, relativeTime);
-    this.props.getAnomaliesConfidence(props.getTags.data[0].tagId, relativeTime);
-    this.props.getTarget(props.getTags.data[0].tagId, relativeTime);
+    this.props.getCarsStatus(tagId, period, relativeTime);
+    this.props.getCategories(tagId, relativeTime);
+    this.props.getAnomaliesList(tagId, relativeTime);
+    this.props.getCarsStatus(tagId, period, relativeTime);
+    this.props.getFleetActivities(tagId, period, relativeTime);
+    this.props.getAnomaliesConfidence(tagId, relativeTime);
+    this.props.getTarget(tagId, relativeTime);
   }
 
   fleetActivitiesData(props) {
@@ -207,6 +208,10 @@ export default class AnomaliesPage extends Component {
       { offset: window.innerWidth / 25.26, color: '#b2d733' },
       { offset: window.innerWidth / 15.5, color: '#13aa38' },
       { offset: window.innerWidth / 11.2, color: '#1156e4' },
+      { offset: window.innerWidth / 8.73, color: '#904fff' },
+      { offset: window.innerWidth / 7.16, color: '#fff' },
+      { offset: window.innerWidth / 8.73, color: '#904fff' },
+      { offset: window.innerWidth / 7.16, color: '#fff' },
       { offset: window.innerWidth / 8.73, color: '#904fff' },
       { offset: window.innerWidth / 7.16, color: '#fff' },
     ];

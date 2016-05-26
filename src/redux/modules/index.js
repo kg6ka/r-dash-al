@@ -10,6 +10,7 @@ import alertsList, { sagas as alertsSagas } from './alertsList';
 import anomaliesList, { sagas as anomaliesListSagas } from './anomaliesList';
 import confidenceFilter, { sagas as confidenceFilterSagas } from './confidenceFilter';
 import getTags, { sagas as getTagsSagas } from './getTags';
+import { sagas as setTimeSagas } from './setTime';
 import mapsPopup from './mapsPopup';
 
 export default combineReducers({
@@ -39,4 +40,5 @@ export const sagas = [
   ...anomaliesListSagas,
   ...confidenceFilterSagas,
   ...getTagsSagas,
+  ...setTimeSagas,
 ];

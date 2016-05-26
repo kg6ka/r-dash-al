@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { showAlerts } from './../../redux/modules/alertsList';
 import { getCurrentTags, changeCurrentTag } from './../../redux/modules/getTags';
+import { setTime, stopTime } from './../../redux/modules/setTime';
 import styles from './App.scss';
 
 import { HeaderSite } from 'components';
@@ -46,7 +47,9 @@ class App extends Component {
           changeTag={ this.props.changeCurrentTag }
           tags={ getTags.data }
           currentName={ thisName }
-          currentTag={this.props.getTags.currentTag } />
+          currentTag={this.props.getTags.currentTag }
+          start={this.props.setTime }
+          stop={ this.props.stopTime } />
         { children }
       </div>
     );
@@ -64,6 +67,8 @@ export default connect(({
       showAlerts,
       getCurrentTags,
       changeCurrentTag,
+      setTime,
+      stopTime,
     }, dispatch))(App);
 
 

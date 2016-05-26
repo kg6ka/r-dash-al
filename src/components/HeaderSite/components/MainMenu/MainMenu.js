@@ -28,11 +28,11 @@ export default class MainMenu extends Component {
       icon: 'data.png',
       type: 'last',
       items: [
-        {label: 'last month', action: '6h'},
-        {label: 'last week', action: '1h'},
-        {label: 'last 24 hrs', action: '10m'},
-        {label: 'last 1 hour', action: '30s'},
-        {label: 'last 10 minutes', action: '5s'},
+        {label: 'last month', action: '1m'},
+        {label: 'last week', action: '1w'},
+        {label: 'last 24 hrs', action: '1d'},
+        {label: 'last 1 hour', action: '1h'},
+        {label: 'last 10 minutes', action: '10m'},
       ]
     }
     ];

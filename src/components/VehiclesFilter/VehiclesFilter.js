@@ -13,7 +13,7 @@ export default class VehiclesFilter extends Component {
 
     for (const i in this.props.data.MSG) {
       if (this.props.data.MSG[i].total > max)
-        max = argusComponents.target.MSG[i].total;
+        max = this.props.data.MSG[i].total;
     }
 
     for (const i in this.props.data.Vehicle) {

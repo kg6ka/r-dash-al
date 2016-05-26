@@ -126,7 +126,7 @@ export default class Dashboard extends Component {
   getCurrentAction(location) {
     const action = location.hash ? location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
-    let period = '';
+    let period = '5s';
     switch (action) {
       case '10m': period = '10m';
         relativeTime = relativeTime - 6000 * 10;
@@ -223,14 +223,16 @@ export default class Dashboard extends Component {
   fleetActivitiesData(props) {
     const resultArray = [];
     for (let i = 0; props.fleetActivities.data.length > i; i++) {
-      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i]) {
+
+      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i])
         break;
-      }
+                
+      const _activitys = (props.carsStatus.activities[i]) ? props.carsStatus.activities[i].values[0].value : 0;
       const newBar = {
         time: props.fleetActivities.data[i].timestamp,
-        activitys: props.carsStatus.activities[0].values[0].value,
-        suspicious: props.fleetActivities.data[0].values[0].value,
-        blocked: props.fleetActivities.data[0].values[1].value,
+        activitys: _activitys,
+        suspicious: props.fleetActivities.data[i].values[0].value,
+        blocked: props.fleetActivities.data[i].values[1].value,
       };
       resultArray.push(newBar);
     }

@@ -70,12 +70,14 @@ export default class Dashboard extends Component {
       this.props.getCurrentTags();
     } else {
       this.getNewProps(this.props.getTags.currentTag);
-      //window.setInterval(this.getNewProps.bind(this.props.getTags.currentTag), 10000);
+      window.setInterval(this.getNewProps.bind(this, this.props.getTags.currentTag), 5000);
+      window.setInterval(this.getNewPropsForMap.bind(this, this.props.getTags.currentTag), 10000);
     }
   }
 
   componentWillReceiveProps(props) {
-    if (props.categories.data.length && this.props.categories.data.length !== props.categories.data.length) {
+    if (props.categories.data.length &&
+        this.props.categories.data.length !== props.categories.data.length) {
       this.setState({
         categories: this.categoriesData(props),
       });
@@ -83,11 +85,13 @@ export default class Dashboard extends Component {
 
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      //window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 10000);
+      window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
+      window.setInterval(this.getNewPropsForMap.bind(this, props.getTags.currentTag), 10000);
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.getNewProps(props.getTags.currentTag);
+      this.getNewPropsForMap(props.getTags.currentTag);
     }
 
     if (props.carsStatus.activities.length) {
@@ -119,8 +123,8 @@ export default class Dashboard extends Component {
     }
   }
 
-  getNewProps(tagId) {
-    const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
+  getCurrentAction(location) {
+    const action = location.hash ? location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
     let period = '5s';
     switch (action) {
@@ -142,11 +146,23 @@ export default class Dashboard extends Component {
     }
 
     relativeTime = Math.round(relativeTime);
+    return {
+      relativeTime,
+      period,
+    };
+  }
+
+  getNewProps(tagId) {
+    const { period, relativeTime } = this.getCurrentAction(this.props.location);
     this.props.getCarsStatus(tagId, period, relativeTime);
     this.props.getTotalAnomalies(tagId, period, relativeTime);
     this.props.getFleetActivities(tagId, period, relativeTime);
     this.props.getCategories(tagId, relativeTime);
     this.props.getTarget(tagId, relativeTime);
+  }
+
+  getNewPropsForMap(tagId) {
+    const { relativeTime } = this.getCurrentAction(this.props.location);
     this.props.getMap(tagId, relativeTime);
     this.props.getAlertsData();
   }

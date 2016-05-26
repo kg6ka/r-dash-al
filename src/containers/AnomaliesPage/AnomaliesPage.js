@@ -49,14 +49,14 @@ export default class AnomaliesPage extends Component {
       this.props.getCurrentTags();
     } else {
       this.getNewProps(this.props.getTags.currentTag);
-      //window.setInterval(this.getNewProps.bind(this.props.getTags.currentTag), 10000);
+      window.setInterval(this.getNewProps.bind(this.props.getTags.currentTag), 5000);
     }
   }
 
   componentWillReceiveProps(props) {
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      //window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 10000);
+      window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {

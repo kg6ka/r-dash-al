@@ -37,6 +37,12 @@ export function* timeManagementSaga() {
       isPaused = true;
     }
 
+    if (action.type === SET_TIME && isPaused) {
+      bufferFn = action.fn;
+      isPaused = false;
+      continue;
+    }
+
     if (timerGenerator) {
       clearInterval(timerGenerator.result());
       timerGenerator.cancel();

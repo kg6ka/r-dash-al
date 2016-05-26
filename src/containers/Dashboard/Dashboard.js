@@ -75,10 +75,6 @@ export default class Dashboard extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.removeTime();
-  }
-
   componentWillReceiveProps(props) {
     if (props.categories.data.length &&
         this.props.categories.data.length !== props.categories.data.length) {

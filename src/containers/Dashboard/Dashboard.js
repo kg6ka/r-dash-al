@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 const { object, func } = PropTypes;
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { CarsStatus, Anomalies, FleetActivity, Categories,
   Target, AlertsList, Map } from 'components';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
@@ -11,7 +12,7 @@ import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
 import { getCurrentTags } from './../../redux/modules/getTags';
 import { getAlertsData, showAlerts, deleteAlert } from './../../redux/modules/alertsList';
-import { bindActionCreators } from 'redux';
+import { setTime, removeTime } from './../../redux/modules/setTime';
 import styles from './Dashboard.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -70,9 +71,12 @@ export default class Dashboard extends Component {
       this.props.getCurrentTags();
     } else {
       this.getNewProps(this.props.getTags.currentTag);
-      window.setInterval(this.getNewProps.bind(this, this.props.getTags.currentTag), 5000);
-      window.setInterval(this.getNewPropsForMap.bind(this, this.props.getTags.currentTag), 10000);
+      this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
     }
+  }
+
+  componentWillUnmount() {
+    this.props.removeTime();
   }
 
   componentWillReceiveProps(props) {
@@ -85,8 +89,7 @@ export default class Dashboard extends Component {
 
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
-      window.setInterval(this.getNewPropsForMap.bind(this, props.getTags.currentTag), 10000);
+      this.props.setTime(this.getNewProps.bind(this, props.getTags.currentTag));
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
@@ -340,5 +343,7 @@ export default connect(
       getMap,
       getAlertsData,
       getCurrentTags,
+      setTime,
+      removeTime,
     }, dispatch)
 )(Dashboard);

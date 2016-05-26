@@ -24,11 +24,22 @@
   padding: 1.67em 3em;
 }
 
-.update:before {
+.updateButton:before {
   content: "";
   padding: 0.5em;
   margin-right: 1.5em;
   background: url("./images/pause.png") no-repeat center center;
+}
+
+.updateButton, .updateButtonCancel {
+  display: inline-block;
+}
+
+.updateButtonCancel:before {
+  content: "";
+  padding: 0.5em;
+  margin-right: 1.5em;
+  background: url("./images/arrow.png") no-repeat center center;
 }
 
 .update span:first-child:after{

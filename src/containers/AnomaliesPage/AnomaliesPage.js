@@ -15,6 +15,7 @@ import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
 import { getCurrentTags } from './../../redux/modules/getTags';
 import { getTarget } from './../../redux/modules/target';
+import { setTime, removeTime } from './../../redux/modules/setTime';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -49,14 +50,18 @@ export default class AnomaliesPage extends Component {
       this.props.getCurrentTags();
     } else {
       this.getNewProps(this.props.getTags.currentTag);
-      window.setInterval(this.getNewProps.bind(this.props.getTags.currentTag), 5000);
+      this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
     }
+  }
+
+  componentWillUnmount() {
+    this.props.removeTime();
   }
 
   componentWillReceiveProps(props) {
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
+      this.props.setTime(this.getNewProps.bind(this, props.getTags.currentTag));
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
@@ -337,5 +342,7 @@ export default connect(
       getAnomaliesConfidence,
       getCurrentTags,
       getTarget,
+      setTime,
+      removeTime,
     }, dispatch)
 )(AnomaliesPage);

@@ -49,7 +49,7 @@ export function getTarget(tagId, from) {
 
 export function* targetSaga() {
   while (1) {
-    const { tagId,from } = yield take(GETTING_TARGETS);
+    const { tagId, from } = yield take(GETTING_TARGETS);
     try {
       const { apiBaseUrl } = config;
       const ecu = yield request

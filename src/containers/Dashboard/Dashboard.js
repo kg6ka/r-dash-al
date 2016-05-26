@@ -70,8 +70,8 @@ export default class Dashboard extends Component {
       this.props.getCurrentTags();
     } else {
       this.getNewProps(this.props.getTags.currentTag);
-      //window.setInterval(this.getNewProps.bind(this, this.props.getTags.currentTag), 5000);
-      //window.setInterval(this.getNewPropsForMap.bind(this, this.props.getTags.currentTag), 10000);
+      window.setInterval(this.getNewProps.bind(this, this.props.getTags.currentTag), 5000);
+      window.setInterval(this.getNewPropsForMap.bind(this, this.props.getTags.currentTag), 10000);
     }
   }
 
@@ -85,8 +85,8 @@ export default class Dashboard extends Component {
 
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      //window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
-      //window.setInterval(this.getNewPropsForMap.bind(this, props.getTags.currentTag), 10000);
+      window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
+      window.setInterval(this.getNewPropsForMap.bind(this, props.getTags.currentTag), 10000);
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
@@ -146,7 +146,6 @@ export default class Dashboard extends Component {
     }
 
     relativeTime = Math.round(relativeTime);
-    debugger;
     return {
       relativeTime,
       period,
@@ -155,7 +154,6 @@ export default class Dashboard extends Component {
 
   getNewProps(tagId) {
     const { period, relativeTime } = this.getCurrentAction(this.props.location);
-    debugger;
     this.props.getCarsStatus(tagId, period, relativeTime);
     this.props.getTotalAnomalies(tagId, period, relativeTime);
     this.props.getFleetActivities(tagId, period, relativeTime);

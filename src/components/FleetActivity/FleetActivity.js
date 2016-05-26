@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import expand from './images/expand.svg';
-// import data from './data.js';
 import { Charts, Designations } from './components';
 
-class FleetActivity extends Component {
+export default class FleetActivity extends Component {
   render() {
     const width = window.innerWidth / 1.79;
     const height = window.innerWidth / 5.45;
@@ -70,6 +69,7 @@ class FleetActivity extends Component {
           />
           <Charts
             data={ this.props.data }
+            registered={ this.props.registered }
             color1={'suspiciousGradient'}
             color2={'blockedGradient'}
             color3={'transmittingGradient'}
@@ -105,10 +105,8 @@ class FleetActivity extends Component {
             <stop offset="34%" stopColor="#1092ba" />
             <stop offset="100%" stopColor="#2fc6f4" />
           </linearGradient>
-        </svg>
-      </div>
-    );
+          </svg>
+        </div>
+      );
   }
 };
-
-export default FleetActivity;

@@ -1,87 +1,80 @@
-@import url(./fonts/PTSans.css);
-
-.headerSite { 
-    font-family: PTSans;
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    background-color: #1e252b;
-    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    width:100%;
-    z-index:1000;
+.headerSite {
+  font-family: 'PTSans';
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  background-color: #1e252b;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  width:100%;
+  z-index:1000;
 }
 
 .center{
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .update {
-    color: #ffffff;
-    font-size: 0.876em;
-    border-right: 1px solid #2c353c;
-    padding: 1.67em 3em;
+  color: #ffffff;
+  font-size: 0.876em;
+  border-right: 1px solid #2c353c;
+  padding: 1.67em 3em;
 }
 
 .update:before {
-    content: "";
-    padding: 0.5em;
-    margin-right: 1.5em;
-    background: url("./images/pause.png") no-repeat center center;
+  content: "";
+  padding: 0.5em;
+  margin-right: 1.5em;
+  background: url("./images/pause.png") no-repeat center center;
 }
 
 .update span:first-child:after{
-    content:"|";
-    color: #2fc6f4;
-    margin: 0 0.4em;
+  content:"|";
+  color: #2fc6f4;
+  margin: 0 0.4em;
 }
 
 .mainMenu {
-    display: flex;
-    list-style: none;
-    margin:0; 
-    padding: 0;
-    /* text-align: center; */
-/*     justify-content: center; */
+  display: flex;
+  list-style: none;
+  margin:0;
+  padding: 0;
 }
 
 .mainMenu > * {
-    /* padding: 0.4em 1em; */
-    color: #ffffff;
-    font-size: 0.967em;
-    border-left: 1px solid #2c353c;
-    /* padding: 0; */
-    position:relative;
-     -webkit-box-flex: 1;
-     -webkit-flex-grow: 1; 
-     flex-grow: 1;
-    .child{
-      position:absolute;
-      display:none;
-      background-color:#1e252b;
-        padding:0;
-        width:100%;
-      li{
-        display:block;
-      }
-    }
-    &:hover .child{
-       display:block;
-    }
+  color: #ffffff;
+  font-size: 0.967em;
+  border-left: 1px solid #2c353c;
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
 
+  .child{
+    position: absolute;
+    display: none;
+    background-color: #1e252b;
+    padding: 0;
+    width: 100%;
 
+    li{
+      display: block;
+    }
+  }
+
+  &:hover .child{
+    display: block;
+  }
 }
 
 .mainMenu > *:last-child {
     border-right: 1px solid #2c353c;
 }
 
-
-
-.mainMenu 
+.mainMenu
 .mainMenu a:after {
     content: "";
     vertical-align: middle;
@@ -95,13 +88,12 @@
     margin-right: 0.7em;
 }
 
-
 .toggleMenu {
     color: white;
     font-size: 2.1em;
     padding: 0.4em 0.5em;
 }
-.menuToggleIcon { 
+.menuToggleIcon {
   padding: 0.5em;
   cursor: pointer;
   background: url("./images/menu.png") no-repeat center center;
@@ -121,65 +113,64 @@
 }
 
 .logo {
-    padding: 0.75em 0.7em 0em 0.7em;
+  padding: 0.75em 0.7em 0em 0.7em;
 }
 
-[component="MainMenu"]{
-    align-items: center;
-        flex: 1 1 auto;
+[component="MainMenu"] {
+  align-items: center;
+  flex: 1 1 auto;
 }
 
 .mainMenu a {
-    color: inherit;
-    text-decoration: blink;
-    text-transform: uppercase;
-    padding: 1.55em 0.4em;
-    display: block;
-    text-align: center;
-    line-height: 1;
-    cursor: pointer;
-    white-space: nowrap;
-    min-width: 11em;
+  color: inherit;
+  text-decoration: blink;
+  text-transform: uppercase;
+  padding: 1.55em 0.4em;
+  display: block;
+  text-align: center;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 11em;
 }
+
 .error {
-    color: #ff0000;
-    font-size: 1.375em;
-    border-left: 1px solid #2c353c;
-    padding: 0.75em;
-    box-shadow: 0px -20px 44px -29px red inset;
-    cursor: pointer;
+  color: #ff0000;
+  font-size: 1.375em;
+  border-left: 1px solid #2c353c;
+  padding: 0.75em;
+  box-shadow: 0px -20px 44px -29px red inset;
+  cursor: pointer;
 }
 
 .error:before {
-    content: "";
-    padding: 0.5em;
-    margin-right: 0.5em;
-    background: url("./images/ALERT.png") no-repeat center center;
+  content: "";
+  padding: 0.5em;
+  margin-right: 0.5em;
+  background: url("./images/ALERT.png") no-repeat center center;
 }
 
-
 .user {
-    border-left: 1px solid #2c353c;
-    padding: .75em 1.2em;
+  border-left: 1px solid #2c353c;
+  padding: .75em 1.2em;
 }
 
 .mainMenu a:hover {
-    box-shadow: 0 0 0 10em rgba(255, 255, 255, 0.25) inset;
+  box-shadow: 0 0 0 10em rgba(255, 255, 255, 0.25) inset;
 }
 
 .user img {
-    width: 2.3em;
+  width: 2.3em;
 }
 
-
 .toggleMenuContent ul {
-  margin:0;
-  padding-left:1em;
+  margin: 0;
+  padding-left: 1em;
 }
 
 .toggleMenuContent > ul {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 .toggleMenu li{
@@ -189,23 +180,21 @@
 }
 
 .toggleMenu a {
-    color: inherit;
-    text-decoration: blink;
-    padding: 0.45em 0.6em;
-    display: block;
-    border-bottom: 1px solid #17191b;
+  color: inherit;
+  text-decoration: blink;
+  padding: 0.45em 0.6em;
+  display: block;
+  border-bottom: 1px solid #17191b;
 }
 
 .toggleMenuContent {
   position: fixed;
-      font-size: 20px;
-    /* height: 20em; */
-    font-family: PTSans;
+  font-size: 20px;
+  font-family: 'PTSans';
   top: 3em;
   width: 15em;
   left: -100%;
   bottom:0;
-  /* height:20em; */
   height: calc(100% - 2em);
   overflow-x: hidden;
   overflow-y: auto;
@@ -213,5 +202,18 @@
   z-index: 1500;
   -webkit-transition: left 500ms;
   transition: left 500ms;
+
+  a:hover {
+    box-shadow: 0 0 0 10em rgba(255, 255, 255, 0.25) inset;
+  }
 }
 
+.currentUrl {
+  color: #2fc6f4 !important;
+  text-shadow: 0 0 5px #2fc6f4;
+
+  &:hover {
+    color: #04a5f6 !important;
+    text-shadow: 0 0 2px #04a5f6;
+  }
+}

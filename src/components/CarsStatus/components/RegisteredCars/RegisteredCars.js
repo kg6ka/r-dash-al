@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-const { string, number } = PropTypes;
+const { number } = PropTypes;
 import logo from './images/volkswagen_logo.svg';
 import metalBtn from '../images/metalBtn.svg';
 import d3 from 'd3';
@@ -55,7 +55,6 @@ export default class RegisteredCars extends Component {
       .innerRadius(this.innerRadius)
       .outerRadius(this.outerRadius + window.innerWidth / 192)
       .endAngle(360)();
-
     return (
       <g transform={this.translateGroup}>
         <radialGradient id="registeredGradient">

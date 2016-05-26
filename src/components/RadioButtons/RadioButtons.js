@@ -1,22 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+const { array, string, object, func } = PropTypes;
 import styles from './RadioButtons.scss';
 
 export default class RadioButtons extends Component {
   static propTypes = {
-    names: PropTypes.array.isRequired,
-    checked: PropTypes.string.isRequired,
-    style: PropTypes.object.isRequired,
+    names: array,
+    checked: string,
+    style: object,
+    handlerClick: func,
   };
-
-  constructor(props) {
-    super(props);
-//     this.state = {
-//       checked: props.checked,
-//     };
-  }
-
-//   componentWillUpdate(nextProps, nextState) {  this.setState({checked:nextProps.checked})  }
-    
 
   renderRadioButton(item, idx) {
     return (

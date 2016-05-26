@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-const { array } = PropTypes;
+const { array, func } = PropTypes;
 import d3 from 'd3';
 import moment from 'moment';
 import cx from 'classnames';
@@ -9,6 +9,7 @@ import expand from './../FleetActivity/images/expand.svg';
 export default class FilterTable extends Component {
   static propTypes = {
     data: array,
+    onChange: func,
   };
 
   constructor(props) {
@@ -22,8 +23,8 @@ export default class FilterTable extends Component {
       second: 0,
     };
   }
-  
-  componentWillReceiveProps(props)  {
+
+  componentWillReceiveProps(props) {
     if (props.data.length !== this.props.data.length) {
       this.drawCharts(props.data);
       this.chartsDecoration();
@@ -61,8 +62,8 @@ export default class FilterTable extends Component {
 
   drawCharts(data) {
     this.setState({
-      first: moment(new Date(data[0].time)).format("MMMM Do YYYY, h:mm:ss"),
-      second: moment(new Date(data[data.length - 1].time)).format("MMMM Do YYYY, h:mm:ss"),
+      first: moment(new Date(data[0].time)).format('MMMM Do YYYY, h:mm:ss'),
+      second: moment(new Date(data[data.length - 1].time)).format('MMMM Do YYYY, h:mm:ss'),
     });
     const charts = d3.select('.charts');
     const margin = 30;
@@ -75,7 +76,7 @@ export default class FilterTable extends Component {
     let tickValuesSuspicious = [];
 
     const timeTicks = [];
-    let jmpTime = (data[quantity].time - data[0].time) / 7;
+    const jmpTime = (data[quantity].time - data[0].time) / 7;
     let tick = 0;
     for (let i = 0; i < 7; i++) {
       timeTicks.push(new Date(data[0].time + tick));
@@ -84,43 +85,41 @@ export default class FilterTable extends Component {
     timeTicks.push(new Date(data[quantity].time)); // get last time anytime
 
     tickValuesCars = [0,0.5,1,1.5,2];
-    const registered = 1;//argusComponents.fleetActivity.registered;
+    const registered = this.props.total;
 
-    if(registered > 2)     tickValuesCars = [0,2.5,5,7.5,10];
-   
-    if(registered >= 10)   tickValuesCars = [0,25,50,75,100];
-   
-    if(registered >= 100)  tickValuesCars = [0,250,500,750,1000];
-        
-    if(registered >= 1000) tickValuesCars = [0,2500,5000,7500,10000];
+    if (registered >= 10) tickValuesCars = [0, 25, 50, 75, 100];
 
+    if (registered >= 100) tickValuesCars = [0, 250, 500, 750, 1000];
 
-    tickValuesSuspicious = [0, 5, 10, 15,20];
+    if (registered >= 1000) tickValuesCars = [0, 2500, 5000, 7500, 10000];
+
+    tickValuesSuspicious = [0, 5, 10, 15, 20];
     let maxSuspicious = 0;
     for (let i = 0; i < data.length; i++) {
-      if(data[i].suspicious > maxSuspicious)
+      if (data[i].suspicious > maxSuspicious) {
         maxSuspicious = data[i].suspicious;
+      }
     }
 
 //     if(maxSuspicious > 2)     tickValuesSuspicious = [0,2.5,5,7.5,10];
-   
-    if(maxSuspicious >= 10)   tickValuesSuspicious = [0,25,50,75,100];
-   
-    if(maxSuspicious >= 100)  tickValuesSuspicious = [0,250,500,750,1000];
-        
-    if(maxSuspicious >= 1000) tickValuesSuspicious = [0,2500,5000,7500,10000];
 
-    charts.selectAll("svg").remove();
-    charts.selectAll("image").remove();
-    charts.selectAll("text").remove();
-        
+    if (maxSuspicious >= 10) tickValuesSuspicious = [0, 25, 50, 75, 100];
+
+    if (maxSuspicious >= 100) tickValuesSuspicious = [0, 250, 500, 750, 1000];
+
+    if (maxSuspicious >= 1000) tickValuesSuspicious = [0, 2500, 5000, 7500, 10000];
+
+    charts.selectAll('svg').remove();
+    charts.selectAll('image').remove();
+    charts.selectAll('text').remove();
+
     const svg = charts
       .append('svg')
       .attr('width', width)
       .attr('height', height + 10);
 
     const x = d3.time.scale()
-      .domain([timeTicks[0], timeTicks[timeTicks.length-1]])
+      .domain([timeTicks[0], timeTicks[timeTicks.length - 1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
@@ -238,8 +237,8 @@ export default class FilterTable extends Component {
       const s = brush.extent();
 
       this.setState({
-        first: moment(s[0]).format("MMMM Do YYYY, h:mm:ss"),
-        second: moment(s[1]).format("MMMM Do YYYY, h:mm:ss"),
+        first: moment(s[0]).format('MMMM Do YYYY, h:mm:ss'),
+        second: moment(s[1]).format('MMMM Do YYYY, h:mm:ss'),
       });
       this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());

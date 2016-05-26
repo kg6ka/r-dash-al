@@ -2,8 +2,8 @@ import React from 'react';
 
 const DataView = (data) => {
   const suspicious = data.total - data.blocked;
-  const suspiciousPercent = suspicious / argusComponents.target.maxDomain;
-  const blockedPercent = data.blocked / argusComponents.target.maxDomain;
+  const suspiciousPercent = suspicious / data.maxDomain;
+  const blockedPercent = data.blocked / data.maxDomain;
   const width = window.innerWidth / 5.25;
   const rectH = window.innerWidth / 384;
   const lineH = window.innerWidth / 48;

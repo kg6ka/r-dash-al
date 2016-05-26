@@ -1,21 +1,25 @@
 import React, { PropTypes, Component } from 'react';
-const { array } = PropTypes;
+const { array, func } = PropTypes;
 import styles from './AnomaliesList.scss';
 import blocked from './images/blocked.svg';
 import signal from './images/signal.svg';
 import previous from './images/previous.svg';
 import filter from './images/filter.svg';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { openMapsPopup } from 'redux/modules/mapsPopup';
+import { bindActionCreators } from 'redux';
 
 export default class AnomaliesList extends Component {
   static propTypes = {
     anomalies: array,
+    openMapsPopup: func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      anomalies: props.anomalies ? props.anomalies : [],
+      anomalies: props.anomalies || [],
       openIdx: null,
     };
     this.colors = {
@@ -53,7 +57,15 @@ export default class AnomaliesList extends Component {
         Time: new Date(el.timestamp).toTimeString().split(' ')[0],
         Bus: el.source,
         'Msg.Id': el.messageId,
-        Data: (el.data) && el.data.join('-'),
+
+        Data: el.data.map(i => {
+          const hex = i.toString(16);
+          if (hex.toString().length < 2) {
+            return `0${hex}`;
+          }
+          return hex;
+        }
+        ).join('-').toUpperCase(),
         Category: el.cause,
         'Vehicle Id': el.vehicleId,
         Ruleset: el.rulesetId,
@@ -110,9 +122,9 @@ export default class AnomaliesList extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.editingData(anomalies).map((i, idx) =>
+              { this.editingData(anomalies).map((i, idx) =>
                 [<tr key={ idx } onClick={ this.moreInfo.bind(this, idx) }>
-                  <td className={ openIdx === idx ? styles.operArrow : styles.hideArrow }>></td>
+                  <td className={ openIdx === idx ? styles.openArrow : styles.hideArrow }>></td>
                   <td>{i.ID}</td>
                   <td dangerouslySetInnerHTML={{ __html: i.Confidence }}></td>
                   <td dangerouslySetInnerHTML={{ __html: i.Blocked }}></td>
@@ -130,11 +142,31 @@ export default class AnomaliesList extends Component {
                     <div className="wrapper">
                       <div className={styles.msgTitle}>Message {i['Msg.Id']}</div>
                       <div className={styles.msgRow}>
-                        <div><span className={styles.namespan}>{'Name  |'}</span>{'  PLA_Status_01' }</div>
-                        <div><span className={styles.namespan}>{'Interval  |'}</span>{'  4ms.' }</div>
-                        <div><span className={styles.namespan}>{'Type  |'}</span>{'  Event periodic' }</div>
-                        <div><span className={styles.namespan}>{'ECU  |'}</span>{'  Tmnt version 4.7.1.04' }</div>
-                        <div><span className={styles.namespan}>{'Location |'}</span>{' Wolfsburg'}</div>
+                        <div>
+                          <span className={styles.namespan}>{'Name  |'}</span>
+                          {'  PLA_Status_01' }
+                        </div>
+                        <div>
+                          <span className={styles.namespan}>{'Interval  |'}</span>
+                          {'  4ms.' }
+                        </div>
+                        <div>
+                          <span className={styles.namespan}>{'Type  |'}</span>
+                          {'  Event periodic' }
+                        </div>
+                        <div>
+                          <span className={styles.namespan}>{'ECU  |'}</span>
+                          {'  Tmnt version 4.7.1.04' }
+                        </div>
+                        <div>
+                          <span className={styles.namespan}>{'Location | '}</span>
+                          <span
+                            className={styles.location}
+                            onClick={ this.props.openMapsPopup }
+                          >
+                            {'Wolfsburg'}
+                          </span>
+                        </div>
                       </div>
                       <div className={styles.signalTitle}>Signal Values 1<span>/</span>20</div>
                       <div className={styles.camZoom}>
@@ -159,7 +191,7 @@ export default class AnomaliesList extends Component {
                     <a href="#">Show all</a>
                   </td>
                 </tr>]
-              )}
+              ) }
             </tbody>
           </table>
         </div>
@@ -167,3 +199,10 @@ export default class AnomaliesList extends Component {
     );
   }
 }
+
+export default connect(
+  ({ mapsPopup }) => ({ mapsPopup }),
+    dispatch => bindActionCreators({
+      openMapsPopup,
+    }, dispatch)
+)(AnomaliesList);

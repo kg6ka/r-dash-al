@@ -8,7 +8,11 @@ const GET_CARS_STATUS_FAILURE = 'argus/carsStatus/GET_CARS_STATUS_FAILURE';
 
 const initialState = {
   activities: [],
-  registeredVehicles: [],
+  registeredVehicles: [
+    {
+      count: 0,
+    },
+  ],
   updatedVehicles: [],
   loading: false,
 };
@@ -44,13 +48,13 @@ export function getCarsStatus(tagId, period,from) {
     type: GETTING_CARS_STATUS,
     tagId,
     period,
-    from
+    from,
   };
 }
 
 export function* carsStatusSaga() {
   while (1) {
-    const { tagId, period,from } = yield take(GETTING_CARS_STATUS);
+    const { tagId, period, from } = yield take(GETTING_CARS_STATUS);
     try {
       const { apiBaseUrl } = config;
       const activities = yield request
@@ -65,6 +69,7 @@ export function* carsStatusSaga() {
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/statuses/vehicles/counts/updated`)
           .promise()
         ;
+
       const body = {
         activities: [...activities.body.data],
         registeredVehicles: [...registeredVehicles.body.data],

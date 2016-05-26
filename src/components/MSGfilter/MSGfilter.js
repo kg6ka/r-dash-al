@@ -3,58 +3,6 @@ import { RadioButtons, Scrollbars, DataBars } from 'components';
 import styles from './MSGfilter.scss';
 
 const buttonsNames = ['ID', 'ECU'];
-const data = [
-  { val: '160',
-    msg: '0x103',
-    suspicious: '100',
-    blocked: '160',
-  },
-  { val: '100',
-    msg: '0x2A3',
-    suspicious: '120',
-    blocked: '90',
-  },
-  { val: '100',
-    msg: '0x55E',
-    suspicious: '90',
-    blocked: '120',
-  },
-  { val: '30',
-    msg: '0x145',
-    suspicious: '60',
-    blocked: '90',
-  },
-  { val: '20',
-    msg: '0x26',
-    suspicious: '70',
-    blocked: '50',
-  },
-  { val: '160',
-    msg: '0x103',
-    suspicious: '100',
-    blocked: '160',
-  },
-  { val: '100',
-    msg: '0x2A3',
-    suspicious: '120',
-    blocked: '90',
-  },
-  { val: '100',
-    msg: '0x55E',
-    suspicious: '90',
-    blocked: '120',
-  },
-  { val: '30',
-    msg: '0x145',
-    suspicious: '60',
-    blocked: '90',
-  },
-  { val: '20',
-    msg: '0x26',
-    suspicious: '70',
-    blocked: '50',
-  },
-];
 
 export default class MSGfilter extends Component {
   constructor(props) {
@@ -71,6 +19,34 @@ export default class MSGfilter extends Component {
   }
 
   render() {
+    let max = 0;
+    for (const i in this.props.data.ECU) {
+      if (this.props.data.ECU[i].total > max) {
+        max = this.props.data.ECU[i].total;
+      }
+    }
+
+    for (const i in this.props.data.MSG) {
+      if (this.props.data.MSG[i].total > max) {
+        max = this.props.data.MSG[i].total;
+      }
+    }
+
+    for (const i in this.props.data.Vehicle) {
+      if (this.props.data.Vehicle[i].total > max) {
+        max = this.props.data.Vehicle[i].total;
+      }
+    }
+
+    if (max > 1000) max = 10000;
+    if (max <= 1000) max = 1000;
+    if (max <= 500) max = 500;
+    if (max <= 100) max = 100;
+    if (max <= 10) max = 10;
+    if (max <= 5) max = 5;
+
+    const maxDomain = max;
+
     return (
       <div className={styles.msgFilter}>
         <div>
@@ -90,7 +66,7 @@ export default class MSGfilter extends Component {
         <div className={styles.scroll}>
           <Scrollbars>
             <div className={styles.charts}>
-              { argusComponents.target[this.state.checked == 'ID' ? 'MSG':this.state.checked].map((el, idx) => {
+              { this.props.data[this.state.checked == 'ID' ? 'MSG' : this.state.checked].map((el, idx) => {
               const { key,total,blocked } = el;
               return (<DataBars
                 key={ idx }

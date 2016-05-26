@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
+const { number, array, func } = PropTypes;
 import styles from './ConfidenceFilter.scss';
 
-const informationData = [
-  { offset: window.innerWidth / 25.26, color: '#ffeeb2', val: 50 },
-  { offset: window.innerWidth / 15.5, color: '#ffe400', val: 60 },
-  { offset: window.innerWidth / 11.2, color: '#f07742', val: 100 },
-  { offset: window.innerWidth / 8.73, color: '#ff7f00', val: 93 },
-  { offset: window.innerWidth / 7.16, color: '#e72530', val: 48 },
-];
-
 export default class ConfidenceFilter extends Component {
+  static propTypes = {
+    max: number,
+    onChange: func,
+    data: array,
+  };
 
   drawInformation(data, idx) {
     const suspicPersent = data.total / this.props.max;

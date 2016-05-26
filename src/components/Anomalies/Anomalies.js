@@ -103,7 +103,7 @@ export default class Anomalies extends Component {
   }
 
   render() {
-    const { anomalies, cars1, percent } = this.props;
+    const { anomalies, cars1 } = this.props;
     const offset = window.innerWidth / 127.6;
     const calcY = this.componentHeight / 2;
     const calcX = this.screenWidth / 6.83 - offset;

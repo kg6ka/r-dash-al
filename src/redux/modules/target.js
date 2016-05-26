@@ -1,6 +1,6 @@
 import { take, put } from 'redux-saga/effects';
 import request from 'superagent-es6-promise';
-import config, { dataFrom } from 'config';
+import config from 'config';
 
 const GETTING_TARGETS = 'argus/carsStatus/GETTING_TARGETS';
 const GOT_TARGETS = 'argus/carsStatus/GOT_TARGETS';
@@ -39,11 +39,11 @@ export default function targetReducer(state = initialState, action) {
   }
 }
 
-export function getTarget(tagId,from) {
+export function getTarget(tagId, from) {
   return {
     type: GETTING_TARGETS,
     tagId,
-    from
+    from,
   };
 }
 
@@ -53,17 +53,18 @@ export function* targetSaga() {
     try {
       const { apiBaseUrl } = config;
       const ecu = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByEcu?from=${from}`)
+          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByEcu?from=${from}`)
           .promise()
         ;
       const msg = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=${from}`)
+          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=${from}`)
           .promise()
         ;
       const vehicle = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=${from}`)
+          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=${from}`)
           .promise()
         ;
+
       const body = {
         ECU: [...ecu.body.data],
         MSG: [...msg.body.data],

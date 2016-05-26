@@ -1,26 +1,22 @@
 import React, { Component, PropTypes } from 'react';
-const { string, array } = PropTypes;
+const { string, array, func } = PropTypes;
 import styles from './Categories.scss';
 import d3 from 'd3';
 import cx from 'classnames';
-
-const externalLink =
-  'M 8.3333327,8.3333 H 1.66667 V 1.6915 L 3.33333,1.6665 V 0 H 0 V 10 H 10.000003' +
-  ' V 5.8333 H 8.3333327 v 2.5 z M 4.9999997,0 l 1.666673,1.6667 -2.500003,2.5' +
-  ' 1.666663,1.6666 2.5,-2.5 L 10.000003,5 V 0 H 4.9999997 z';
 
 export default class Categories extends Component {
   static propTypes = {
     name: string,
     filter: string,
     data: array,
+    onChange: func,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       hovered: null,
-      data: [],
+      data: props.data || [],
     };
   }
 
@@ -149,17 +145,16 @@ export default class Categories extends Component {
           y={ rectSide }
           fill={ this.state.hovered === idx ? data.color : 'white' }
         >
-          { data.percent } %
+          { Math.round(data.percent) } %
         </text>
         { this.state.hovered === idx ?
             <g
-              transform={`translate(${window.innerWidth / 6.7},${window.innerWidth / 455})`}
+              transform={`translate(${window.innerWidth / 7.2},${window.innerWidth / 455})`}
               fill={ data.color }
             >
-              <path d={ externalLink } />
               <text
                 x={window.innerWidth / 90}
-                y={window.innerWidth / 151.8}
+                y={window.innerWidth / 180}
                 fill="#13aa38"
               >
                 ^15%

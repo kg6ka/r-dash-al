@@ -13,7 +13,7 @@ export default class Charts extends Component {
   };
 
   componentWillReceiveProps(props) {
-    if (props.data.length !== this.props.data.length) {
+    if (props.data.length > 0) {
       this.drawCharts();
       this.chartsDecoration();
     }

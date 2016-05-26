@@ -20,21 +20,21 @@ export default class MSGfilter extends Component {
 
   render() {
     let max = 0;
-    for (const i in argusComponents.target.ECU) {
-      if (argusComponents.target.ECU[i].total > max) {
-        max = argusComponents.target.ECU[i].total;
+    for (const i in this.props.data.ECU) {
+      if (this.props.data.ECU[i].total > max) {
+        max = this.props.data.ECU[i].total;
       }
     }
 
-    for (const i in argusComponents.target.MSG) {
-      if (argusComponents.target.MSG[i].total > max) {
-        max = argusComponents.target.MSG[i].total;
+    for (const i in this.props.data.MSG) {
+      if (this.props.data.MSG[i].total > max) {
+        max = this.props.data.MSG[i].total;
       }
     }
 
-    for (const i in argusComponents.target.Vehicle) {
-      if (argusComponents.target.Vehicle[i].total > max) {
-        max = argusComponents.target.Vehicle[i].total;
+    for (const i in this.props.data.Vehicle) {
+      if (this.props.data.Vehicle[i].total > max) {
+        max = this.props.data.Vehicle[i].total;
       }
     }
 

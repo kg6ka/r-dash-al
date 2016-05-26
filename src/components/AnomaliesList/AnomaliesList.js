@@ -5,6 +5,9 @@ import blocked from './images/blocked.svg';
 import signal from './images/signal.svg';
 import previous from './images/previous.svg';
 import filter from './images/filter.svg';
+import trash from './images/trash.svg';
+import leftArrow from './images/left_arrow.svg';
+import rightArrow from './images/right_arrow.svg';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
@@ -21,6 +24,7 @@ export default class AnomaliesList extends Component {
     this.state = {
       anomalies: props.anomalies || [],
       openIdx: null,
+      currPage: 0,
     };
     this.colors = {
       0: '',
@@ -81,12 +85,40 @@ export default class AnomaliesList extends Component {
     });
   }
 
+  drawPagination(quantity) {
+    return (
+      <div className={styles.pagination}>
+        <div className={styles.leftSide}>
+          <span style={{ fontSize: '1.5em', marginRight: '.5em' }}>1-13</span>
+            out of { quantity }
+          </div>
+        <div className={styles.rightSide}>
+          <span className={styles.clear}>
+            <img src={ trash } alt="trash" style={{ width: '1em' }} />
+            Clear filters
+          </span>
+          <div className={styles.paginator}>
+            <div className={styles.pager}>
+              <img src={ leftArrow } alt="left arrow" style={{ width: '.5em' }} />
+            </div>
+            <div className={styles.page}>3</div>
+            of 20
+            <div className={styles.pager}>
+              <img src={ rightArrow } alt="right arrow" style={{ width: '.5em' }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { anomalies, openIdx } = this.state;
     return (
       <div className={styles.content}>
         <div className={styles.header}>Anomalies list</div>
         <div className={styles.anomalies}>
+          { this.drawPagination(anomalies.length) }
           <table className={styles.table}>
             <thead>
               <tr>

@@ -19,7 +19,6 @@
 }
 
 .table {
-  margin-top: calc(100vw / 48);
   border-spacing: 1px;
   width: 47vw;
 /*width: 100%;
@@ -166,4 +165,56 @@
 .location {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.pagination {
+  height: 2.1vw;
+  display: block;
+  width: 100%;
+  margin-top: calc(100vw / 48);
+  text-align: center;
+  line-height: 2.1vw;
+  vertical-align: middle;
+
+  .rightSide {
+    display: inline-block;
+    float: right;;
+  }
+
+  .leftSide {
+    display: inline-block;
+    float: left;
+  }
+}
+
+.clear {
+  margin-right: 1em;
+  cursor: pointer;
+
+  img {
+    margin: 0 1em;
+  }
+}
+
+.paginator {
+  display: inline-block;
+  line-height: 2em;
+}
+
+.page {
+  border: 1px solid #374758;
+  border-radius: 4px;
+  width: 2.5em;
+  display: inline-block;
+  margin-right: .5em;
+}
+
+.pager {
+  cursor: pointer;
+  border-color: #374758;
+  border-radius: 4px;
+  background-color: #374758;
+  width: 1.5em;
+  display: inline-block;
+  margin: 0 .4em;
 }

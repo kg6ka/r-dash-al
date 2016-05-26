@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { showAlerts } from './../../redux/modules/alertsList';
 import { getCurrentTags, changeCurrentTag } from './../../redux/modules/getTags';
 import { setTime, stopTime, removeTime } from './../../redux/modules/setTime';
+
 import styles from './App.scss';
 
 import { HeaderSite } from 'components';

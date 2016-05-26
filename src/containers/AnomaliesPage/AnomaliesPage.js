@@ -54,10 +54,6 @@ export default class AnomaliesPage extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.removeTime();
-  }
-
   componentWillReceiveProps(props) {
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);

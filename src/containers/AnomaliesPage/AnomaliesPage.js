@@ -159,20 +159,20 @@ export default class AnomaliesPage extends Component {
     let relativeTime = new Date().getTime();
     let period = '';
     switch (action) {
-      case '10m': period = '5s';
-        relativeTime = (relativeTime / 1000) - 60 * 10;
+      case '10m': period = '10m';
+        relativeTime = relativeTime - 6000 * 10;
         break;
-      case '1h': period = '30s';
-        relativeTime = (relativeTime / 1000) - 60 * 60;
+      case '1h': period = '1h';
+        relativeTime = relativeTime - 6000 * 60;
         break;
-      case '1d': period = '10m';
-        relativeTime = (relativeTime / 1000) - 60 * 60 * 24;
+      case '1d': period = '1d';
+        relativeTime = relativeTime - 6000 * 60 * 24;
         break;
-      case '1w': period = '1h';
-        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7;
+      case '1w': period = '1w';
+        relativeTime = relativeTime - 6000 * 60 * 24 * 7;
         break;
-      case '1m': period = '6h';
-        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7 * 4;
+      case '1m': period = '1m';
+        relativeTime = relativeTime - 6000 * 60 * 24 * 7 * 4;
         break;
     }
 

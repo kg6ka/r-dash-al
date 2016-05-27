@@ -52,10 +52,11 @@ export default class Dashboard extends Component {
         cars3: 0,
       },
       fleetActivities: [{
-        time: 67567,
+        time: 0,
         activitys: 0,
         suspicious: 0,
         blocked: 0,
+        startTime: new Date().getTime() - (3600 * 24 * 30 * 1000),
       }],
       registeredVehicles: {
         activities: [],
@@ -106,12 +107,12 @@ export default class Dashboard extends Component {
       this.setState({
         registeredVehicles: result,
       });
+    }
 
-      if (props.fleetActivities.data.length) {
-        this.setState({
-          fleetActivities: this.fleetActivitiesData(props),
-        });
-      }
+    if (props.fleetActivities.data.length) {
+      this.setState({
+        fleetActivities: this.fleetActivitiesData(props),
+      });
     }
 
     if (props.totalAnomalies.data.length &&
@@ -123,24 +124,33 @@ export default class Dashboard extends Component {
   }
 
   getCurrentAction(location) {
-    const action = location.hash ? location.hash.substring(1) : '10m';
+    const action = location.hash ? location.hash.substring(1) : '1m';
     let relativeTime = new Date().getTime();
     let period = '5s';
     switch (action) {
-      case '10m': period = '10m';
-        relativeTime = relativeTime - 6000 * 10;
+      case '10m':
+        period = '5s';
+        relativeTime = relativeTime - 60000 * 10;
         break;
-      case '1h': period = '1h';
-        relativeTime = relativeTime - 6000 * 60;
+      case '1h':
+        period = '30s';
+        relativeTime = relativeTime - 60000 * 60;
         break;
-      case '1d': period = '1d';
-        relativeTime = relativeTime - 6000 * 60 * 24;
+      case '1d':
+        period = '10m';
+        relativeTime = relativeTime - 60000 * 60 * 24;
         break;
-      case '1w': period = '1w';
-        relativeTime = relativeTime - 6000 * 60 * 24 * 7;
+      case '1w':
+        period = '1h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
         break;
-      case '1m': period = '1m';
-        relativeTime = relativeTime - 6000 * 60 * 24 * 7 * 4;
+      case '1m':
+        period = '6h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        break;
+      default:
+        period = '6h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
         break;
     }
 
@@ -219,14 +229,17 @@ export default class Dashboard extends Component {
 
   fleetActivitiesData(props) {
     const resultArray = [];
-    for (let i = 0; props.fleetActivities.data.length > i; i++) {
+    const startTime = this.getCurrentAction(props.location).relativeTime;
 
-      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i])
+    for (let i = 0; props.fleetActivities.data.length > i; i++) {
+      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i]) {
         break;
-                
+      }
+
       const _activitys = (props.carsStatus.activities[i]) ? props.carsStatus.activities[i].values[0].value : 0;
       const newBar = {
         time: props.fleetActivities.data[i].timestamp,
+        startTime,
         activitys: _activitys,
         suspicious: props.fleetActivities.data[i].values[0].value,
         blocked: props.fleetActivities.data[i].values[1].value,
@@ -283,7 +296,8 @@ export default class Dashboard extends Component {
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity
                   data={ this.state.fleetActivities }
-                  registered={ this.props.carsStatus.registeredVehicles[0].count }
+                  registered={ this.props.carsStatus.registeredVehicles.length
+                    ? this.props.carsStatus.registeredVehicles[0].count : 0 }
                 />
               </div>
               <div className={cx(styles.fleetActivity, layout.layoutCol50, layout.height50)}>

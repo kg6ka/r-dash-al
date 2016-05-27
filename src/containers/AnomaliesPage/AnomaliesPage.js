@@ -158,22 +158,31 @@ export default class AnomaliesPage extends Component {
   getNewProps(tagId) {
     const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
-    let period = '';
+    let period = '5s';
     switch (action) {
-      case '10m': period = '10m';
-        relativeTime = relativeTime - 6000 * 10;
+      case '10m':
+        period = '5s';
+        relativeTime = relativeTime - 60000 * 10;
         break;
-      case '1h': period = '1h';
-        relativeTime = relativeTime - 6000 * 60;
+      case '1h':
+        period = '30s';
+        relativeTime = relativeTime - 60000 * 60;
         break;
-      case '1d': period = '1d';
-        relativeTime = relativeTime - 6000 * 60 * 24;
+      case '1d':
+        period = '10m';
+        relativeTime = relativeTime - 60000 * 60 * 24;
         break;
-      case '1w': period = '1w';
-        relativeTime = relativeTime - 6000 * 60 * 24 * 7;
+      case '1w':
+        period = '1h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
         break;
-      case '1m': period = '1m';
-        relativeTime = relativeTime - 6000 * 60 * 24 * 7 * 4;
+      case '1m':
+        period = '6h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        break;
+      default:
+        period = '6h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
         break;
     }
 

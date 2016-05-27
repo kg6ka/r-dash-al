@@ -296,6 +296,7 @@ export default class Dashboard extends Component {
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity
                   data={ this.state.fleetActivities }
+                  alertChange={ this.props.alertsList.showAlerts }
                   registered={ this.props.carsStatus.registeredVehicles.length
                     ? this.props.carsStatus.registeredVehicles[0].count : 0 }
                 />

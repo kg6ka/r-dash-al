@@ -10,7 +10,7 @@ const initialState = {
   alertsVehicle: [],
   alertsMessage: [],
   loading: false,
-  showAlerts: true
+  showAlerts: true,
 };
 
 export default function alertsListReducer(state = initialState, action) {

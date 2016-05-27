@@ -49,9 +49,14 @@ export default class Charts extends Component {
   }
 
   drawCharts() {
+    console.log('draw chart');
     const { data, color1, color2, color3 } = this.props;
+    let width = window.innerWidth / 1.85;
+    if (!this.props.repaint) {
+      width = width * 1.2;
+    }
     const charts = d3.select('.charts');
-    const width = window.innerWidth / 1.85;
+
     const height = window.innerWidth / 11.43;
     const margin = window.innerWidth / 40;
     const axisWidth = width - 2 * margin;
@@ -242,7 +247,10 @@ export default class Charts extends Component {
   render() {
     const margin = window.innerWidth / 40;
     const height = window.innerWidth / 11.43;
-    const width = window.innerWidth / 1.85;
+    let width = window.innerWidth / 1.85;
+    if (!this.props.repaint) {
+      width = width * 1.2;
+    }
     const axisHeigth = height - margin;
     const axisWidth = width - 2 * margin;
     return (

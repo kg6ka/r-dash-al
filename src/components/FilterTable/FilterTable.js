@@ -62,8 +62,8 @@ export default class FilterTable extends Component {
 
   drawCharts(data) {
     this.setState({
-      first: moment(new Date(data[0].time)).format('MMMM Do YYYY, h:mm:ss'),
-      second: moment(new Date(data[data.length - 1].time)).format('MMMM Do YYYY, h:mm:ss'),
+      first: moment(new Date(this.props.timeRange[0])).format('MMMM Do YYYY, h:mm:ss'),
+      second: moment(new Date(this.props.timeRange[1])).format('MMMM Do YYYY, h:mm:ss'),
     });
     const charts = d3.select('.charts');
     const margin = 30;
@@ -223,8 +223,8 @@ export default class FilterTable extends Component {
     };
 
     brush.x(x)
-      .extent([new Date(data[0].time),
-        new Date(data[data.length - 1].time)]);
+      .extent([new Date(this.props.timeRange[0]),
+        new Date(this.props.timeRange[1])]);
 
     this.coordinate = [margin, height, width - 64, height];
 
@@ -243,10 +243,8 @@ export default class FilterTable extends Component {
     function brushend() {
       const s = brush.extent();
 
-      this.setState({
-        first: moment(s[0]).format('MMMM Do YYYY, h:mm:ss'),
-        second: moment(s[1]).format('MMMM Do YYYY, h:mm:ss'),
-      });
+      this.props.updateRange(s[0].getTime(), s[1].getTime());
+      console.log(s[0], s[1]);
       this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());
     }

@@ -9,7 +9,7 @@ import cx from 'classnames';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { getCategories } from './../../redux/modules/categories';
-import { getAnomaliesList } from './../../redux/modules/anomaliesList';
+import { getAnomaliesList, updateTimeRange } from './../../redux/modules/anomaliesList';
 import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
@@ -52,6 +52,8 @@ export default class AnomaliesPage extends Component {
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
     }
+
+    this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
   }
 
   componentWillReceiveProps(props) {
@@ -62,6 +64,7 @@ export default class AnomaliesPage extends Component {
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
       this.getNewProps(props);
+      this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
     }
 
     if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
@@ -189,7 +192,7 @@ export default class AnomaliesPage extends Component {
     return {period, relativeTime};
   }
   getNewProps(tagId) {
-    const { relativeTime, period } = this.getRelativeTime(tagId);
+    const { relativeTime, period } = this.getRelativeTime();
 
     this.props.getCarsStatus(tagId, period, relativeTime);
     this.props.getCategories(tagId, relativeTime);
@@ -280,7 +283,7 @@ export default class AnomaliesPage extends Component {
   }
 
   render() {
-    const { relativeTime } = this.getRelativeTime(this.props.getTags.currentTag);
+    const { relativeTime } = this.getRelativeTime();
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
         <div className={styles.anomaliesHeader}>
@@ -293,6 +296,8 @@ export default class AnomaliesPage extends Component {
             <FilterTable
               data={ this.state.bars.result }
               time={ relativeTime }
+              updateRange={ (fT, sT) => this.props.updateTimeRange(fT, sT) }
+              timeRange={[this.props.anomaliesList.startTime, this.props.anomaliesList.endTime]}
               total={ this.state.bars.total }
               onChange={::this.onChangeSelect}
 
@@ -360,5 +365,6 @@ export default connect(
       getTarget,
       setTime,
       removeTime,
+      updateTimeRange,
     }, dispatch)
 )(AnomaliesPage);

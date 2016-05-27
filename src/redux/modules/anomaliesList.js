@@ -5,10 +5,14 @@ import config from 'config';
 const GETTING_ANOMALIES_LIST = 'argus/carsStatus/GETTING_ANOMALIES_LIST';
 const GOT_ANOMALIES_LIST = 'argus/carsStatus/GOT_ANOMALIES_LIST';
 const GET_ANOMALIES_LIST_FAILURE = 'argus/carsStatus/GET_ANOMALIES_LIST_FAILURE';
+const UPDATE_TIME_RANGE='argus/anomalies/TIME_RANGE';
+
 
 const initialState = {
   data: [],
   loading: false,
+  startTime: new Date().getTime(),
+  endTime: new Date().getTime(),
 };
 
 export default function AnomaliesListReducer(state = initialState, action) {
@@ -31,6 +35,12 @@ export default function AnomaliesListReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case UPDATE_TIME_RANGE:
+      return {
+        ...state,
+        startTime: action.startTime,
+        endTime: action.endTime,
       };
     default:
       return state;
@@ -59,6 +69,14 @@ export function* anomaliesListSaga() {
     } catch (err) {
       yield put({ type: GET_ANOMALIES_LIST_FAILURE });
     }
+  }
+}
+
+export function updateTimeRange(startTime, endTime) {
+  return {
+    type: UPDATE_TIME_RANGE,
+    startTime,
+    endTime,
   }
 }
 

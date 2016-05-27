@@ -3,6 +3,8 @@ const { array, string, number } = PropTypes;
 import d3 from 'd3';
 import blueCar from '../../images/blueCar.svg';
 
+const DAY = 1000 * 60 * 60 * 24;
+
 export default class Charts extends Component {
   static propTypes = {
     data: array,
@@ -68,9 +70,11 @@ export default class Charts extends Component {
     }
 
     const currentData = new Date().getTime();
+    const range = currentData - data[0].startTime;
+
     const timeTicks = [];
     const jmpTime = (currentData - data[0].startTime) / 7;
-
+    const timeformat = range > DAY ? '%b%d %H:%M' :  '%H:%M:%S';
     for (let i = 0; i < 7; i++) {
       timeTicks.push(new Date(data[0].startTime + (jmpTime * i)));
     }
@@ -152,7 +156,7 @@ export default class Charts extends Component {
       .orient('bottom')
       .ticks(6)
       .tickPadding(window.innerWidth / 128)
-      .tickFormat(d3.time.format('%H:%M:%S'))
+      .tickFormat(d3.time.format(timeformat))
       .tickValues(timeTicks);
 
     svg.append('g')

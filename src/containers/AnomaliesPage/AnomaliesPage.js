@@ -15,7 +15,7 @@ import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
 import { getCurrentTags } from './../../redux/modules/getTags';
 import { getTarget } from './../../redux/modules/target';
-import { setTime, removeTime } from './../../redux/modules/setTime';
+import { setTime, removeTime, stopTime } from './../../redux/modules/setTime';
 
 export default class AnomaliesPage extends Component {
   static propTypes = {
@@ -51,6 +51,7 @@ export default class AnomaliesPage extends Component {
     } else {
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
+      this.props.stopTime();
     }
 
     this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
@@ -373,5 +374,6 @@ export default connect(
       setTime,
       removeTime,
       updateTimeRange,
+      stopTime,
     }, dispatch)
 )(AnomaliesPage);

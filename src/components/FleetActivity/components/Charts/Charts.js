@@ -51,7 +51,6 @@ export default class Charts extends Component {
   }
 
   drawCharts() {
-    console.log('draw chart');
     const { data, color1, color2, color3 } = this.props;
     let width = window.innerWidth / 1.85;
     if (!this.props.repaint) {

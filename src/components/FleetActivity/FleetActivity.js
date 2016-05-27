@@ -4,7 +4,6 @@ import { Charts, Designations } from './components';
 
 export default class FleetActivity extends Component {
   render() {
-    console.log('render0', this.props);
     let width = window.innerWidth / 1.79;
     if (!this.props.alertChange) {
       width = width * 1.2;

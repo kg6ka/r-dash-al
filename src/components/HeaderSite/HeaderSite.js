@@ -12,7 +12,7 @@ class HeaderSite extends Component {
         this.update_date = '2016 March 02, 13:21';
         this.user_img = 'avatar.png';
         this.state = {};
-        this.state.updateStop = false;
+        this.state.updateStop = true;
     }
 
     changeTimer() {

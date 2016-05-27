@@ -84,7 +84,6 @@ export function deleteAlert(alertsType, desc2) {
 
 export function* alertsListSaga() {
   while (1) {
-    console.log("alertsListSaga");
     try {
       yield take(GETTING_ALERTS_DATA);
       const { apiBaseUrl } = config;

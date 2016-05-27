@@ -12,7 +12,7 @@ import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
 import { getCurrentTags } from './../../redux/modules/getTags';
 import { getAlertsData, showAlerts, deleteAlert } from './../../redux/modules/alertsList';
-import { setTime, removeTime } from './../../redux/modules/setTime';
+import { setTime, removeTime, stopTime } from './../../redux/modules/setTime';
 import styles from './Dashboard.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -73,6 +73,7 @@ export default class Dashboard extends Component {
     } else {
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
+      this.props.stopTime();
     }
   }
 
@@ -356,5 +357,6 @@ export default connect(
       getCurrentTags,
       setTime,
       removeTime,
+      stopTime,
     }, dispatch)
 )(Dashboard);

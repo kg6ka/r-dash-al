@@ -137,6 +137,7 @@ export default class Target extends Component {
                   name={ el.key }
                   total={ el.total }
                   blocked={ el.blocked }
+                  title={ this.state.checked }
                 />
             ) }
             </div>

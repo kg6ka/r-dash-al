@@ -54,6 +54,8 @@ export default class AnomaliesPage extends Component {
     }
 
     this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
+    const range = [this.props.anomaliesList.startTime, this.props.anomaliesList.endTime];
+    this.getFilteredData(range, this.props);
   }
 
   componentWillReceiveProps(props) {
@@ -127,6 +129,13 @@ export default class AnomaliesPage extends Component {
       if (max <= 10) max = 10;
       if (max <= 5) max = 5;
 
+      if (this.props.anomaliesList.startTime !== props.anomaliesList.startTime
+        || this.props.anomaliesList.endTime !== props.anomaliesList.endTime) {
+
+        const range = [props.anomaliesList.startTime, props.anomaliesList.endTime];
+        this.getFilteredData(range, props);
+      }
+
       this.setState({
         confidence: {
           data: items,
@@ -135,28 +144,26 @@ export default class AnomaliesPage extends Component {
       });
     }
   }
-
-  onChangeSelect(range) {
-    const rangeToData = [
-      new Date(range[0]).getTime(),
-      new Date(range[1]).getTime(),
-    ];
+  getFilteredData(range, props) {
     let max;
     let min;
-    if (rangeToData[0] > rangeToData[1]) {
-      max = rangeToData[0];
-      min = rangeToData[1];
+    if (range[0] > range[1]) {
+      max = range[0];
+      min = range[1];
     } else {
-      max = rangeToData[1];
-      min = rangeToData[0];
+      max = range[1];
+      min = range[0];
     }
+    const filterData = props.anomaliesList.data.filter((item) => {
+      const itemDate = new Date(item.timestamp).getTime();
+      return itemDate > min && itemDate < max;
+    });
 
-    const filterData = this.props.anomaliesList.data.filter((item) =>
-      item.timestamp > min && item.timestamp < max);
     this.setState({
       anomalies: filterData,
     });
   }
+
   getRelativeTime (tagId) {
     const action = this.props.location.hash ? this.props.location.hash.substring(1) : '1m';
     let relativeTime = new Date().getTime();
@@ -283,6 +290,7 @@ export default class AnomaliesPage extends Component {
   }
 
   render() {
+    const range = [this.props.anomaliesList.startTime, this.props.anomaliesList.endTime];
     const { relativeTime } = this.getRelativeTime();
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
@@ -297,9 +305,8 @@ export default class AnomaliesPage extends Component {
               data={ this.state.bars.result }
               time={ relativeTime }
               updateRange={ (fT, sT) => this.props.updateTimeRange(fT, sT) }
-              timeRange={[this.props.anomaliesList.startTime, this.props.anomaliesList.endTime]}
+              timeRange={range}
               total={ this.state.bars.total }
-              onChange={::this.onChangeSelect}
 
               />
           </div>

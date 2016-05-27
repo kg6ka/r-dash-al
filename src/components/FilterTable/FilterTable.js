@@ -244,8 +244,6 @@ export default class FilterTable extends Component {
       const s = brush.extent();
 
       this.props.updateRange(s[0].getTime(), s[1].getTime());
-      console.log(s[0], s[1]);
-      this.props.onChange(s);
       svg.classed('selecting', !d3.event.target.empty());
     }
 

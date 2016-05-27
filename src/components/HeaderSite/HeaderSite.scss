@@ -24,6 +24,10 @@
   padding: 1.67em 3em;
 }
 
+.update div {
+  cursor: pointer;
+}
+
 .updateButton:before {
   content: "";
   padding: 0.5em;

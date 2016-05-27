@@ -33,30 +33,34 @@ export function* timeManagementSaga() {
     if (action.type === REMOVE_TIME) {
       isPaused = false;
     }
+
     if (action.type === STOP_TIME) {
+      clearInterval(timerGenerator.result());
+      timerGenerator.cancel();
       isPaused = true;
     }
 
     if (action.type === SET_TIME && isPaused) {
       bufferFn = action.fn;
-      isPaused = false;
+    }
+
+    if (isPaused) {
       continue;
     }
 
     if (timerGenerator) {
       clearInterval(timerGenerator.result());
       timerGenerator.cancel();
-      timerGenerator = undefined;
-    } else {
-      timerGenerator = yield fork(setTimeoutSaga, action.fn || bufferFn);
-      bufferFn = action.fn || bufferFn;
     }
+
+    timerGenerator = yield fork(setTimeoutSaga, action.fn || bufferFn);
+    bufferFn = action.fn || bufferFn;
 
   }
 }
 
 function* setTimeoutSaga(fn) {
-    return window.setInterval(fn, 5000);
+  return window.setInterval(fn, 5000);
 }
 
 export const sagas = [

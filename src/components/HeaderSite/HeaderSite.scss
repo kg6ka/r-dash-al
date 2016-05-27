@@ -112,10 +112,10 @@
   padding: 0.5em;
   cursor: pointer;
   background: url("./images/menu.png") no-repeat center center;
-  &[open] + .toggleMenuContent {
+  &.open + .toggleMenuContent {
     left: 0;
   }
-  &[open]:after {
+  &.open:after {
     position: fixed;
     top: 1.8em;
     bottom: 0;

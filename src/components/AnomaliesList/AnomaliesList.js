@@ -21,10 +21,13 @@ export default class AnomaliesList extends Component {
 
   constructor(props) {
     super(props);
+    this.perPage = 16;
     this.state = {
       anomalies: props.anomalies || [],
       openIdx: null,
+      quantity: props.anomalies.length,
       currPage: 0,
+      pages: Math.ceil(props.anomalies.length / this.perPage),
     };
     this.colors = {
       0: '',
@@ -37,11 +40,20 @@ export default class AnomaliesList extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.anomalies.length !== this.props.anomalies.length) {
-      this.setState({
-        anomalies: props.anomalies,
-      });
+    if (props.anomalies.length === this.props.anomalies.length) {
+      return;
     }
+
+    const quantity = props.anomalies.length;
+    const pages = Math.ceil(quantity / this.perPage);
+    const currPage = this.state.currPage;
+
+    this.setState({
+      anomalies: props.anomalies,
+      quantity,
+      pages,
+      currPage: currPage > pages ? pages - 1 : currPage,
+    });
   }
 
   editingData = (data) =>
@@ -85,25 +97,28 @@ export default class AnomaliesList extends Component {
     });
   }
 
-  drawPagination(quantity) {
+  drawPagination() {
+    const { pages, quantity, currPage } = this.state;
     return (
       <div className={styles.pagination}>
         <div className={styles.leftSide}>
-          <span style={{ fontSize: '1.5em', marginRight: '.5em' }}>1-13</span>
+          <span style={{ fontSize: '1.5em', marginRight: '.5em' }}>
+            1-{ pages }
+          </span>
             out of { quantity }
-          </div>
+        </div>
         <div className={styles.rightSide}>
           <span className={styles.clear}>
             <img src={ trash } alt="trash" style={{ width: '1em' }} />
             Clear filters
           </span>
           <div className={styles.paginator}>
-            <div className={styles.pager}>
+            <div onClick={ ::this.drawPrevPage } className={styles.pager}>
               <img src={ leftArrow } alt="left arrow" style={{ width: '.5em' }} />
             </div>
-            <div className={styles.page}>3</div>
-            of 20
-            <div className={styles.pager}>
+            <div className={styles.page}>{ currPage + 1 }</div>
+            of { pages }
+            <div onClick={ ::this.drawNextPage } className={styles.pager}>
               <img src={ rightArrow } alt="right arrow" style={{ width: '.5em' }} />
             </div>
           </div>
@@ -112,13 +127,30 @@ export default class AnomaliesList extends Component {
     );
   }
 
+  drawNextPage() {
+    if (this.state.currPage === this.state.pages) { return; }
+    this.setState({
+      currPage: this.state.currPage + 1,
+    });
+  }
+
+  drawPrevPage() {
+    if (this.state.currPage <= 0) { return; }
+    this.setState({
+      currPage: this.state.currPage - 1,
+    });
+  }
+
   render() {
-    const { anomalies, openIdx } = this.state;
+    const { anomalies, openIdx, currPage } = this.state;
+    const start = currPage * this.perPage;
+    const end = start + this.perPage;
     return (
       <div className={styles.content}>
         <div className={styles.header}>Anomalies list</div>
         <div className={styles.anomalies}>
-          { this.drawPagination(anomalies.length) }
+          { this.drawPagination() }
+          <div className={styles.tableWraper}>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -153,7 +185,7 @@ export default class AnomaliesList extends Component {
               </tr>
             </thead>
             <tbody>
-              { this.editingData(anomalies).map((i, idx) =>
+              { this.editingData(anomalies).slice(start, end).map((i, idx) =>
                 [<tr key={ idx } onClick={ this.moreInfo.bind(this, idx) }>
                   <td className={ openIdx === idx ? styles.openArrow : styles.hideArrow }>></td>
                   <td>{i.ID}</td>
@@ -225,6 +257,7 @@ export default class AnomaliesList extends Component {
               ) }
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     );

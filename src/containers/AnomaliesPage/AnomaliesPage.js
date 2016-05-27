@@ -51,9 +51,9 @@ export default class AnomaliesPage extends Component {
     } else {
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
-      this.props.stopTime();
     }
 
+    this.props.stopTime();
     this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
     const range = [this.props.anomaliesList.startTime, this.props.anomaliesList.endTime];
     this.getFilteredData(range, this.props);

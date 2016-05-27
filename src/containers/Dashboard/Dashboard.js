@@ -73,8 +73,9 @@ export default class Dashboard extends Component {
     } else {
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
-      this.props.stopTime();
+
     }
+    this.props.stopTime();
   }
 
   componentWillReceiveProps(props) {

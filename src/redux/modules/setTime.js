@@ -29,14 +29,15 @@ export function removeTime() {
 export function* timeManagementSaga() {
   while (1) {
     const action = yield take([SET_TIME, STOP_TIME, REMOVE_TIME]);
-
     if (action.type === REMOVE_TIME) {
       isPaused = false;
     }
 
     if (action.type === STOP_TIME) {
-      clearInterval(timerGenerator.result());
-      timerGenerator.cancel();
+      if (timerGenerator) {
+        clearInterval(timerGenerator.result());
+        timerGenerator.cancel();
+      }
       isPaused = true;
     }
 

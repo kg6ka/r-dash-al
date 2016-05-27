@@ -83,7 +83,7 @@ export default class AnomaliesList extends Component {
         const side = window.innerWidth / 96;
         const confidence =
           `<div style="display: block;">
-            <div style=display:inline-block;background-color:${this.colors[el.likelihood]};width:10px;height:10px;
+            <div style="display:inline-block; background-color:${this.colors[el.likelihood]}; width:10px; height:10px;
             ></div>
             <div  style="display: inline-block;"> ${el.likelihood}</div>
           </div>`;
@@ -105,6 +105,7 @@ export default class AnomaliesList extends Component {
           Category: el.cause,
           'Vehicle Id': el.vehicleId,
           Ruleset: el.rulesetId,
+          signals: el.signals,
         };
       })
       .reduce((data, item) => {
@@ -179,7 +180,6 @@ export default class AnomaliesList extends Component {
     });
   }
 
-<<<<<<< HEAD
   filterColumn(event) {
     this.props.setFilter(event.target.name, event.target.value);
   }
@@ -203,7 +203,6 @@ export default class AnomaliesList extends Component {
       </tr>
     );
   }
-=======
   showAllSignals() {
     this.setState({
       openIdx: {
@@ -234,8 +233,6 @@ export default class AnomaliesList extends Component {
     </div>);
   }
 
-
->>>>>>> Clicking 'show all' should display all signals for the anomaly without correct data for location
   render() {
     const { openIdx, currPage } = this.state;
     const start = currPage * this.state.perPage;

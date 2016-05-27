@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 const { func, string, number, array } = PropTypes;
 import styles from '../../HeaderSite.scss';
+import logo from '../../images/menu-icons/polo-logo.png';
+import Israel from '../../images/menu-icons/Israel.png';
+import Germany from '../../images/menu-icons/Germany.png';
+import dataImg from '../../images/menu-icons/data.png';
 
 export default class MainMenu extends Component {
   static contextTypes = {
@@ -26,14 +30,13 @@ export default class MainMenu extends Component {
         url: '#home',
         type: 'country',
         items: [
-          { label: 'Germany', action: '', icon: 'Germany.png' },
-          { label: 'Israel', action: '', icon: 'Israel.png' },
+          { label: 'Germany', action: '', icon: Germany },
+          { label: 'Israel', action: '', icon: Israel },
         ],
       },
       filter: {
         label: 'last 10 minutes:',
         url: '#contact-us',
-        icon: 'data.png',
         type: 'last',
         items: [
           { label: 'last month', action: '1m' },
@@ -76,7 +79,7 @@ export default class MainMenu extends Component {
     return (
       <li className={styles['polo 2016']}>
         <a className="polo 2016">
-          <img alt="logo" src="/assets/images/menu-icons/polo-logo.png" />
+          <img alt="logo" src={ logo } />
           {this.props.tags[this.state.index].name}
         </a>
         <ul className={styles.child}>
@@ -109,13 +112,13 @@ export default class MainMenu extends Component {
   renderDropdown(data) {
     const icon = data.label === 'country'
       ? data.items[this.state.country].icon
-      : data.icon;
+      : dataImg;
     return (
       <li>
         <a className={data.label}>
           <img
             alt="icon"
-            src={`/assets/images/menu-icons/${icon}`}
+            src={ icon }
           />
           { data.items[this.state[data.type]].label }
         </a>

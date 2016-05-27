@@ -135,14 +135,19 @@
   }
 }
 
+
 .camZoom {
   float: left;
   background-color: #2b3641;
-  width: 27%;
+  width: 90%;
   div {
     padding: 0.5em 0;
     float: left;
   }
+}
+
+.camZoomOne {
+  width: 33%;
 }
 
 .prevIcon {
@@ -224,4 +229,9 @@
 }
 .table .searchInput {
   border-bottom: 1px solid #6aa2f6;
+}
+
+.singleSignal {
+  display: inline-block;
+  width: 30%;
 }

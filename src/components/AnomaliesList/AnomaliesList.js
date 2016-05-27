@@ -12,6 +12,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { bindActionCreators } from 'redux';
+import cx from 'classnames';
 
 const columns = ['ID',
   'Confidence',
@@ -40,7 +41,10 @@ export default class AnomaliesList extends Component {
     this.state = {
       perPage: 16,
       anomalies: props.anomalies || [],
-      openIdx: null,
+      openIdx: {
+        id: null,
+        isShow: false,
+      },
       quantity: props.anomalies.length,
       currPage: 0,
     };
@@ -111,16 +115,22 @@ export default class AnomaliesList extends Component {
             break;
           }
         }
+
         return isOk ? [...data, item] : data;
       }, []);
   }
+
   moreInfo(data) {
-    let openIdx = data;
-    if (openIdx === this.state.openIdx) {
-      openIdx = null;
+    let id = data;
+    if (id === this.state.openIdx.id) {
+      id = null;
     }
+
     this.setState({
-      openIdx,
+      openIdx: {
+        id,
+        isShow: false,
+      },
     });
   }
 
@@ -169,6 +179,7 @@ export default class AnomaliesList extends Component {
     });
   }
 
+<<<<<<< HEAD
   filterColumn(event) {
     this.props.setFilter(event.target.name, event.target.value);
   }
@@ -192,6 +203,39 @@ export default class AnomaliesList extends Component {
       </tr>
     );
   }
+=======
+  showAllSignals() {
+    this.setState({
+      openIdx: {
+        id: this.state.openIdx.id,
+        isShow: !this.state.openIdx.isShow,
+      },
+    });
+  }
+
+  signalValuesRender(item) {
+    return (<div className={styles.singleSignal}>
+      <div>
+        <img
+          className={styles.signalIcon}
+          src={ signal }
+          alt="signal"
+          />
+        CamZoomActiveState = {0}
+      </div>
+      <div>
+        <img
+          className={styles.prevIcon}
+          src={ previous }
+          alt="previous"
+          />
+        Previous Value = <span style={{ color: 'red' }}>{item.value}</span>
+      </div>
+    </div>);
+  }
+
+
+>>>>>>> Clicking 'show all' should display all signals for the anomaly without correct data for location
   render() {
     const { openIdx, currPage } = this.state;
     const start = currPage * this.state.perPage;
@@ -224,7 +268,7 @@ export default class AnomaliesList extends Component {
             <tbody>
               { anomalies.slice(start, end).map((i, idx) =>
                 [<tr key={ idx } onClick={ this.moreInfo.bind(this, idx) }>
-                  <td className={ openIdx === idx ? styles.openArrow : styles.hideArrow }>></td>
+                  <td className={ openIdx.id === idx ? styles.openArrow : styles.hideArrow }>></td>
                   <td>{i.ID}</td>
                   <td dangerouslySetInnerHTML={{ __html: i.Confidence }}></td>
                   <td dangerouslySetInnerHTML={{ __html: i.Blocked }}></td>
@@ -237,7 +281,7 @@ export default class AnomaliesList extends Component {
                   <td>{i['Vehicle Id']}</td>
                   <td>{i.Ruleset}</td>
                 </tr>,
-                <tr className={ openIdx === idx ? styles.moreInfo : styles.hideInfo }>
+                <tr className={ openIdx.id === idx ? styles.moreInfo : styles.hideInfo }>
                   <td colSpan="12" className={styles.detail}>
                     <div className="wrapper">
                       <div className={styles.msgTitle}>Message {i['Msg.Id']}</div>
@@ -269,26 +313,16 @@ export default class AnomaliesList extends Component {
                         </div>
                       </div>
                       <div className={styles.signalTitle}>Signal Values 1<span>/</span>20</div>
-                      <div className={styles.camZoom}>
-                        <div>
-                          <img
-                            className={styles.signalIcon}
-                            src={ signal }
-                            alt="signal"
-                          />
-                          CamZoomActiveState = 0
-                        </div>
-                        <div>
-                          <img
-                            className={styles.prevIcon}
-                            src={ previous }
-                            alt="previous"
-                          />
-                          Previous Value = <span style={{ color: 'red' }}>245</span>
-                        </div>
+                      <div className={styles.camZoom} className={cx({
+                        [styles.camZoom]: true,
+                        [styles.camZoomOne]: !openIdx.isShow,
+                      })}>
+                        { (openIdx.id === idx && openIdx.isShow) ?
+                          i.signals.map((item) => this.signalValuesRender(item)) :
+                          this.signalValuesRender(i.signals[0]) }
                       </div>
                     </div>
-                    <a href="#">Show all</a>
+                    <a href="#" onClick={ this.showAllSignals.bind(this, i) }>Show all</a>
                   </td>
                 </tr>]
               ) }

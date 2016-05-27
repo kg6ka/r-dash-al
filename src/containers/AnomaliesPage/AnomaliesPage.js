@@ -9,7 +9,7 @@ import cx from 'classnames';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { getCategories } from './../../redux/modules/categories';
-import { getAnomaliesList, updateTimeRange } from './../../redux/modules/anomaliesList';
+import { getAnomaliesList, updateTimeRange, setFilter } from './../../redux/modules/anomaliesList';
 import { getFleetActivities } from './../../redux/modules/fleetActivities';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
 import { getAnomaliesConfidence } from './../../redux/modules/confidenceFilter';
@@ -335,7 +335,10 @@ export default class AnomaliesPage extends Component {
           <MapsPopup />
         </div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50, styles.anomaliesList)}>
-          <AnomaliesList anomalies={ this.state.anomalies } />
+          <AnomaliesList
+            anomalies={ this.state.anomalies }
+            filters={ this.props.anomaliesList.filters }
+            setFilter={ this.props.setFilter }/>
         </div>
       </div>
     );
@@ -375,5 +378,6 @@ export default connect(
       removeTime,
       updateTimeRange,
       stopTime,
+      setFilter,
     }, dispatch)
 )(AnomaliesPage);

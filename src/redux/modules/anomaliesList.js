@@ -5,7 +5,8 @@ import config from 'config';
 const GETTING_ANOMALIES_LIST = 'argus/carsStatus/GETTING_ANOMALIES_LIST';
 const GOT_ANOMALIES_LIST = 'argus/carsStatus/GOT_ANOMALIES_LIST';
 const GET_ANOMALIES_LIST_FAILURE = 'argus/carsStatus/GET_ANOMALIES_LIST_FAILURE';
-const UPDATE_TIME_RANGE='argus/anomalies/TIME_RANGE';
+const UPDATE_TIME_RANGE = 'argus/anomalies/TIME_RANGE';
+const SET_FILTER = 'argus/anomalies/SET_FILTER';
 
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   loading: false,
   startTime: new Date().getTime(),
   endTime: new Date().getTime(),
+  filters: {},
 };
 
 export default function AnomaliesListReducer(state = initialState, action) {
@@ -42,8 +44,25 @@ export default function AnomaliesListReducer(state = initialState, action) {
         startTime: action.startTime,
         endTime: action.endTime,
       };
+    case SET_FILTER:
+      const filters = { ...state.filters };
+
+      filters[action.name] = action.value;
+
+      return {
+        ...state,
+        filters,
+      };
     default:
       return state;
+  }
+}
+
+export function setFilter(name, value) {
+  return {
+    type: SET_FILTER,
+    name,
+    value,
   }
 }
 

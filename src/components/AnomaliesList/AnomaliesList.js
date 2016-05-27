@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-const { array, func } = PropTypes;
+const { array, func, object } = PropTypes;
 import styles from './AnomaliesList.scss';
 import blocked from './images/blocked.svg';
 import signal from './images/signal.svg';
@@ -13,21 +13,36 @@ import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { bindActionCreators } from 'redux';
 
+const columns = ['ID',
+  'Confidence',
+  'Blocked',
+  'Date',
+  'Time',
+  'Bus',
+  'Msg.Id',
+  'Data',
+  'Category',
+  'Vehicle Id',
+  'Ruleset',
+];
+
 export default class AnomaliesList extends Component {
   static propTypes = {
     anomalies: array,
     openMapsPopup: func,
+    filters: object,
+    addFilter: func,
   };
 
   constructor(props) {
     super(props);
-    this.perPage = 16;
+
     this.state = {
+      perPage: 16,
       anomalies: props.anomalies || [],
       openIdx: null,
       quantity: props.anomalies.length,
       currPage: 0,
-      pages: Math.ceil(props.anomalies.length / this.perPage),
     };
     this.colors = {
       0: '',
@@ -56,37 +71,49 @@ export default class AnomaliesList extends Component {
     });
   }
 
-  editingData = (data) =>
-    data.map((el, idx) => {
-      const side = window.innerWidth / 96;
-      const confidence =
-        `<div style="display: block;">
-          <div style=display:inline-block;background-color:${this.colors[el.likelihood]};width:10px;height:10px;
-          ></div>
-          <div  style="display: inline-block;"> ${el.likelihood}</div>
-        </div>`;
-      return {
-        ID: idx + 1,
-        Confidence: confidence,
-        Blocked: el.blocked ? `<img src=${blocked} alt="stop" height=${side} width=${side}>` : '',
-        Date: moment(data.timestamp).format('DD/MM/YYYY'),
-        Time: new Date(el.timestamp).toTimeString().split(' ')[0],
-        Bus: el.source,
-        'Msg.Id': el.messageId,
-        Data: el.data.map(i => {
-          const hex = i.toString(16);
-          if (hex.toString().length < 2) {
-            return `0${hex}`;
-          }
-          return hex;
-        }
-        ).join('-').toUpperCase(),
-        Category: el.cause,
-        'Vehicle Id': el.vehicleId,
-        Ruleset: el.rulesetId,
-      };
-    })
+  editingData = (data) => {
+    const filters = this.props.filters;
 
+    return data
+      .map((el, idx) => {
+        const side = window.innerWidth / 96;
+        const confidence =
+          `<div style="display: block;">
+            <div style=display:inline-block;background-color:${this.colors[el.likelihood]};width:10px;height:10px;
+            ></div>
+            <div  style="display: inline-block;"> ${el.likelihood}</div>
+          </div>`;
+        return {
+          ID: idx + 1,
+          Confidence: confidence,
+          Blocked: el.blocked ? `<img src=${blocked} alt="stop" height=${side} width=${side}>` : '',
+          Date: moment(data.timestamp).format('DD/MM/YYYY'),
+          Time: new Date(el.timestamp).toTimeString().split(' ')[0],
+          Bus: el.source,
+          'Msg.Id': el.messageId,
+          Data: el.data.map(i => {
+            const hex = i.toString(16);
+            if (hex.toString().length < 2) {
+              return `0${hex}`;
+            }
+            return hex;
+          }).join('-').toUpperCase(),
+          Category: el.cause,
+          'Vehicle Id': el.vehicleId,
+          Ruleset: el.rulesetId,
+        };
+      })
+      .reduce((data, item) => {
+        let isOk = true;
+        for (let key in filters) {
+          if (item[key].toString().search(filters[key]) === -1) {
+            isOk = false;
+            break;
+          }
+        }
+        return isOk ? [...data, item] : data;
+      }, []);
+  }
   moreInfo(data) {
     let openIdx = data;
     if (openIdx === this.state.openIdx) {
@@ -97,8 +124,9 @@ export default class AnomaliesList extends Component {
     });
   }
 
-  drawPagination() {
-    const { pages, quantity, currPage } = this.state;
+  drawPagination(quantity) {
+    const { perPage, currPage } = this.state;
+    const pages = Math.ceil(quantity / perPage);
     return (
       <div className={styles.pagination}>
         <div className={styles.leftSide}>
@@ -141,15 +169,39 @@ export default class AnomaliesList extends Component {
     });
   }
 
+  filterColumn(event) {
+    this.props.setFilter(event.target.name, event.target.value);
+  }
+
+  renderSearch () {
+    return (
+      <tr>
+        <td>
+          <img src={ filter } alt="filter" style={{ width: '1em' }} />
+        </td>
+        {columns.map(item => {
+          return (
+            <td>
+              <input
+                type="search"
+                name={item}
+                className={styles.searchInput}
+                onChange={this.filterColumn.bind(this)}/>
+            </td>)
+        })}
+      </tr>
+    );
+  }
   render() {
-    const { anomalies, openIdx, currPage } = this.state;
-    const start = currPage * this.perPage;
-    const end = start + this.perPage;
+    const { openIdx, currPage } = this.state;
+    const start = currPage * this.state.perPage;
+    const anomalies = this.editingData(this.state.anomalies);
+    const end = start + this.state.perPage;
     return (
       <div className={styles.content}>
         <div className={styles.header}>Anomalies list</div>
         <div className={styles.anomalies}>
-          { this.drawPagination() }
+          { this.drawPagination(anomalies.length) }
           <div className={styles.tableWraper}>
           <table className={styles.table}>
             <thead>
@@ -167,25 +219,10 @@ export default class AnomaliesList extends Component {
                 <th>Vehicle ID</th>
                 <th>Ruleset</th>
               </tr>
-              <tr>
-                <td>
-                  <img src={ filter } alt="filter" style={{ width: '1em' }} />
-                </td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-                <td><input type="search" /></td>
-              </tr>
+              { this.renderSearch() }
             </thead>
             <tbody>
-              { this.editingData(anomalies).slice(start, end).map((i, idx) =>
+              { anomalies.slice(start, end).map((i, idx) =>
                 [<tr key={ idx } onClick={ this.moreInfo.bind(this, idx) }>
                   <td className={ openIdx === idx ? styles.openArrow : styles.hideArrow }>></td>
                   <td>{i.ID}</td>

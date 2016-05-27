@@ -186,10 +186,11 @@ export default class AnomaliesPage extends Component {
     }
 
     relativeTime = Math.round(relativeTime);
-    return relativeTime;
+    return {period, relativeTime};
   }
   getNewProps(tagId) {
-    const relativeTime = this.getRelativeTime(tagId);
+    const { relativeTime, period } = this.getRelativeTime(tagId);
+
     this.props.getCarsStatus(tagId, period, relativeTime);
     this.props.getCategories(tagId, relativeTime);
     this.props.getAnomaliesList(tagId, relativeTime);
@@ -279,6 +280,7 @@ export default class AnomaliesPage extends Component {
   }
 
   render() {
+    const { relativeTime } = this.getRelativeTime(this.props.getTags.currentTag);
     return (
       <div className={cx(layout.layout, styles.anomaliesContent)}>
         <div className={styles.anomaliesHeader}>
@@ -290,6 +292,7 @@ export default class AnomaliesPage extends Component {
           <div className={cx(styles.backgroundGradient)}>
             <FilterTable
               data={ this.state.bars.result }
+              time={ relativeTime }
               total={ this.state.bars.total }
               onChange={::this.onChangeSelect}
 

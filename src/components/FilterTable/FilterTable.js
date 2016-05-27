@@ -1,15 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-const { array, func } = PropTypes;
+const { array, func, number } = PropTypes;
 import d3 from 'd3';
 import moment from 'moment';
 import cx from 'classnames';
 import componentStyle from './FilterTable.scss';
 import expand from './../FleetActivity/images/expand.svg';
 
+const DAY = 1000 * 60 * 60 * 24;
+
 export default class FilterTable extends Component {
   static propTypes = {
     data: array,
     onChange: func,
+    time: number,
   };
 
   constructor(props) {
@@ -72,20 +75,23 @@ export default class FilterTable extends Component {
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
     const quantity = data.length - 1;
+    const { time } = this.props;
 
-    if (!data[0] || data[0].time === 0) {
+    if (!time || time === 0) {
       return;
     }
 
     const currentData = new Date().getTime();
+    const range = currentData - time;
     const timeTicks = [];
-    const jmpTime = (currentData - data[0].startTime) / 7;
+    const jmpTime = (currentData - time) / 7;
 
     for (let i = 0; i < 7; i++) {
-      timeTicks.push(new Date(data[0].startTime + (jmpTime * i)));
+      timeTicks.push(new Date(time + (jmpTime * i)));
     }
-    debugger;
+
     timeTicks.push(new Date(currentData));
+    const timeformat = range > DAY ? '%b%d %H:%M' :  '%H:%M:%S';
 
     let maxSuspicious = 0;
     let maxBlocked = 0;
@@ -162,7 +168,7 @@ export default class FilterTable extends Component {
       .orient('bottom')
       .ticks(6)
       .tickPadding(window.innerWidth / 128)
-      .tickFormat(d3.time.format('%H:%M:%S'))
+      .tickFormat(d3.time.format(timeformat))
       .tickValues(timeTicks);
 
     svg.append('g')

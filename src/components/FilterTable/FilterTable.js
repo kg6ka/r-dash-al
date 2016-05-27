@@ -50,9 +50,6 @@ export default class FilterTable extends Component {
     d3.selectAll('.yAxis1 text')
       .style({ stroke: '#ffbc16' });
 
-    d3.selectAll('.yAxis2 text')
-      .style({ stroke: '#2fc6f4' });
-
     d3.selectAll('.axisLine')
       .style({
         stroke: '#8f9295',
@@ -91,6 +88,7 @@ export default class FilterTable extends Component {
     }
 
     timeTicks.push(new Date(currentData));
+
     const timeformat = range > DAY ? '%b%d %H:%M' :  '%H:%M:%S';
 
     let maxSuspicious = 0;
@@ -138,29 +136,14 @@ export default class FilterTable extends Component {
       .domain([0, leftTick * 5])
       .range([axisHeigth, margin / 2]);
 
-    const y2 = d3.scale.linear()
-      .domain([0, rightTick * 5])
-      .range([axisHeigth, margin / 2]);
 
     const yAxis1 = d3.svg.axis()
       .scale(y1)
       .tickSize(-(axisWidth - margin))
       .orient('left')
       .tickValues(leftScale)
+      .tickFormat(() => '')
       .tickPadding(window.innerWidth / 128);
-
-    const yAxis2 = d3.svg.axis()
-      .scale(y2)
-      .tickSize(-(axisWidth - margin))
-      .orient('right')
-      .tickValues(rightScale)
-      .tickPadding(window.innerWidth / 128)
-      .tickFormat(d => {
-        if (d < 1000) {
-          return d;
-        }
-        return `${d / 1000} K`;
-      });
 
     const xAxis = d3.svg.axis()
       .scale(x)
@@ -172,9 +155,9 @@ export default class FilterTable extends Component {
       .tickValues(timeTicks);
 
     svg.append('g')
-      .attr('class', 'yAxis2')
-      .attr('transform', `translate(${axisWidth},0)`)
-      .call(yAxis2);
+      .attr('class', 'yAxis1')
+      .attr('transform', `translate(${margin},0)`)
+      .call(yAxis1);
 
     svg.append('g')
       .attr('class', 'xAxis')
@@ -194,7 +177,7 @@ export default class FilterTable extends Component {
       .attr('class', 'barItem')
       .attr('x', d => x(new Date(d.time)))
       .attr('y', d => y1(d.suspicious))
-      .attr('width', (axisWidth - margin) / quantity)
+      .attr('width', 4)
       .attr('height', d => axisHeigth - y1(d.suspicious))
       .attr('fill', '#f5c300');
 
@@ -210,7 +193,7 @@ export default class FilterTable extends Component {
       .attr('class', 'barItem')
       .attr('x', (d) => x(new Date(d.time)))
       .attr('y', d => y1(d.blocked))
-      .attr('width', (axisWidth - margin) / quantity)
+      .attr('width', 4)
       .attr('height', d => axisHeigth - y1(d.blocked))
       .attr('fill', '#c90000');
 

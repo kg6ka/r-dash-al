@@ -155,7 +155,7 @@ export default class AnomaliesPage extends Component {
     });
   }
   getRelativeTime (tagId) {
-    const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
+    const action = this.props.location.hash ? this.props.location.hash.substring(1) : '1m';
     let relativeTime = new Date().getTime();
     let period = '5s';
     switch (action) {

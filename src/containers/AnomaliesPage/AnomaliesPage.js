@@ -219,9 +219,9 @@ export default class AnomaliesPage extends Component {
       }
       const newBar = {
         time: props.fleetActivities.data[i].timestamp,
-        activitys: props.carsStatus.activities[0].values[0].value,
-        suspicious: props.fleetActivities.data[0].values[0].value,
-        blocked: props.fleetActivities.data[0].values[1].value,
+        activitys: props.carsStatus.activities[i.values[0].value,
+        suspicious: props.fleetActivities.data[i].values[0].value,
+        blocked: props.fleetActivities.data[i].values[1].value,
       };
       resultArray.push(newBar);
     }

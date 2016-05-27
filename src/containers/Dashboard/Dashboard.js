@@ -178,24 +178,12 @@ export default class Dashboard extends Component {
   }
 
   categoriesData(props) {
-    const old = [
-      { offset: window.innerWidth / 25.26, color: '#b2d733' },
-      { offset: window.innerWidth / 15.5, color: '#13aa38' },
-      { offset: window.innerWidth / 11.2, color: '#1156e4' },
-      { offset: window.innerWidth / 8.73, color: '#904fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
-    ];
-
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);
 
-    return props.categories.data.reduce((curValue, item, index) => {
+    return props.categories.data.reduce((curValue, item) => {
       const dataCategory = {
         text: item.key.replace(/_/g, ' '),
         percent: Math.floor(item.total * 100 / sum),
-        offset: old[index].offset,
-        color: old[index].color,
       };
       return [...curValue, dataCategory];
     }, []);

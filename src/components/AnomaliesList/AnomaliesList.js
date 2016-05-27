@@ -221,7 +221,7 @@ export default class AnomaliesList extends Component {
           src={ signal }
           alt="signal"
           />
-        CamZoomActiveState = {0}
+        CamZoomActiveState = {item.name}
       </div>
       <div>
         <img

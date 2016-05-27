@@ -37,9 +37,8 @@ export default class AnomaliesList extends Component {
 
   constructor(props) {
     super(props);
-
+    const perPage = 16
     this.state = {
-      perPage: 16,
       anomalies: props.anomalies || [],
       openIdx: {
         id: null,
@@ -47,6 +46,8 @@ export default class AnomaliesList extends Component {
       },
       quantity: props.anomalies.length,
       currPage: 0,
+      perPage: perPage,
+      pages: Math.ceil(props.anomalies.length / perPage),
     };
     this.colors = {
       0: '',
@@ -64,7 +65,7 @@ export default class AnomaliesList extends Component {
     }
 
     const quantity = props.anomalies.length;
-    const pages = Math.ceil(quantity / this.perPage);
+    const pages = Math.ceil(quantity / this.state.perPage);
     const currPage = this.state.currPage;
 
     this.setState({
@@ -135,6 +136,12 @@ export default class AnomaliesList extends Component {
     });
   }
 
+  handleChange(event) {
+    this.setState({
+      perPage: event.target.value,
+    });
+  }
+
   drawPagination(quantity) {
     const { perPage, currPage } = this.state;
     const pages = Math.ceil(quantity / perPage);
@@ -147,6 +154,12 @@ export default class AnomaliesList extends Component {
             out of { quantity }
         </div>
         <div className={styles.rightSide}>
+          <div className={styles.perpage}>
+            Rows per page
+            <div className={styles.page}>
+              <input type="text" value={ perPage } onChange={this.handleChange.bind(this)} />
+            </div>
+          </div>
           <span className={styles.clear}>
             <img src={ trash } alt="trash" style={{ width: '1em' }} />
             Clear filters
@@ -234,10 +247,11 @@ export default class AnomaliesList extends Component {
   }
 
   render() {
-    const { openIdx, currPage } = this.state;
-    const start = currPage * this.state.perPage;
+    const { openIdx, currPage, perPage } = this.state;
     const anomalies = this.editingData(this.state.anomalies);
+    const start = currPage * perPage;
     const end = start + this.state.perPage;
+
     return (
       <div className={styles.content}>
         <div className={styles.header}>Anomalies list</div>

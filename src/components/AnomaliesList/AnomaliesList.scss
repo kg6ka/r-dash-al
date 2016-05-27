@@ -21,7 +21,7 @@
 .table {
   border-spacing: 1px;
   width: 47vw;
-  height: calc(84vh - 2.1vw);
+//  height: calc(84vh - 2.1vw);
   background-color: #404244;
   [type="search"]{
     display:block;
@@ -182,7 +182,8 @@
 
   .rightSide {
     display: inline-block;
-    float: right;;
+    float: right;
+    line-height: 2em;
   }
 
   .leftSide {
@@ -192,7 +193,7 @@
 }
 
 .clear {
-  margin-right: 1em;
+  margin-right: .5em;
   cursor: pointer;
 
   img {
@@ -234,4 +235,20 @@
 .singleSignal {
   display: inline-block;
   width: 30%;
+}
+
+.perpage {
+  display: inline-block;
+
+  .page {
+    margin-left: .5em;
+
+    input {
+      width: 100%;
+      text-align: center;
+      border: none;
+      background-color: transparent;
+      color: white;
+    }
+  }
 }

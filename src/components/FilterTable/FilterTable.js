@@ -72,42 +72,48 @@ export default class FilterTable extends Component {
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;
     const quantity = data.length - 1;
-    let tickValuesCars = [];
-    let tickValuesSuspicious = [];
 
-    const timeTicks = [];
-    const jmpTime = (data[quantity].time - data[0].time) / 7;
-    let tick = 0;
-    for (let i = 0; i < 7; i++) {
-      timeTicks.push(new Date(data[0].time + tick));
-      tick = Math.round(tick + jmpTime);
+    if (!data[0] || data[0].time === 0) {
+      return;
     }
-    timeTicks.push(new Date(data[quantity].time)); // get last time anytime
 
-    tickValuesCars = [0,0.5,1,1.5,2];
-    const registered = this.props.total;
+    const currentData = new Date().getTime();
+    const timeTicks = [];
+    const jmpTime = (currentData - data[0].startTime) / 7;
 
-    if (registered >= 10) tickValuesCars = [0, 25, 50, 75, 100];
+    for (let i = 0; i < 7; i++) {
+      timeTicks.push(new Date(data[0].startTime + (jmpTime * i)));
+    }
+    debugger;
+    timeTicks.push(new Date(currentData));
 
-    if (registered >= 100) tickValuesCars = [0, 250, 500, 750, 1000];
-
-    if (registered >= 1000) tickValuesCars = [0, 2500, 5000, 7500, 10000];
-
-    tickValuesSuspicious = [0, 5, 10, 15, 20];
     let maxSuspicious = 0;
+    let maxBlocked = 0;
+    let maxActivities = 0;
+
     for (let i = 0; i < data.length; i++) {
       if (data[i].suspicious > maxSuspicious) {
         maxSuspicious = data[i].suspicious;
       }
+
+      maxActivities = maxActivities > data[i].activitys ? maxActivities : data[i].activitys;
+      maxBlocked = maxBlocked > data[i].blocked ? maxBlocked : data[i].blocked;
     }
 
-//     if(maxSuspicious > 2)     tickValuesSuspicious = [0,2.5,5,7.5,10];
+    let maxY1 = maxBlocked > maxSuspicious ? maxBlocked : maxSuspicious;
 
-    if (maxSuspicious >= 10) tickValuesSuspicious = [0, 25, 50, 75, 100];
+    let leftScale = [];
+    let rightScale = [];
+    let leftTick = Math.round(((maxY1 * 1.7) / 10)) * 2;
+    let rightTick = Math.round((maxActivities / 5));
 
-    if (maxSuspicious >= 100) tickValuesSuspicious = [0, 250, 500, 750, 1000];
-
-    if (maxSuspicious >= 1000) tickValuesSuspicious = [0, 2500, 5000, 7500, 10000];
+    if (rightTick < 0.5) {
+      rightTick = 0.5;
+    }
+    for (let i = 0; i < 5; i++) {
+      leftScale.push(leftTick * i);
+      rightScale.push(rightTick * i);
+    }
 
     charts.selectAll('svg').remove();
     charts.selectAll('image').remove();
@@ -116,27 +122,39 @@ export default class FilterTable extends Component {
     const svg = charts
       .append('svg')
       .attr('width', width)
-      .attr('height', height + 10);
+      .attr('height', height);
 
     const x = d3.time.scale()
       .domain([timeTicks[0], timeTicks[timeTicks.length - 1]])
       .range([margin, axisWidth]);
 
     const y1 = d3.scale.linear()
-      .domain([0, tickValuesSuspicious[4]])
+      .domain([0, leftTick * 5])
       .range([axisHeigth, margin / 2]);
 
     const y2 = d3.scale.linear()
-      .domain([0, tickValuesCars[4]])
+      .domain([0, rightTick * 5])
       .range([axisHeigth, margin / 2]);
+
+    const yAxis1 = d3.svg.axis()
+      .scale(y1)
+      .tickSize(-(axisWidth - margin))
+      .orient('left')
+      .tickValues(leftScale)
+      .tickPadding(window.innerWidth / 128);
 
     const yAxis2 = d3.svg.axis()
       .scale(y2)
       .tickSize(-(axisWidth - margin))
       .orient('right')
-      .tickValues(tickValuesCars)
-      .tickPadding(10)
-      .tickFormat('');
+      .tickValues(rightScale)
+      .tickPadding(window.innerWidth / 128)
+      .tickFormat(d => {
+        if (d < 1000) {
+          return d;
+        }
+        return `${d / 1000} K`;
+      });
 
     const xAxis = d3.svg.axis()
       .scale(x)

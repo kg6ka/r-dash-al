@@ -154,8 +154,7 @@ export default class AnomaliesPage extends Component {
       anomalies: filterData,
     });
   }
-
-  getNewProps(tagId) {
+  getRelativeTime (tagId) {
     const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
     let period = '5s';
@@ -187,6 +186,10 @@ export default class AnomaliesPage extends Component {
     }
 
     relativeTime = Math.round(relativeTime);
+    return relativeTime;
+  }
+  getNewProps(tagId) {
+    const relativeTime = this.getRelativeTime(tagId);
     this.props.getCarsStatus(tagId, period, relativeTime);
     this.props.getCategories(tagId, relativeTime);
     this.props.getAnomaliesList(tagId, relativeTime);
@@ -285,7 +288,12 @@ export default class AnomaliesPage extends Component {
           className={cx(layout.layoutSideLeft, layout.layoutCol50)}
         >
           <div className={cx(styles.backgroundGradient)}>
-            <FilterTable data={ this.state.bars.result } total={ this.state.bars.total } onChange={::this.onChangeSelect} />
+            <FilterTable
+              data={ this.state.bars.result }
+              total={ this.state.bars.total }
+              onChange={::this.onChangeSelect}
+
+              />
           </div>
           <div className={cx(layout.layoutCol50, layout.height50, layout.borderRightButtom)}>
             <MSGfilter data={ this.props.target } onChange={ ::this.filterByMessage } />
@@ -311,7 +319,6 @@ export default class AnomaliesPage extends Component {
           <MapsPopup />
         </div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50, styles.anomaliesList)}>
-            <AnomaliesList anomalies={ this.state.anomalies } />
         </div>
       </div>
     );

@@ -27,6 +27,7 @@ export default class AnomaliesList extends Component {
       openIdx: null,
       quantity: props.anomalies.length,
       currPage: 0,
+      perPage: this.perPage,
       pages: Math.ceil(props.anomalies.length / this.perPage),
     };
     this.colors = {
@@ -45,7 +46,7 @@ export default class AnomaliesList extends Component {
     }
 
     const quantity = props.anomalies.length;
-    const pages = Math.ceil(quantity / this.perPage);
+    const pages = Math.ceil(quantity / this.state.perPage);
     const currPage = this.state.currPage;
 
     this.setState({
@@ -63,7 +64,7 @@ export default class AnomaliesList extends Component {
         `<div style="display: block;">
           <div style=display:inline-block;background-color:${this.colors[el.likelihood]};width:10px;height:10px;
           ></div>
-          <div  style="display: inline-block;"> ${el.likelihood}</div>
+          <div style="display: inline-block;"> ${el.likelihood}</div>
         </div>`;
       return {
         ID: idx + 1,
@@ -97,8 +98,14 @@ export default class AnomaliesList extends Component {
     });
   }
 
+  handleChange(event) {
+    this.setState({
+      perPage: event.target.value,
+    });
+  }
+
   drawPagination() {
-    const { pages, quantity, currPage } = this.state;
+    const { pages, quantity, currPage, perPage } = this.state;
     return (
       <div className={styles.pagination}>
         <div className={styles.leftSide}>
@@ -108,6 +115,12 @@ export default class AnomaliesList extends Component {
             out of { quantity }
         </div>
         <div className={styles.rightSide}>
+          <div className={styles.perpage}>
+            Rows per page
+            <div className={styles.page}>
+              <input type="text" value={ perPage } onChange={this.handleChange.bind(this)} />
+            </div>
+          </div>
           <span className={styles.clear}>
             <img src={ trash } alt="trash" style={{ width: '1em' }} />
             Clear filters
@@ -142,9 +155,9 @@ export default class AnomaliesList extends Component {
   }
 
   render() {
-    const { anomalies, openIdx, currPage } = this.state;
-    const start = currPage * this.perPage;
-    const end = start + this.perPage;
+    const { anomalies, openIdx, currPage, perPage } = this.state;
+    const start = currPage * perPage;
+    const end = start + perPage;
     return (
       <div className={styles.content}>
         <div className={styles.header}>Anomalies list</div>

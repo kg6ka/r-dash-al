@@ -369,7 +369,11 @@ export default class AnomaliesList extends Component {
                           </span>
                         </div>
                       </div>
-                      <div className={styles.signalTitle}>Signal Values 1<span>/</span>20</div>
+                      <div className={styles.signalTitle}>Signal Values
+                        {openIdx.id === idx && openIdx.isShow ? i.signals.length : 1}
+                        <span>/</span>
+                        {i.signals.length}
+                      </div>
                       <div className={cx({
                         [styles.camZoom]: true,
                         [styles.camZoomOne]: !openIdx.isShow,

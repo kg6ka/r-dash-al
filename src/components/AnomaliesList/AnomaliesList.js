@@ -33,6 +33,7 @@ export default class AnomaliesList extends Component {
     openMapsPopup: func,
     filters: object,
     addFilter: func,
+    clearFilter: func,
   };
 
   constructor(props) {
@@ -226,22 +227,37 @@ export default class AnomaliesList extends Component {
   filterColumn(event) {
     this.props.setFilter(event.target.name, event.target.value);
   }
-
+  clearFilter (event) {
+    this.props.clearFilter();
+  }
   renderSearch () {
+    const isEmpty = Object.keys(this.props.filters).length === 0;
     return (
       <tr>
         <td>
-          <img src={ filter } alt="filter" style={{ width: '1em' }} />
+          <img src={ filter } onClick={this.clearFilter.bind(this)} alt="filter" style={{ width: '1em' }} />
         </td>
         {columns.map(item => {
-          return (
-            <td>
-              <input
-                type="search"
-                name={item}
-                className={styles.searchInput}
-                onChange={this.filterColumn.bind(this)}/>
-            </td>)
+          if (isEmpty) {
+            return (
+              <td>
+                <input
+                  type="search"
+                  name={item}
+                  value=""
+                  className={styles.searchInput}
+                  onChange={this.filterColumn.bind(this)}/>
+              </td>)
+          } else {
+            return (
+              <td>
+                <input
+                  type="search"
+                  name={item}
+                  className={styles.searchInput}
+                  onChange={this.filterColumn.bind(this)}/>
+              </td>)
+          }
         })}
       </tr>
     );

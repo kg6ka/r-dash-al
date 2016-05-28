@@ -7,6 +7,7 @@ const GOT_ANOMALIES_LIST = 'argus/carsStatus/GOT_ANOMALIES_LIST';
 const GET_ANOMALIES_LIST_FAILURE = 'argus/carsStatus/GET_ANOMALIES_LIST_FAILURE';
 const UPDATE_TIME_RANGE = 'argus/anomalies/TIME_RANGE';
 const SET_FILTER = 'argus/anomalies/SET_FILTER';
+const CLEAR_FILTER = 'argus/anomalies/CLEAR_FILTER';
 
 
 const initialState = {
@@ -53,6 +54,11 @@ export default function AnomaliesListReducer(state = initialState, action) {
         ...state,
         filters,
       };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filters: {},
+      }
     default:
       return state;
   }
@@ -63,6 +69,12 @@ export function setFilter(name, value) {
     type: SET_FILTER,
     name,
     value,
+  }
+}
+
+export function clearFilter() {
+  return {
+    type: CLEAR_FILTER,
   }
 }
 

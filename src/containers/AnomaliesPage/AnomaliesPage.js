@@ -322,6 +322,8 @@ export default class AnomaliesPage extends Component {
         </div>
         <div className={cx(layout.layoutSideRight, layout.layoutCol50, styles.anomaliesList)}>
           <AnomaliesList
+            currentTag={ this.props.getTags.currentTag }
+            location={ this.props.location }
             anomalies={ this.state.anomalies }
             filters={ this.props.anomaliesList.filters }
             setFilter={ this.props.setFilter }

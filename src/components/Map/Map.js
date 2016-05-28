@@ -107,6 +107,11 @@ export default class Map extends Component {
 
   componentWillReceiveProps(props) {
     if (props.locations && props.locations.length !== this.props.locations.length && props.lng) {
+      this.drawMap(props);
+    }
+  }
+
+  drawMap(props) {
       const locations = props.locations;
       let max = 0;
       let i = locations.length;
@@ -156,6 +161,9 @@ export default class Map extends Component {
         return map.addMarker(marker);
       });
     }
+
+  componentDidMount() {
+    this.drawMap(this.props);
   }
 
   render() {

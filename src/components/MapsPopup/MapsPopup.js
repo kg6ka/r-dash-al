@@ -20,13 +20,19 @@ export default class MapsPopup extends Component {
         onRequestClose={ this.props.hideMapsPopup }
         className={styles.popupContent}
       >
-        <Map lat={48.856614} lng={2.3522219} />
+        <Map
+          lat={this.props.map.center.lat}
+          lng={this.props.map.center.lng}
+          locations={this.props.map.data}
+          desc={this.props.map.center.desc}
+          isMapsModalOpen={this.props.mapsPopup.isMapsModalOpen}
+          />
       </Modal>
     );
   }
 }
 
 export default connect(
-  ({ mapsPopup }) => ({ mapsPopup }),
+  ({ mapsPopup, map }) => ({ mapsPopup, map }),
   { openMapsPopup, hideMapsPopup, getHeatmapData }
 )(MapsPopup);

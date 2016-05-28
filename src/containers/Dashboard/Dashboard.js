@@ -71,6 +71,7 @@ export default class Dashboard extends Component {
     if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
+      this.props.getMap(this.props.getTags.currentTag, 0);
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
 

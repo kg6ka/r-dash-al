@@ -127,7 +127,7 @@ export default class FilterTable extends Component {
     const svg = charts
       .append('svg')
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height + 10);
 
     const x = d3.time.scale()
       .domain([timeTicks[0], timeTicks[timeTicks.length - 1]])

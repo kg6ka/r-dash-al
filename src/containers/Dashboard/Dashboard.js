@@ -71,10 +71,10 @@ export default class Dashboard extends Component {
     if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
-      this.props.getMap(this.props.getTags.currentTag, 0);
+      this.props.getMap(this.props.getTags.currentTag, this.getCurrentAction(props.location).relativeTime);
+      this.props.getAlertsData();
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
-
     }
     this.props.removeTime();
   }
@@ -89,6 +89,8 @@ export default class Dashboard extends Component {
 
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
+      this.props.getMap(props.getTags.currentTag, this.getCurrentAction(props.location).relativeTime);
+      this.props.getAlertsData();
       this.props.setTime(this.getNewProps.bind(this, props.getTags.currentTag));
     }
 

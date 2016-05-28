@@ -143,14 +143,16 @@ export default class FilterTable extends Component {
       .orient('left')
       .tickValues(leftScale)
       .tickFormat(() => '')
-      .tickPadding(window.innerWidth / 128);
+      //TODO fix hardcoded offset
+      .tickPadding(window.innerWidth / (((128 * 1.58) / 0.51) + 3));
 
     const xAxis = d3.svg.axis()
       .scale(x)
       .tickSize(-(axisHeigth - margin / 4))
       .orient('bottom')
       .ticks(6)
-      .tickPadding(window.innerWidth / 128)
+      //TODO fix hardcoded offset
+      .tickPadding(window.innerWidth / (((128 * 1.58) / 0.51) + 3))
       .tickFormat(d3.time.format(timeformat))
       .tickValues(timeTicks);
 

@@ -273,7 +273,7 @@ export default class AnomaliesList extends Component {
 
   signalValuesRender(item) {
     return (<div className={styles.singleSignal}>
-      <div>
+      <div className={styles.signalBlock}>
         <img
           className={styles.signalIcon}
           src={ signal }
@@ -281,7 +281,7 @@ export default class AnomaliesList extends Component {
           />
         CamZoomActiveState = {item.name}
       </div>
-      <div>
+      <div className={styles.signalBlock}>
         <img
           className={styles.prevIcon}
           src={ previous }

@@ -279,13 +279,13 @@ export default class AnomaliesPage extends Component {
   render() {
     const range = [this.props.anomaliesList.startTime, this.props.anomaliesList.endTime];
     const { relativeTime } = this.getRelativeTime();
-    return (
+    return ( 
       <div className={cx(layout.layout, styles.anomaliesContent)}>
         <div className={styles.anomaliesHeader}>
         <BackBtn />
         </div>
         <div
-          className={cx(layout.layoutSideLeft, layout.layoutCol50)}
+          className={cx(layout.layoutSideLeft, layout.layoutCol45)}
         >
           <div className={cx(styles.backgroundGradient)}>
             <FilterTable
@@ -320,7 +320,7 @@ export default class AnomaliesPage extends Component {
           </div>
           <MapsPopup />
         </div>
-        <div className={cx(layout.layoutSideRight, layout.layoutCol50, styles.anomaliesList)}>
+        <div className={cx(layout.layoutSideRight, layout.layoutCol55, styles.anomaliesList)}>
           <AnomaliesList
             currentTag={ this.props.getTags.currentTag }
             location={ this.props.location }

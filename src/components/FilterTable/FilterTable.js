@@ -63,7 +63,7 @@ export default class FilterTable extends Component {
   drawCharts(data) {
     const charts = d3.select('.charts');
     const margin = 30;
-    const width = window.innerWidth * 0.51;
+    const width = window.innerWidth * 0.46;
     const height = (window.innerWidth / 11.43);
     const axisWidth = width - 2 * margin;
     const axisHeigth = height - margin;

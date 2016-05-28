@@ -104,6 +104,7 @@ body {
     flex: 1 1 auto;
 /*    min-height: 14em;*/
     box-sizing: border-box;
+    align-items: stretch;
 }
 .layoutCol,
 .layoutSideRight,
@@ -162,6 +163,15 @@ body {
     width: 55%;
 
 }
+.layoutCol60 {
+    width: 60%;
+
+}
+.layoutCol40 {
+    width: 40%;
+
+}
+
 .layoutCol45 {
     width: 45%;
 

@@ -37,7 +37,7 @@ export default class AnomaliesList extends Component {
 
   constructor(props) {
     super(props);
-    const perPage = 16
+    const perPage = 16;
     this.state = {
       anomalies: props.anomalies || [],
       openIdx: {
@@ -93,10 +93,10 @@ export default class AnomaliesList extends Component {
           ID: idx + 1,
           Confidence: confidence,
           Blocked: el.blocked ? `<img src=${blocked} alt="stop" height=${side} width=${side}>` : '',
-          Date: moment(data.timestamp).format('DD/MM/YYYY'),
-          Time: new Date(el.timestamp).toTimeString().split(' ')[0],
+          Date: moment(el.timestamp).format('DD/MM/YYYY'),
+          Time: moment(el.timestamp).format('HH:mm:ss.ms'),
           Bus: el.source,
-          'Msg.Id': el.messageId.toString(16),
+          'Msg.Id': el.messageId,
           Data: el.data.map(i => {
             const hex = i.toString(16);
             if (hex.toString().length < 2) {
@@ -112,7 +112,7 @@ export default class AnomaliesList extends Component {
       })
       .reduce((data, item) => {
         let isOk = true;
-        for (let key in filters) {
+        for (const key in filters) {
           if (item[key].toString().search(filters[key]) === -1) {
             isOk = false;
             break;

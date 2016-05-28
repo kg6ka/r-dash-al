@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { showAlerts } from './../../redux/modules/alertsList';
 import { getCurrentTags, changeCurrentTag } from './../../redux/modules/getTags';
-import { setTime, stopTime, removeTime } from './../../redux/modules/setTime';
+import { setTime, stopTime, removeTime } from './../../redux/modules/time';
 
 import styles from './App.scss';
 
@@ -47,6 +47,7 @@ class App extends Component {
           onClick={this.changeAlertsVisibilty}
           changeTag={ this.props.changeCurrentTag }
           tags={ getTags.data }
+          time={ this.props.time }
           currentName={ thisName }
           currentTag={this.props.getTags.currentTag }
           start={this.props.removeTime }
@@ -58,19 +59,21 @@ class App extends Component {
 }
 
 export default connect(({
-        alertsList,
-        getTags,
-    }) => ({
-      alertsList,
-      getTags,
-    }),
-    dispatch => bindActionCreators({
-      showAlerts,
-      getCurrentTags,
-      changeCurrentTag,
-      setTime,
-      removeTime,
-      stopTime,
-    }, dispatch))(App);
+    alertsList,
+    getTags,
+    time,
+  }) => ({
+    alertsList,
+    getTags,
+    time,
+  }),
+  dispatch => bindActionCreators({
+    showAlerts,
+    getCurrentTags,
+    changeCurrentTag,
+    setTime,
+    removeTime,
+    stopTime,
+  }, dispatch))(App);
 
 

@@ -3,10 +3,43 @@ import { take, fork } from 'redux-saga/effects';
 const SET_TIME = 'argus/setTime/SET_TIME';
 const STOP_TIME = 'argus/setTime/STOP_TIME';
 const REMOVE_TIME = 'argus/setTime/REMOVE_TIME';
+const UPDATE_PERIOD = 'argus/setTime/UPDATE_PERIOD';
 
 let timerGenerator;
 let bufferFn;
 let isPaused = false;
+
+const initialState = {
+  paused: true,
+  period: '10m',
+};
+
+
+export default function timeReducer(state = initialState, action) {
+  switch (action.type) {
+    case STOP_TIME: {
+      return {
+        ...state,
+        paused: true,
+      };
+    }
+    case REMOVE_TIME: {
+      return {
+        ...state,
+        paused: false,
+      };
+    }
+    case UPDATE_PERIOD: {
+      return {
+        ...state,
+        period: action.period,
+      }
+    }
+    default:
+      return state;
+  }
+}
+
 export function setTime(fn) {
   return {
     type: SET_TIME,

@@ -131,7 +131,7 @@ export default class AnomaliesList extends Component {
         return {
           ID: idx + 1,
           Confidence: confidence,
-          Blocked: el.blocked ? `<img src=${blocked} alt="stop" height=${side} width=${side}>` : '',
+          Blocked: el.blocked === 'BLOCK' ? `<img src=${blocked} alt="stop" height=${side} width=${side}>` : '',
           Date: moment(el.timestamp).format('DD/MM/YYYY'),
           Time: moment(el.timestamp).format('HH:mm:ss.ms'),
           Bus: el.source,

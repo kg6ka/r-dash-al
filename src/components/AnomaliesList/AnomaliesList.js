@@ -211,7 +211,7 @@ export default class AnomaliesList extends Component {
                 value={ inputPerPage }
                 onChange={this.inputHandler.bind(this)}
                 onBlur={this.handleChange.bind(this)}
-                onKeyPress={debounce(this.handleChange.bind(this), 1500)}
+                onKeyPress={debounce(this.handleChange.bind(this), 400)}
               />
             </div>
           </div>

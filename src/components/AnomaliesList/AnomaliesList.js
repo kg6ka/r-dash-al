@@ -82,11 +82,12 @@ export default class AnomaliesList extends Component {
     return data
       .map((el, idx) => {
         const side = window.innerWidth / 96;
+        const likelihood = el.likelihood || 4;
+        const style = `display:inline-block;background-color:${this.colors[likelihood]};width:10px;height:10px;margin-right:.5em`;
         const confidence =
           `<div style="display: block;">
-            <div style="display:inline-block; background-color:${this.colors[el.likelihood]}; width:10px; height:10px;
-            ></div>
-            <div  style="display: inline-block;"> ${el.likelihood}</div>
+            <div style=${style}></div>
+            ${likelihood}
           </div>`;
         return {
           ID: idx + 1,

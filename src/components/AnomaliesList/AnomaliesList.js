@@ -167,6 +167,10 @@ export default class AnomaliesList extends Component {
             Clear filters
           </span>
           <div className={styles.paginator}>
+            <div onClick={ ::this.backFive } className={styles.forFive}>
+              <img src={ leftArrow } alt="left arrow" style={{ width: '.5em' }} />
+              <img src={ leftArrow } alt="left arrow" style={{ width: '.5em' }} />
+            </div>
             <div onClick={ ::this.drawPrevPage } className={styles.pager}>
               <img src={ leftArrow } alt="left arrow" style={{ width: '.5em' }} />
             </div>
@@ -175,10 +179,34 @@ export default class AnomaliesList extends Component {
             <div onClick={ ::this.drawNextPage } className={styles.pager}>
               <img src={ rightArrow } alt="right arrow" style={{ width: '.5em' }} />
             </div>
+            <div onClick={ ::this.forwardFive } className={styles.forFive}>
+              <img src={ rightArrow } alt="right arrow" style={{ width: '.5em' }} />
+              <img src={ rightArrow } alt="right arrow" style={{ width: '.5em' }} />
+            </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  backFive() {
+    let nextPage = this.state.currPage - 5;
+    if (nextPage < 0) {
+      nextPage = 0;
+    }
+    this.setState({
+      currPage: nextPage,
+    });
+  }
+
+  forwardFive() {
+    let nextPage = this.state.currPage + 5;
+    if (nextPage > this.state.pages) {
+      nextPage = this.state.pages;
+    }
+    this.setState({
+      currPage: nextPage,
+    });
   }
 
   drawNextPage() {

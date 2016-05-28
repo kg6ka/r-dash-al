@@ -19,8 +19,8 @@ export default class Categories extends Component {
       quantity: props.data ? props.data.length : 0,
       data: props.data || [],
     };
-    this.colors = ['#b2d733', '#13aa38', '#bbfa9f', '#1156e4', '#904fff', '#0099cc',
-      '#ff7f50', '#ff9394', '#8c0a2f', '#fffe93'];
+    this.colors = ['#b2d733', '#13aa38', '#1156e4', '#904fff', '#0099cc',
+      '#ff7f50', '#ff9394', '#bbfa9f', '#8c0a2f', '#fffe93'];
   }
 
   componentWillReceiveProps(props) {
@@ -62,7 +62,7 @@ export default class Categories extends Component {
     const pie = d3.layout.pie()
       .value((d) => d.percent)
       .sort(null);
-  
+
     const data = pie(this.state.data)[this.state.hovered];
 
     let angle = 0;

@@ -14,6 +14,7 @@ import { openMapsPopup } from 'redux/modules/mapsPopup';
 import { getMap } from './../../redux/modules/map';
 import { bindActionCreators } from 'redux';
 import cx from 'classnames';
+import { debounce } from 'lodash';
 
 const columns = ['ID',
   'Confidence',
@@ -48,6 +49,7 @@ export default class AnomaliesList extends Component {
       },
       quantity: props.anomalies.length,
       currPage: 0,
+      inputPerPage: perPage,
       perPage,
       pages: Math.ceil(props.anomalies.length / perPage),
     };
@@ -176,15 +178,21 @@ export default class AnomaliesList extends Component {
     });
   }
 
-  handleChange(event) {
+  inputHandler(event) {
     this.setState({
-      perPage: event.target.value,
+      inputPerPage: event.target.value,
+    });
+  }
+
+  handleChange() {
+    this.setState({
+      perPage: this.state.inputPerPage,
       currPage: 0,
     });
   }
 
   drawPagination(quantity) {
-    const { perPage, currPage } = this.state;
+    const { perPage, inputPerPage, currPage } = this.state;
     const pages = Math.ceil(quantity / perPage);
     return (
       <div className={styles.pagination}>
@@ -198,7 +206,13 @@ export default class AnomaliesList extends Component {
           <div className={styles.perpage}>
             Rows per page
             <div className={styles.page}>
-              <input type="text" value={ perPage } onChange={this.handleChange.bind(this)} />
+              <input
+                type="text"
+                value={ inputPerPage }
+                onChange={this.inputHandler.bind(this)}
+                onBlur={this.handleChange.bind(this)}
+                onKeyPress={debounce(this.handleChange.bind(this), 1500)}
+              />
             </div>
           </div>
           <span className={styles.clear}>

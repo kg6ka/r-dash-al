@@ -73,10 +73,9 @@ export default class FilterTable extends Component {
     if (!time || time === 0) {
       return;
     }
-
-    const startTime = this.props.timeRange[0] < time ? this.props.timeRange[0] : time;
+    const startTime = this.props.timeRange[0] > time ? this.props.timeRange[0] : time;
     this.setState({
-      first: moment(new Date(startTime).format('MMMM Do YYYY, h:mm:ss'),
+      first: moment(new Date(startTime)).format('MMMM Do YYYY, h:mm:ss'),
       second: moment(new Date(this.props.timeRange[1])).format('MMMM Do YYYY, h:mm:ss'),
     });
     const currentData = new Date().getTime();
@@ -224,7 +223,7 @@ export default class FilterTable extends Component {
     };
 
     brush.x(x)
-      .extent([new Date(this.props.timeRange[0]),
+      .extent([new Date(startTime),
         new Date(this.props.timeRange[1])]);
 
     this.coordinate = [margin, height, width - 64, height];

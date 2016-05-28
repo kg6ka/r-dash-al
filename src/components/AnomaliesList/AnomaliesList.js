@@ -95,7 +95,7 @@ export default class AnomaliesList extends Component {
           Date: moment(data.timestamp).format('DD/MM/YYYY'),
           Time: new Date(el.timestamp).toTimeString().split(' ')[0],
           Bus: el.source,
-          'Msg.Id': el.messageId,
+          'Msg.Id': el.messageId.toString(16),
           Data: el.data.map(i => {
             const hex = i.toString(16);
             if (hex.toString().length < 2) {

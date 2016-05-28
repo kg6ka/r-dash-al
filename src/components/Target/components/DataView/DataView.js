@@ -20,7 +20,7 @@ const DataView = (data) => {
           fontSize={ size }
           fontFamily="PTSans"
         >
-          `${data.name} - ${data.total} Total`
+          {data.name} - {data.total} Total
         </text>
         <rect
           x="1"

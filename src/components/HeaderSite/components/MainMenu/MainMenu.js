@@ -22,7 +22,7 @@ export default class MainMenu extends Component {
     this.state = {
       index: 0,
       country: 0,
-      last: 0,
+      last: 4,
     };
     this.data = {
       country: {
@@ -39,11 +39,11 @@ export default class MainMenu extends Component {
         url: '#contact-us',
         type: 'last',
         items: [
-          { label: 'last 10 minutes', action: '10m' },
           { label: 'last month', action: '1m' },
           { label: 'last week', action: '1w' },
           { label: 'last 24 hrs', action: '1d' },
           { label: 'last 1 hour', action: '1h' },
+          { label: 'last 10 minutes', action: '10m' },
         ],
       },
     };

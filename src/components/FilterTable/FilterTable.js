@@ -74,7 +74,7 @@ export default class FilterTable extends Component {
       return;
     }
 
-    const startTime = this.props.timeRange[0] > time ? this.props.timeRange[0] : time;
+    const startTime = this.props.timeRange[0] < time ? this.props.timeRange[0] : time;
     this.setState({
       first: moment(new Date(this.props.timeRange[0])).format('MMMM Do YYYY, h:mm:ss'),
       second: moment(new Date(this.props.timeRange[1])).format('MMMM Do YYYY, h:mm:ss'),

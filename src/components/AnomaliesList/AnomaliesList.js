@@ -11,6 +11,7 @@ import rightArrow from './images/right_arrow.svg';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { openMapsPopup } from 'redux/modules/mapsPopup';
+import { getMap } from './../../redux/modules/map';
 import { bindActionCreators } from 'redux';
 import cx from 'classnames';
 
@@ -59,7 +60,44 @@ export default class AnomaliesList extends Component {
     };
   }
 
+  getCurrentAction(location) {
+    const action = location.hash ? location.hash.substring(1) : '10m';
+    let relativeTime = new Date().getTime();
+    switch (action) {
+      case '10m':
+        relativeTime = relativeTime - 60000 * 10;
+        break;
+      case '1h':
+        relativeTime = relativeTime - 60000 * 60;
+        break;
+      case '1d':
+        relativeTime = relativeTime - 60000 * 60 * 24;
+        break;
+      case '1w':
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
+        break;
+      case '1m':
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        break;
+      default:
+        relativeTime = relativeTime - 60000 * 10;
+        break;
+    }
+
+    relativeTime = Math.round(relativeTime);
+    return relativeTime;
+  }
+
+  componetDidMount() {
+    this.props.getMap(this.props.currentTag, this.getCurrentAction(this.props.location));
+  }
+
   componentWillReceiveProps(props) {
+    if (this.props.currentTag !== props.currentTag
+      || this.props.location.hash !== props.location.hash) {
+      this.props.getMap(props.currentTag, this.getCurrentAction(this.props.location));
+    }
+
     if (props.anomalies.length === this.props.anomalies.length) {
       return;
     }
@@ -352,5 +390,6 @@ export default connect(
   ({ mapsPopup }) => ({ mapsPopup }),
     dispatch => bindActionCreators({
       openMapsPopup,
+      getMap,
     }, dispatch)
 )(AnomaliesList);

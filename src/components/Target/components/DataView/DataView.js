@@ -20,7 +20,7 @@ const DataView = (data) => {
           fontSize={ size }
           fontFamily="PTSans"
         >
-          { data.title === 'MSG'
+          { data.title === 'Vehicle'
             ? `${data.total} - ${data.name} Total`
             : `${data.name} - ${data.total} Total`
           }

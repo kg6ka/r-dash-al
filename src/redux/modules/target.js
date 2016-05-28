@@ -56,11 +56,11 @@ export function* targetSaga() {
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByEcu?from=${from}`)
           .promise()
         ;
-      const msg = yield request
+      const vehicle = yield request
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByVehicle?from=${from}`)
           .promise()
         ;
-      const vehicle = yield request
+      const msg = yield request
           .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByMessage?from=${from}`)
           .promise()
         ;

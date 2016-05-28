@@ -53,6 +53,13 @@ export function stopTime() {
   };
 }
 
+export function setPeriod(period) {
+  return {
+    type: UPDATE_PERIOD,
+    period,
+  };
+}
+
 export function removeTime() {
   return {
     type: REMOVE_TIME,

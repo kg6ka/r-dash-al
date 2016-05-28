@@ -29,10 +29,11 @@ class HeaderSite extends Component {
     }
   }
 
-
   render() {
     return <header className={styles.headerSite}>
-      <ToggleMenu/>
+      <ToggleMenu
+        period={this.props.time.period}
+        />
       <Link to="dashboard" className={styles.logo}><img src="/assets/images/logo.png"/></Link>
       <div className={styles.center}>
         <MainMenu

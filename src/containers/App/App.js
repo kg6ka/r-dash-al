@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { showAlerts } from './../../redux/modules/alertsList';
 import { getCurrentTags, changeCurrentTag } from './../../redux/modules/getTags';
-import { setTime, stopTime, removeTime } from './../../redux/modules/time';
+import { setTime, stopTime, removeTime, setPeriod } from './../../redux/modules/time';
 
 import styles from './App.scss';
 
@@ -74,6 +74,7 @@ export default connect(({
     setTime,
     removeTime,
     stopTime,
+    setPeriod,
   }, dispatch))(App);
 
 

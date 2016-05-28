@@ -191,8 +191,8 @@ export default class AnomaliesPage extends Component {
         relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
         break;
       default:
-        period = '6h';
-        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        period = '5s';
+        relativeTime = relativeTime - 60000 * 10;
         break;
     }
 

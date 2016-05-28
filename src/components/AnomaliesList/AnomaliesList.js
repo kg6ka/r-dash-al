@@ -46,7 +46,7 @@ export default class AnomaliesList extends Component {
       },
       quantity: props.anomalies.length,
       currPage: 0,
-      perPage: perPage,
+      perPage,
       pages: Math.ceil(props.anomalies.length / perPage),
     };
     this.colors = {
@@ -139,6 +139,7 @@ export default class AnomaliesList extends Component {
   handleChange(event) {
     this.setState({
       perPage: event.target.value,
+      currPage: 0,
     });
   }
 

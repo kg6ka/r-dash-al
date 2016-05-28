@@ -126,7 +126,7 @@ export default class Dashboard extends Component {
   }
 
   getCurrentAction(location) {
-    const action = location.hash ? location.hash.substring(1) : '1m';
+    const action = location.hash ? location.hash.substring(1) : '10m';
     let relativeTime = new Date().getTime();
     let period = '5s';
     switch (action) {

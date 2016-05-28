@@ -61,10 +61,6 @@ export default class FilterTable extends Component {
   }
 
   drawCharts(data) {
-    this.setState({
-      first: moment(new Date(this.props.timeRange[0])).format('MMMM Do YYYY, h:mm:ss'),
-      second: moment(new Date(this.props.timeRange[1])).format('MMMM Do YYYY, h:mm:ss'),
-    });
     const charts = d3.select('.charts');
     const margin = 30;
     const width = window.innerWidth * 0.51;
@@ -78,6 +74,11 @@ export default class FilterTable extends Component {
       return;
     }
 
+    const startTime = this.props.timeRange[0] > time ? this.props.timeRange[0] : time;
+    this.setState({
+      first: moment(new Date(this.props.timeRange[0])).format('MMMM Do YYYY, h:mm:ss'),
+      second: moment(new Date(this.props.timeRange[1])).format('MMMM Do YYYY, h:mm:ss'),
+    });
     const currentData = new Date().getTime();
     const range = currentData - time;
     const timeTicks = [];

@@ -279,16 +279,18 @@ export default class AnomaliesList extends Component {
           src={ signal }
           alt="signal"
           />
-        CamZoomActiveState = {item.name}
+        {`${item.name} = ${item.value}`}
       </div>
-      <div className={styles.signalBlock}>
+      { item.previousValue ?
+        <div className={styles.signalBlock}>
         <img
           className={styles.prevIcon}
           src={ previous }
           alt="previous"
           />
-        Previous Value = <span style={{ color: 'red' }}>{item.value}</span>
-      </div>
+        Previous Value = <span style={{ color: 'red' }}>{item.previousValue}</span>
+      </div> : ''}
+
     </div>);
   }
 

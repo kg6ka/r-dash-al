@@ -81,7 +81,7 @@ body {
 :global(.fleetActivityBlock) {
 /*   width: calc(100vw / 1.71); */
 /*   width: 100%; */
-  height: calc(100vw / 5.45);
+/*   height: calc(100vw / 5.45); */
    > svg{   margin: auto;
     display: block;}
 }
@@ -89,10 +89,6 @@ body {
 
 
 
-
-.layout{
-  margin-top: 4.1em;
-}
 
 .layout,
 .layout [class*="layoutCol"],
@@ -104,7 +100,18 @@ body {
     flex: 1 1 auto;
 /*    min-height: 14em;*/
     box-sizing: border-box;
+    align-items: stretch;
+    align-content: flex-start;
 }
+
+
+
+.layout{
+  align-content: stretch;
+  margin-top: 3.9em;
+  min-height: calc(100vh - 3.9em);
+}
+
 .layoutCol,
 .layoutSideRight,
 .layoutSideLeft {
@@ -156,21 +163,30 @@ body {
 }
 .layoutCol50 {
     width: 50%;
-   
+
 }
 .layoutCol55 {
     width: 55%;
-   
+
 }
+.layoutCol60 {
+    width: 60%;
+
+}
+.layoutCol40 {
+    width: 40%;
+
+}
+
 .layoutCol45 {
     width: 45%;
-   
+
 }
 .height20 {
   height: calc(100vw/30);
 }
 .height50 {
-   height: calc(100vw/5.9);
+   height: calc(100vw/6.1);
 }
 
 .layoutCol20 {

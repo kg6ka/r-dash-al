@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../../HeaderSite.scss';
 import { Link } from 'react-router';
+import cx from 'classnames';
 
 export default class ToggleMenu extends Component {
   constructor(props) {
@@ -38,24 +39,22 @@ export default class ToggleMenu extends Component {
         ],
       },
     ];
+    this.state = {
+      isOpen: false,
+    };
   }
 
-  menuToggle(event) {
-    const menuToggle = event.target;
-    if (menuToggle.hasAttribute('open')) {
-      document.querySelector('body').classList.add('menu-open');
-      menuToggle.removeAttribute('open');
-    } else {
-      document.querySelector('body').classList.remove('menu-open');
-      menuToggle.setAttribute('open', '');
-    }
+  menuToggle() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
   }
 
   renderSubMenu(list, stepClass) {
     return (
       <ul className={stepClass}>
         { list.map((item, i) =>
-            <li key={i} >
+            <li key={i} onClick={::this.menuToggle}>
               <Link to={item.url} activeClassName={styles.currentUrl}>
                 { item.label }
               </Link>
@@ -66,17 +65,21 @@ export default class ToggleMenu extends Component {
   }
 
   render() {
+    const currClasses = cx({
+      [styles.menuToggleIcon]: true,
+      [styles.open]: this.state.isOpen,
+    });
     return (
       <div className={styles.toggleMenu}>
-        <div className={styles.menuToggleIcon} onClick={this.menuToggle}></div>
+        <div className={currClasses} onClick={::this.menuToggle}></div>
         <div className={styles.toggleMenuContent}>
           <ul className={styles.menuToggle}>
             { this.data.map((link, i) =>
-              <li key={i}>
+              <li key={i} onClick={::this.menuToggle}>
                 <Link to={ link.url } activeClassName={styles.currentUrl}>
                   { link.label }
                   </Link>
-                { link.items ? this.renderSubMenu(link.items, 'child') : null }
+                { link.items ? this.renderSubMenu.call(this, link.items, 'child') : null }
               </li>
             )}
           </ul>

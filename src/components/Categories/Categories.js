@@ -16,20 +16,34 @@ export default class Categories extends Component {
     super(props);
     this.state = {
       hovered: null,
+      quantity: props.data ? props.data.length : 0,
       data: props.data || [],
     };
+    this.colors = ['#b2d733', '#13aa38', '#1156e4', '#904fff', '#0099cc',
+      '#ff7f50', '#ff9394', '#bbfa9f', '#8c0a2f', '#fffe93'];
   }
 
   componentWillReceiveProps(props) {
     if (props.data) {
       this.setState({
         data: props.data,
+        quantity: props.data.length,
       });
     }
   }
 
   getOffset(idx) {
     return idx === this.state.hovered ? window.innerWidth / 120 : window.innerWidth / 240;
+  }
+
+  getCaregoryOffset() {
+    const w = window.innerWidth;
+    if (this.state.quantity <= 5) {
+      return [window.innerWidth / 25.26, window.innerWidth / 15.5,
+        window.innerWidth / 11.2, window.innerWidth / 8.73, window.innerWidth / 7.16];
+    }
+    return [0.03 * w, 0.044 * w, 0.058 * w, 0.072 * w, 0.086 * w, 0.100 * w,
+      0.114 * w, 0.128 * w, 0.142 * w, 0.156 * w];
   }
 
   handleOver(hovered) {
@@ -45,6 +59,19 @@ export default class Categories extends Component {
   }
 
   drawPointer() {
+    const pie = d3.layout.pie()
+      .value((d) => d.percent)
+      .sort(null);
+
+    const data = pie(this.state.data)[this.state.hovered];
+
+    let angle = 0;
+    if (data) {
+      const start = data.startAngle * 180 / 3.14;
+      const end = data.endAngle * 180 / 3.14;
+      angle = (end - start) / 2 + start;
+    }
+
     const points = `1,${window.innerWidth / 96} 0.5,0 0,${-window.innerWidth / 40}
       -0.5,0 -1,${window.innerWidth / 96}`;
 
@@ -61,7 +88,10 @@ export default class Categories extends Component {
       .endAngle(2 * Math.PI);
 
     return (
-      <g transform={ `translate(${window.innerWidth / 20},${window.innerWidth / 20})` }>
+      <g
+        transform={ `translate(${window.innerWidth / 20},
+          ${window.innerWidth / 20}) rotate(${angle})` }
+      >
         <path className="arc" fill="url(#blueGradient)" d={ arc() } />
         <polygon
           stroke="#f75d00"
@@ -98,34 +128,37 @@ export default class Categories extends Component {
     return (
       <g className="chart" transform={ `translate(${w / 2},${w / 2})` }>
         { pie(this.state.data).map((el, idx) =>
-          <path
-            key={ `slice-${idx}` }
-            fill={ el.data.color }
-            d ={ arc(el, idx) }
-          />
-        ) }
+            <path
+              key={ `slice-${idx}` }
+              fill={ this.colors[idx] }
+              d={ arc(el, idx) }
+            />
+          )}
       </g>
     );
   }
 
   drawInformation(data, idx) {
+    const { text } = data;
+    const limit = 20;
+    const title = text.length >= limit ? `${text.slice(0, limit)}...` : text;
     const rectX = window.innerWidth / 83.5;
     const rectSide = window.innerWidth / 135;
     return (
       <g
         className={ styles.information }
         key={ idx }
-        transform={ `translate(0, ${data.offset})` }
+        transform={ `translate(0, ${this.getCaregoryOffset()[idx]})` }
         onMouseOver={ this.handleOver.bind(this, idx) }
-        onMouseOut={ ::this.handleOut }
-        onClick={ this.props.onChange ? this.props.onChange.bind(this, data.text) : null }
+        onMouseOut={ this.handleOut.bind(this) }
+        onClick={ this.props.onChange ? this.props.onChange.bind(this, text) : null }
       >
         <rect
           x={ rectX }
           y="0"
           width={ rectSide }
           height={ rectSide }
-          fill={ data.color }
+          fill={ this.colors[idx] }
         />
         <text
           className={ cx({
@@ -133,9 +166,9 @@ export default class Categories extends Component {
           }) }
           x={ rectX + rectSide * 2 }
           y={ rectSide }
-          fill={ this.state.hovered === idx ? data.color : 'white' }
+          fill={ this.state.hovered === idx ? this.colors[idx] : 'white' }
         >
-          { data.text }
+          { title }
         </text>
         <text
           className={ cx({
@@ -143,14 +176,14 @@ export default class Categories extends Component {
           }) }
           x={ window.innerWidth / 8 }
           y={ rectSide }
-          fill={ this.state.hovered === idx ? data.color : 'white' }
+          fill={ this.state.hovered === idx ? this.colors[idx] : 'white' }
         >
           { Math.round(data.percent) } %
         </text>
         { this.state.hovered === idx ?
             <g
               transform={`translate(${window.innerWidth / 7.2},${window.innerWidth / 455})`}
-              fill={ data.color }
+              fill={ this.colors[idx] }
             >
               <text
                 x={window.innerWidth / 90}

@@ -10,7 +10,7 @@ const initialState = {
   alertsVehicle: [],
   alertsMessage: [],
   loading: false,
-  showAlerts: true
+  showAlerts: true,
 };
 
 export default function alertsListReducer(state = initialState, action) {
@@ -84,7 +84,6 @@ export function deleteAlert(alertsType, desc2) {
 
 export function* alertsListSaga() {
   while (1) {
-    console.log("alertsListSaga");
     try {
       yield take(GETTING_ALERTS_DATA);
       const { apiBaseUrl } = config;

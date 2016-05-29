@@ -40,33 +40,35 @@ export default function totalAnomaliesReducer(state = initialState, action) {
   }
 }
 
-export function getTotalAnomalies(tagId, period,from) {
+export function getTotalAnomalies(tagId, period,from,to) {
   return {
     type: GETTING_TOTAL_ANOMALIES,
     tagId,
     period,
-    from
+    from,
+    to,
   };
 }
 
 export function* totalAnomaliesSaga() {
   while (1) {
-    const { tagId, period,from } = yield take(GETTING_TOTAL_ANOMALIES);
+    const { tagId, period, from,to } = yield take(GETTING_TOTAL_ANOMALIES);
     try {
       const { apiBaseUrl } = config;
       const totalAnomalies = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/anomalies?from=${from}`)
+          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/${period}/1/anomalies?from=${from}&to=${to}`)
           .promise()
         ;
       const carsData = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/1/anomalousVehicles?from=${from}`)
+          .get(`${apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/1/anomalousVehicles?from=${from}&to=${to}`)
           .promise()
         ;
+
       const body = {
         data: totalAnomalies.body.data,
-        cars1: carsData.body.data[0].values[0].value + carsData.body.data[0].values[1].value,
-        cars2: carsData.body.data[0].values[0].value,
-        cars3: carsData.body.data[0].values[1].value,
+        cars1: carsData.body.data.values[0].value + carsData.body.data.values[1].value,
+        cars2: carsData.body.data.values[0].value,
+        cars3: carsData.body.data.values[1].value,
       };
       yield put({ type: GOT_TOTAL_ANOMALIES, data: body });
     } catch (err) {

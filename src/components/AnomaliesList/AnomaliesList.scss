@@ -14,16 +14,14 @@
   font-family: 'PTSans';
   color: white;
   font-size: calc(100vw / 147);
-  width: 47vw;
+  width: 51vw;
 /*   height: 84vh; */
 }
 
 .table {
-  margin-top: calc(100vw / 48);
   border-spacing: 1px;
-  width: 47vw;
-/*width: 100%;
-  overflow-x: scroll; */
+  width: 100%;
+//  height: calc(84vh - 2.1vw);
   background-color: #404244;
   [type="search"]{
     display:block;
@@ -137,14 +135,19 @@
   }
 }
 
+
 .camZoom {
   float: left;
   background-color: #2b3641;
-  width: 27%;
+  width: 90%;
   div {
     padding: 0.5em 0;
     float: left;
   }
+}
+
+.camZoomOne {
+  width: 50%;
 }
 
 .prevIcon {
@@ -166,4 +169,101 @@
 .location {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.pagination {
+  height: 2.1vw;
+  display: block;
+  width: 100%;
+  margin-top: calc(100vw / 48);
+  text-align: center;
+  line-height: 2.1vw;
+  vertical-align: middle;
+
+  .rightSide {
+    display: inline-block;
+    float: right;
+    line-height: 2em;
+  }
+
+  .leftSide {
+    display: inline-block;
+    float: left;
+  }
+}
+
+.clear {
+  margin-right: .5em;
+  cursor: pointer;
+
+  img {
+    margin: 0 1em;
+  }
+}
+
+.paginator {
+  display: inline-block;
+  line-height: 2em;
+}
+
+.page {
+  border: 1px solid #374758;
+  border-radius: 4px;
+  width: 2.5em;
+  display: inline-block;
+  margin-right: .5em;
+}
+
+.pager {
+  cursor: pointer;
+  border-color: #374758;
+  border-radius: 4px;
+  background-color: #374758;
+  width: 1.5em;
+  display: inline-block;
+  margin: 0 .4em;
+}
+
+.forFive {
+  cursor: pointer;
+  border-color: #374758;
+  border-radius: 4px;
+  background-color: #374758;
+  width: 1.5em;
+  display: inline-block;
+  margin: 0;
+}
+
+.tableWraper {
+  overflow-x: auto;
+  width: 100%;
+}
+.table .searchInput {
+  border-bottom: 1px solid #6aa2f6;
+}
+
+.singleSignal {
+  display: inline-block;
+  width: 30%;
+}
+
+.signalBlock {
+  width: 100%;
+  text-align: left;
+}
+
+.perpage {
+  display: inline-block;
+
+  .page {
+    margin-left: .5em;
+
+    input {
+      width: 100%;
+      text-align: center;
+      border: none;
+      background-color: transparent;
+      color: white;
+    }
+  }
 }

@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import { showAlerts } from './../../redux/modules/alertsList';
 import { getCurrentTags, changeCurrentTag } from './../../redux/modules/getTags';
+import { setTime, stopTime, removeTime, setPeriod } from './../../redux/modules/time';
+
 import styles from './App.scss';
 
 import { HeaderSite } from 'components';
@@ -45,8 +47,12 @@ class App extends Component {
           onClick={this.changeAlertsVisibilty}
           changeTag={ this.props.changeCurrentTag }
           tags={ getTags.data }
+          time={ this.props.time }
           currentName={ thisName }
-          currentTag={this.props.getTags.currentTag } />
+          currentTag={this.props.getTags.currentTag }
+          start={this.props.removeTime }
+          stop={ this.props.stopTime }
+          updateDate={this.props.updateDate}  />
         { children }
       </div>
     );
@@ -54,16 +60,22 @@ class App extends Component {
 }
 
 export default connect(({
-        alertsList,
-        getTags,
-    }) => ({
-      alertsList,
-      getTags,
-    }),
-    dispatch => bindActionCreators({
-      showAlerts,
-      getCurrentTags,
-      changeCurrentTag,
-    }, dispatch))(App);
+    alertsList,
+    getTags,
+    time,
+  }) => ({
+    alertsList,
+    getTags,
+    time,
+  }),
+  dispatch => bindActionCreators({
+    showAlerts,
+    getCurrentTags,
+    changeCurrentTag,
+    setTime,
+    removeTime,
+    stopTime,
+    setPeriod,
+  }, dispatch))(App);
 
 

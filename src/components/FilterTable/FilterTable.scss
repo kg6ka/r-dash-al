@@ -17,13 +17,14 @@
 
 .bodyComponent {
   position: relative;
+  margin-bottom: 5px;
 }
 
 .dataList {
   list-style-type: none;
   margin:0 0 20px 30px;
   color: #ffffff;
-  width: 300px;
+  width: 70%;
   position: relative;
   font-family: 'PTSans';
   font-size: calc(100vw / 130);

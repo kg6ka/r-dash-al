@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 const { object, func } = PropTypes;
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { CarsStatus, Anomalies, FleetActivity, Categories,
   Target, AlertsList, Map } from 'components';
 import { getCarsStatus } from './../../redux/modules/carsStatus';
@@ -11,7 +12,7 @@ import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
 import { getCurrentTags } from './../../redux/modules/getTags';
 import { getAlertsData, showAlerts, deleteAlert } from './../../redux/modules/alertsList';
-import { bindActionCreators } from 'redux';
+import { setTime, removeTime, stopTime,setUpdateTime } from './../../redux/modules/time';
 import styles from './Dashboard.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -51,10 +52,11 @@ export default class Dashboard extends Component {
         cars3: 0,
       },
       fleetActivities: [{
-        time: 67567,
+        time: 0,
         activitys: 0,
         suspicious: 0,
         blocked: 0,
+        startTime: new Date().getTime() - (3600 * 24 * 30 * 1000),
       }],
       registeredVehicles: {
         activities: [],
@@ -69,15 +71,18 @@ export default class Dashboard extends Component {
     if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
+      const { relativeTime, nowTime } = this.getCurrentAction(this.props.location);
+      this.props.getMap(this.props.getTags.currentTag, relativeTime, nowTime);
+      this.props.getAlertsData();
       this.getNewProps(this.props.getTags.currentTag);
-      window.setInterval(this.getNewProps.bind(this, this.props.getTags.currentTag), 5000);
-      window.setInterval(this.getNewPropsForMap.bind(this, this.props.getTags.currentTag), 10000);
+      this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
     }
+    this.props.removeTime();
   }
 
   componentWillReceiveProps(props) {
-    if (props.categories.data.length &&
-        this.props.categories.data.length !== props.categories.data.length) {
+//     if (props.categories.data.length && this.props.categories.data.length !== props.categories.data.length) {
+    if (props.categories.data.length) {
       this.setState({
         categories: this.categoriesData(props),
       });
@@ -85,8 +90,10 @@ export default class Dashboard extends Component {
 
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      window.setInterval(this.getNewProps.bind(this, props.getTags.currentTag), 5000);
-      window.setInterval(this.getNewPropsForMap.bind(this, props.getTags.currentTag), 10000);
+      const { relativeTime, nowTime } = this.getCurrentAction(props.location);      
+      this.props.getMap(props.getTags.currentTag, relativeTime, nowTime);
+      this.props.getAlertsData();
+      this.props.setTime(this.getNewProps.bind(this, props.getTags.currentTag));
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
@@ -107,16 +114,15 @@ export default class Dashboard extends Component {
       this.setState({
         registeredVehicles: result,
       });
-
-      if (props.fleetActivities.data.length) {
-        this.setState({
-          fleetActivities: this.fleetActivitiesData(props),
-        });
-      }
     }
 
-    if (props.totalAnomalies.data.length &&
-      props.totalAnomalies.data.length !== this.props.totalAnomalies.data.length) {
+    if (props.fleetActivities.data.length) {
+      this.setState({
+        fleetActivities: this.fleetActivitiesData(props),
+      });
+    }
+
+    if (props.totalAnomalies.data.length) {
       this.setState({
         totalAnomalies: this.totalAnomaliesData(props),
       });
@@ -125,67 +131,68 @@ export default class Dashboard extends Component {
 
   getCurrentAction(location) {
     const action = location.hash ? location.hash.substring(1) : '10m';
-    let relativeTime = new Date().getTime();
+    let nowTime = new Date().getTime();
+    let relativeTime = nowTime;
+
     let period = '5s';
     switch (action) {
-      case '10m': period = '5s';
-        relativeTime = (relativeTime / 1000) - 60 * 10;
+      case '10m':
+        period = '5s';
+        relativeTime = relativeTime - 60000 * 10;
         break;
-      case '1h': period = '30s';
-        relativeTime = (relativeTime / 1000) - 60 * 60;
+      case '1h':
+        period = '30s';
+        relativeTime = relativeTime - 60000 * 60;
         break;
-      case '1d': period = '10m';
-        relativeTime = (relativeTime / 1000) - 60 * 60 * 24;
+      case '1d':
+        period = '10m';
+        relativeTime = relativeTime - 60000 * 60 * 24;
         break;
-      case '1w': period = '1h';
-        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7;
+      case '1w':
+        period = '1h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7;
         break;
-      case '1m': period = '6h';
-        relativeTime = (relativeTime / 1000) - 60 * 60 * 24 * 7 * 4;
+      case '1m':
+        period = '6h';
+        relativeTime = relativeTime - 60000 * 60 * 24 * 7 * 4;
+        break;
+      default:
+        period = '5s';
+        relativeTime = relativeTime - 60000 * 10;
         break;
     }
 
     relativeTime = Math.round(relativeTime);
     return {
+      nowTime,
       relativeTime,
       period,
     };
   }
 
   getNewProps(tagId) {
-    const { period, relativeTime } = this.getCurrentAction(this.props.location);
-    this.props.getCarsStatus(tagId, period, relativeTime);
-    this.props.getTotalAnomalies(tagId, period, relativeTime);
-    this.props.getFleetActivities(tagId, period, relativeTime);
-    this.props.getCategories(tagId, relativeTime);
-    this.props.getTarget(tagId, relativeTime);
+    const { period, relativeTime, nowTime } = this.getCurrentAction(this.props.location);
+    this.props.getCarsStatus(tagId, period, relativeTime, nowTime);
+    this.props.getTotalAnomalies(tagId, period, relativeTime, nowTime);
+    this.props.getFleetActivities(tagId, period, relativeTime, nowTime);
+    this.props.getCategories(tagId, relativeTime, nowTime);
+    this.props.getTarget(tagId, relativeTime, nowTime);
+    this.props.setUpdateTime(nowTime);
   }
 
   getNewPropsForMap(tagId) {
-    const { relativeTime } = this.getCurrentAction(this.props.location);
-    this.props.getMap(tagId, relativeTime);
+    const { relativeTime, nowTime } = this.getCurrentAction(this.props.location);
+    this.props.getMap(tagId, relativeTime, nowTime);
     this.props.getAlertsData();
   }
 
   categoriesData(props) {
-    const old = [
-      { offset: window.innerWidth / 25.26, color: '#b2d733' },
-      { offset: window.innerWidth / 15.5, color: '#13aa38' },
-      { offset: window.innerWidth / 11.2, color: '#1156e4' },
-      { offset: window.innerWidth / 8.73, color: '#904fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
-      { offset: window.innerWidth / 7.16, color: '#fff' },
-    ];
-
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);
 
-    return props.categories.data.reduce((curValue, item, index) => {
+    return props.categories.data.reduce((curValue, item) => {
       const dataCategory = {
         text: item.key.replace(/_/g, ' '),
         percent: Math.floor(item.total * 100 / sum),
-        offset: old[index].offset,
-        color: old[index].color,
       };
       return [...curValue, dataCategory];
     }, []);
@@ -220,14 +227,17 @@ export default class Dashboard extends Component {
 
   fleetActivitiesData(props) {
     const resultArray = [];
-    for (let i = 0; props.fleetActivities.data.length > i; i++) {
+    const startTime = this.getCurrentAction(props.location).relativeTime;
 
-      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i])
+    for (let i = 0; props.fleetActivities.data.length > i; i++) {
+      if (!props.carsStatus.activities[i] || !props.fleetActivities.data[i]) {
         break;
-                
+      }
+
       const _activitys = (props.carsStatus.activities[i]) ? props.carsStatus.activities[i].values[0].value : 0;
       const newBar = {
         time: props.fleetActivities.data[i].timestamp,
+        startTime,
         activitys: _activitys,
         suspicious: props.fleetActivities.data[i].values[0].value,
         blocked: props.fleetActivities.data[i].values[1].value,
@@ -284,7 +294,9 @@ export default class Dashboard extends Component {
               <div className={cx(styles.backgroundGradient, styles.fleetActivity)}>
                 <FleetActivity
                   data={ this.state.fleetActivities }
-                  registered={ this.props.carsStatus.registeredVehicles[0].count }
+                  alertChange={ this.props.alertsList.showAlerts }
+                  registered={ this.props.carsStatus.registeredVehicles.length
+                    ? this.props.carsStatus.registeredVehicles[0].count : 0 }
                 />
               </div>
               <div className={cx(styles.fleetActivity, layout.layoutCol50, layout.height50)}>
@@ -340,5 +352,9 @@ export default connect(
       getMap,
       getAlertsData,
       getCurrentTags,
+      setTime,
+      removeTime,
+      stopTime,
+      setUpdateTime,
     }, dispatch)
 )(Dashboard);

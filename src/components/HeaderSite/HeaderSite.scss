@@ -24,11 +24,26 @@
   padding: 1.67em 3em;
 }
 
-.update:before {
+.update div {
+  cursor: pointer;
+}
+
+.updateButton:before {
   content: "";
   padding: 0.5em;
   margin-right: 1.5em;
   background: url("./images/pause.png") no-repeat center center;
+}
+
+.updateButton, .updateButtonCancel {
+  display: inline-block;
+}
+
+.updateButtonCancel:before {
+  content: "";
+  padding: 0.5em;
+  margin-right: 1.5em;
+  background: url("./images/play_button.png") no-repeat center right;
 }
 
 .update span:first-child:after{
@@ -97,10 +112,10 @@
   padding: 0.5em;
   cursor: pointer;
   background: url("./images/menu.png") no-repeat center center;
-  &[open] + .toggleMenuContent {
+  &.open + .toggleMenuContent {
     left: 0;
   }
-  &[open]:after {
+  &.open:after {
     position: fixed;
     top: 1.8em;
     bottom: 0;

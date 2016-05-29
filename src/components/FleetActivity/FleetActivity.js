@@ -4,8 +4,11 @@ import { Charts, Designations } from './components';
 
 export default class FleetActivity extends Component {
   render() {
-    const width = window.innerWidth / 1.79;
-    const height = window.innerWidth / 5.45;
+    let width = window.innerWidth / 1.79;
+    if (!this.props.alertChange) {
+      width = width * 1.2;
+    }
+    const height = window.innerWidth / 5.7;
     const pictureSide = window.innerWidth / 96;
     const offset = window.innerWidth / 21.3;
     return (
@@ -61,13 +64,14 @@ export default class FleetActivity extends Component {
             strokeWidth="1"
           ></line>
           <image
-            x={ window.innerWidth / 1.71 - pictureSide * 2 }
+            x={ width - pictureSide * 2 }
             y={ pictureSide }
             xlinkHref={ expand }
             width={ pictureSide }
             height={ pictureSide }
           />
           <Charts
+            repaint={ this.props.alertChange }
             data={ this.props.data }
             registered={ this.props.registered }
             color1={'suspiciousGradient'}

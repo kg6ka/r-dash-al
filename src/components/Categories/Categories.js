@@ -151,7 +151,7 @@ export default class Categories extends Component {
         transform={ `translate(0, ${this.getCaregoryOffset()[idx]})` }
         onMouseOver={ this.handleOver.bind(this, idx) }
         onMouseOut={ this.handleOut.bind(this) }
-        onClick={ this.props.onChange ? this.props.onChange.bind(this, title) : null }
+        onClick={ this.props.onChange ? this.props.onChange.bind(this, text) : null }
       >
         <rect
           x={ rectX }

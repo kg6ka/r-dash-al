@@ -216,7 +216,7 @@ export default class AnomaliesList extends Component {
             </div>
           </div>
           <span className={styles.clear}>
-            <img src={ trash } alt="trash" style={{ width: '1em' }} />
+            <img src={ trash } onClick={this.props.clearFilter.bind(this)} alt="trash" style={{ width: '1em' }} />
             Clear filters
           </span>
           <div className={styles.paginator}>
@@ -279,15 +279,13 @@ export default class AnomaliesList extends Component {
   filterColumn(event) {
     this.props.setFilter(event.target.name, event.target.value);
   }
-  clearFilter (event) {
-    this.props.clearFilter();
-  }
+
   renderSearch () {
     const isEmpty = Object.keys(this.props.filters).length === 0;
     return (
       <tr>
         <td>
-          <img src={ filter } onClick={this.clearFilter.bind(this)} alt="filter" style={{ width: '1em' }} />
+          <img src={ filter } alt="filter" style={{ width: '1em' }} />
         </td>
         {columns.map((item,idx) => {
             return (
@@ -295,8 +293,9 @@ export default class AnomaliesList extends Component {
                 <input
                   type="search"
                   name={item}
+                  value = {}
                   defaultValue=""
-                  className={styles.searchInput}
+                  className={'table-search-input ' + styles.searchInput}
                   onChange={this.filterColumn.bind(this)}/>
               </td>)
       

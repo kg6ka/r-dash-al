@@ -230,6 +230,15 @@ export default class AnomaliesPage extends Component {
     return resultArray;
   }
 
+  clearFilter() {
+    this.setState({
+      anomalies: props.anomaliesList.data,
+    });
+    let fileds = document.querySelectorAll('.table-search-input');
+    if(fileds.length > 0)
+      Object.keys(fileds).map(i => fileds[i].value = '');
+  }
+
   categoriesData(props) {
     const sum = props.categories.data.reduce((curValue, item) => curValue + item.total, 0);
 
@@ -329,7 +338,7 @@ export default class AnomaliesPage extends Component {
             anomalies={ this.state.anomalies }
             filters={ this.props.anomaliesList.filters }
             setFilter={ this.props.setFilter }
-            clearFilter={ this.props.clearFilter }/>
+            clearFilter={ this.clearFilter }/>
         </div>
       </div>
     );

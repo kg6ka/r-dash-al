@@ -289,10 +289,10 @@ export default class AnomaliesList extends Component {
         <td>
           <img src={ filter } onClick={this.clearFilter.bind(this)} alt="filter" style={{ width: '1em' }} />
         </td>
-        {columns.map(item => {
+        {columns.map((item,idx) => {
           if (isEmpty) {
             return (
-              <td>
+              <td key={idx}>
                 <input
                   type="search"
                   name={item}

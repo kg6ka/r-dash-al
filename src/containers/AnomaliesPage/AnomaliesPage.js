@@ -75,6 +75,10 @@ export default class AnomaliesPage extends Component {
       this.setState({
         anomalies: props.anomaliesList.data,
       });
+    }else{
+      this.setState({
+        anomalies: [],
+      });
     }
 
     if (props.fleetActivities.data.length) {

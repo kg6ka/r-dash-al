@@ -81,7 +81,7 @@ body {
 :global(.fleetActivityBlock) {
 /*   width: calc(100vw / 1.71); */
 /*   width: 100%; */
-  height: calc(100vw / 5.45);
+/*   height: calc(100vw / 5.45); */
    > svg{   margin: auto;
     display: block;}
 }
@@ -92,6 +92,7 @@ body {
 
 .layout{
   margin-top: 3.9em;
+  min-height: calc(100vh - 3.9em);
 }
 
 .layout,
@@ -180,7 +181,7 @@ body {
   height: calc(100vw/30);
 }
 .height50 {
-   height: calc(100vw/5.9);
+   height: calc(100vw/6.1);
 }
 
 .layoutCol20 {

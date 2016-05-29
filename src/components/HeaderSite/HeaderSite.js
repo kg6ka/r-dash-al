@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { MainMenu, ToggleMenu } from './components';
 import { Link } from 'react-router';
 import styles from './HeaderSite.scss';
+import moment from 'moment';
 const { object, func, array } = PropTypes;
 
 class HeaderSite extends Component {
@@ -16,8 +17,8 @@ class HeaderSite extends Component {
     super(props);
 
     this.count_error = 2;
-    this.update_label = 'Update';
-    this.update_date = '2016 March 02, 13:21';
+    this.update_label = 'Update ';
+//     this.update_date = '2016 March 02, 13:21';
     this.user_img = 'avatar.png';
   }
 
@@ -30,6 +31,10 @@ class HeaderSite extends Component {
   }
 
   render() {
+
+
+    const updateDate = moment(this.props.time.updateDate).format('MMMM DD, h:mm');
+    
     return <header className={styles.headerSite}>
       <ToggleMenu
         period={this.props.time.period}
@@ -43,11 +48,9 @@ class HeaderSite extends Component {
           changeTag={ this.props.changeTag }
           />
         <a className={styles.update}>
-          {this.props.time.paused ?
-            <div className={styles.updateButtonCancel} onClick={ ::this.changeTimer }></div> :
-            <div className={styles.updateButton} onClick={ ::this.changeTimer }></div>}
+          <div className={this.props.time.paused ? styles.updateButtonCancel : styles.updateButton} onClick={ ::this.changeTimer }></div>
           <span>{this.update_label}</span>
-          <span>{this.update_date}</span>
+          <span>{updateDate}</span>
         </a>
       </div>
       <div className={styles.error} onClick={this.props.onClick.bind(this)}>{this.count_error}</div>

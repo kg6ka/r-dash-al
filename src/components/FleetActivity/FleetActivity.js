@@ -8,7 +8,7 @@ export default class FleetActivity extends Component {
     if (!this.props.alertChange) {
       width = width * 1.2;
     }
-    const height = window.innerWidth / 5.45;
+    const height = window.innerWidth / 5.7;
     const pictureSide = window.innerWidth / 96;
     const offset = window.innerWidth / 21.3;
     return (

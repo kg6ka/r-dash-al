@@ -51,7 +51,8 @@ class App extends Component {
           currentName={ thisName }
           currentTag={this.props.getTags.currentTag }
           start={this.props.removeTime }
-          stop={ this.props.stopTime } />
+          stop={ this.props.stopTime }
+          updateDate={this.props.updateDate}  />
         { children }
       </div>
     );

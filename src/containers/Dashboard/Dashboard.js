@@ -12,7 +12,7 @@ import { getTarget } from './../../redux/modules/target';
 import { getMap } from './../../redux/modules/map';
 import { getCurrentTags } from './../../redux/modules/getTags';
 import { getAlertsData, showAlerts, deleteAlert } from './../../redux/modules/alertsList';
-import { setTime, removeTime, stopTime } from './../../redux/modules/time';
+import { setTime, removeTime, stopTime,setUpdateTime } from './../../redux/modules/time';
 import styles from './Dashboard.scss';
 import layout from '../App/App.scss';
 import cx from 'classnames';
@@ -71,7 +71,7 @@ export default class Dashboard extends Component {
     if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
-      this.props.getMap(this.props.getTags.currentTag, this.getCurrentAction(props.location).relativeTime);
+      this.props.getMap(this.props.getTags.currentTag, this.getCurrentAction(this.props.location).relativeTime);
       this.props.getAlertsData();
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
@@ -173,6 +173,7 @@ export default class Dashboard extends Component {
     this.props.getFleetActivities(tagId, period, relativeTime);
     this.props.getCategories(tagId, relativeTime);
     this.props.getTarget(tagId, relativeTime);
+    this.props.setUpdateTime(new Date().getTime());
   }
 
   getNewPropsForMap(tagId) {
@@ -350,5 +351,6 @@ export default connect(
       setTime,
       removeTime,
       stopTime,
+      setUpdateTime,
     }, dispatch)
 )(Dashboard);

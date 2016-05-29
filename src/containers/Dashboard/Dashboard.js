@@ -122,8 +122,7 @@ export default class Dashboard extends Component {
       });
     }
 
-    if (props.totalAnomalies.data.length &&
-      props.totalAnomalies.data.length !== this.props.totalAnomalies.data.length) {
+    if (props.totalAnomalies.data.length) {
       this.setState({
         totalAnomalies: this.totalAnomaliesData(props),
       });

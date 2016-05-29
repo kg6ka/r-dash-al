@@ -33,7 +33,7 @@ class HeaderSite extends Component {
   render() {
 
 
-    const updateDate = moment(this.props.time.updateDate).format('MMMM DD, h:mm');
+    const updateDate = moment(this.props.time.updateDate).format('MMMM DD, HH:mm');
     
     return <header className={styles.headerSite}>
       <ToggleMenu

@@ -71,7 +71,8 @@ export default class Dashboard extends Component {
     if (!this.props.getTags.currentTag) {
       this.props.getCurrentTags();
     } else {
-      this.props.getMap(this.props.getTags.currentTag, this.getCurrentAction(this.props.location).relativeTime);
+      const { relativeTime, nowTime } = this.getCurrentAction(this.props.location);
+      this.props.getMap(this.props.getTags.currentTag, relativeTime, nowTime);
       this.props.getAlertsData();
       this.getNewProps(this.props.getTags.currentTag);
       this.props.setTime(this.getNewProps.bind(this, this.props.getTags.currentTag));
@@ -80,8 +81,8 @@ export default class Dashboard extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.categories.data.length &&
-        this.props.categories.data.length !== props.categories.data.length) {
+//     if (props.categories.data.length && this.props.categories.data.length !== props.categories.data.length) {
+    if (props.categories.data.length) {
       this.setState({
         categories: this.categoriesData(props),
       });
@@ -89,7 +90,8 @@ export default class Dashboard extends Component {
 
     if (props.getTags.currentTag !== this.props.getTags.currentTag && props.getTags.currentTag) {
       this.getNewProps(props.getTags.currentTag);
-      this.props.getMap(props.getTags.currentTag, this.getCurrentAction(props.location).relativeTime);
+      const { relativeTime, nowTime } = this.getCurrentAction(props.location);      
+      this.props.getMap(props.getTags.currentTag, relativeTime, nowTime);
       this.props.getAlertsData();
       this.props.setTime(this.getNewProps.bind(this, props.getTags.currentTag));
     }
@@ -130,7 +132,9 @@ export default class Dashboard extends Component {
 
   getCurrentAction(location) {
     const action = location.hash ? location.hash.substring(1) : '10m';
-    let relativeTime = new Date().getTime();
+    let nowTime = new Date().getTime();
+    let relativeTime = nowTime;
+
     let period = '5s';
     switch (action) {
       case '10m':
@@ -161,24 +165,25 @@ export default class Dashboard extends Component {
 
     relativeTime = Math.round(relativeTime);
     return {
+      nowTime,
       relativeTime,
       period,
     };
   }
 
   getNewProps(tagId) {
-    const { period, relativeTime } = this.getCurrentAction(this.props.location);
-    this.props.getCarsStatus(tagId, period, relativeTime);
-    this.props.getTotalAnomalies(tagId, period, relativeTime);
-    this.props.getFleetActivities(tagId, period, relativeTime);
-    this.props.getCategories(tagId, relativeTime);
-    this.props.getTarget(tagId, relativeTime);
-    this.props.setUpdateTime(new Date().getTime());
+    const { period, relativeTime, nowTime } = this.getCurrentAction(this.props.location);
+    this.props.getCarsStatus(tagId, period, relativeTime, nowTime);
+    this.props.getTotalAnomalies(tagId, period, relativeTime, nowTime);
+    this.props.getFleetActivities(tagId, period, relativeTime, nowTime);
+    this.props.getCategories(tagId, relativeTime, nowTime);
+    this.props.getTarget(tagId, relativeTime, nowTime);
+    this.props.setUpdateTime(nowTime);
   }
 
   getNewPropsForMap(tagId) {
-    const { relativeTime } = this.getCurrentAction(this.props.location);
-    this.props.getMap(tagId, relativeTime);
+    const { relativeTime, nowTime } = this.getCurrentAction(this.props.location);
+    this.props.getMap(tagId, relativeTime, nowTime);
     this.props.getAlertsData();
   }
 

@@ -78,21 +78,22 @@ export function clearFilter() {
   }
 }
 
-export function getAnomaliesList(tagId,from) {
+export function getAnomaliesList(tagId,from, to) {
   return {
     type: GETTING_ANOMALIES_LIST,
     tagId,
-    from
+    from,
+    to
   };
 }
 
 export function* anomaliesListSaga() {
   while (1) {
-    const { tagId,from } = yield take(GETTING_ANOMALIES_LIST);
+    const { tagId,from, to } = yield take(GETTING_ANOMALIES_LIST);
     try {
       const { apiBaseUrl } = config;
       const anomalies = yield request
-          .get(`${apiBaseUrl}/v1/tags/${tagId}/anomalies?from=${from}`)
+          .get(`${apiBaseUrl}/v1/tags/${tagId}/anomalies?from=${from}&to=${to}`)
           .promise()
         ;
       const { body } = anomalies;

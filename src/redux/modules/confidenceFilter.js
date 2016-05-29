@@ -37,21 +37,22 @@ export default function confidenceFilterReducer(state = initialState, action) {
   }
 }
 
-export function getAnomaliesConfidence(tagId,from) {
+export function getAnomaliesConfidence(tagId,from,to) {
   return {
     type: GETTING_ANOMALIES_CONFIDENCE,
     tagId,
-    from
+    from,
+    to,
   };
 }
 
 export function* confidenceFilterSaga() {
   while (1) {
-    const { tagId, from } = yield take(GETTING_ANOMALIES_CONFIDENCE);
+    const { tagId, from,to } = yield take(GETTING_ANOMALIES_CONFIDENCE);
     try {
       const { apiBaseUrl } = config;
       const anomalies = yield request
-          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByConfidence?from=${from}`)
+          .get(`${config.apiBaseUrl}/v1/metrics/tags/${tagId}/bars/all/2/anomaliesByConfidence?from=${from}&to=${to}`)
           .promise()
         ;
       const { body } = anomalies;

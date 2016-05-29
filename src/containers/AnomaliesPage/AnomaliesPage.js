@@ -66,7 +66,7 @@ export default class AnomaliesPage extends Component {
     }
 
     if (props.location.hash && this.props.location.hash !== props.location.hash) {
-      this.getNewProps(props);
+      this.getNewProps(props.getTags.currentTag);
       this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
     }
 
@@ -167,7 +167,9 @@ export default class AnomaliesPage extends Component {
 
   getRelativeTime (tagId) {
     const action = this.props.location.hash ? this.props.location.hash.substring(1) : '10m';
-    let relativeTime = new Date().getTime();
+    let nowTime = new Date().getTime();
+    let relativeTime = nowTime;
+    
     let period = '5s';
     switch (action) {
       case '10m':
@@ -197,18 +199,18 @@ export default class AnomaliesPage extends Component {
     }
 
     relativeTime = Math.round(relativeTime);
-    return {period, relativeTime};
+    return {period, relativeTime, nowTime};
   }
   getNewProps(tagId) {
-    const { relativeTime, period } = this.getRelativeTime();
+    const { nowTime, relativeTime, period } = this.getRelativeTime();
 
-    this.props.getCarsStatus(tagId, period, relativeTime);
-    this.props.getCategories(tagId, relativeTime);
-    this.props.getAnomaliesList(tagId, relativeTime);
-    this.props.getCarsStatus(tagId, period, relativeTime);
-    this.props.getFleetActivities(tagId, period, relativeTime);
-    this.props.getAnomaliesConfidence(tagId, relativeTime);
-    this.props.getTarget(tagId, relativeTime);
+    this.props.getCarsStatus(tagId, period, relativeTime, nowTime);
+    this.props.getCategories(tagId, relativeTime, nowTime);
+    this.props.getAnomaliesList(tagId, relativeTime, nowTime);
+    this.props.getCarsStatus(tagId, period, relativeTime, nowTime);
+    this.props.getFleetActivities(tagId, period, relativeTime, nowTime);
+    this.props.getAnomaliesConfidence(tagId, relativeTime, nowTime);
+    this.props.getTarget(tagId, relativeTime, nowTime);
   }
 
   fleetActivitiesData(props) {

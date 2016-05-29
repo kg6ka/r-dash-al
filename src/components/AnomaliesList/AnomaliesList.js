@@ -290,26 +290,16 @@ export default class AnomaliesList extends Component {
           <img src={ filter } onClick={this.clearFilter.bind(this)} alt="filter" style={{ width: '1em' }} />
         </td>
         {columns.map((item,idx) => {
-          if (isEmpty) {
             return (
               <td key={idx}>
                 <input
                   type="search"
                   name={item}
-                  value=""
+                  defaultValue=""
                   className={styles.searchInput}
                   onChange={this.filterColumn.bind(this)}/>
               </td>)
-          } else {
-            return (
-              <td>
-                <input
-                  type="search"
-                  name={item}
-                  className={styles.searchInput}
-                  onChange={this.filterColumn.bind(this)}/>
-              </td>)
-          }
+      
         })}
       </tr>
     );

@@ -90,11 +90,6 @@ body {
 
 
 
-.layout{
-  margin-top: 3.9em;
-  min-height: calc(100vh - 3.9em);
-}
-
 .layout,
 .layout [class*="layoutCol"],
 .layoutSideRight,
@@ -108,6 +103,15 @@ body {
     align-items: stretch;
     align-content: flex-start;
 }
+
+
+
+.layout{
+  align-content: stretch;
+  margin-top: 3.9em;
+  min-height: calc(100vh - 3.9em);
+}
+
 .layoutCol,
 .layoutSideRight,
 .layoutSideLeft {

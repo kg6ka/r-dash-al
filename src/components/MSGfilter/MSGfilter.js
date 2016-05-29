@@ -77,7 +77,7 @@ export default class MSGfilter extends Component {
                 onChange={ this.props.onChange.bind(this, el, this.state.checked) }
                 data={{
                   val:total,
-                  msg:key,
+                  msg:this.state.checked == 'ID' ? parseInt(key).toString(16) : key,
                   suspicious:total - blocked,
                   blocked: blocked,
                   maxHeight: '200',

@@ -32,6 +32,12 @@ export default class FilterTable extends Component {
       this.drawCharts(props.data);
       this.chartsDecoration();
     }
+//     const first = props.timeRange[0] < props.timeRange[1] ? props.timeRange[0] : props.timeRange[1];
+//     const second = props.timeRange[0] < props.timeRange[1] ? props.timeRange[1] : props.timeRange[0] ;
+    this.setState({
+      first: moment(props.timeRange[0]).format('MMMM DD, HH:mm:ss'),
+      second: moment(props.timeRange[1]).format('MMMM DD, HH:mm:ss'),
+    });
   }
 
   chartsDecoration() {
@@ -75,8 +81,8 @@ export default class FilterTable extends Component {
     }
     const startTime = this.props.timeRange[0] > time ? this.props.timeRange[0] : time;
     this.setState({
-      first: moment(new Date(startTime)).format('MMMM Do YYYY, h:mm:ss'),
-      second: moment(new Date(this.props.timeRange[1])).format('MMMM Do YYYY, h:mm:ss'),
+      first: moment(new Date(startTime)).format('MMMM DD, HH:mm:ss'),
+      second: moment(new Date(this.props.timeRange[1])).format('MMMM DD, HH:mm:ss'),
     });
     const currentData = new Date().getTime();
     const range = currentData - time;
@@ -244,7 +250,6 @@ export default class FilterTable extends Component {
 
     function brushend() {
       const s = brush.extent();
-
       this.props.updateRange(s[0].getTime(), s[1].getTime());
       svg.classed('selecting', !d3.event.target.empty());
     }

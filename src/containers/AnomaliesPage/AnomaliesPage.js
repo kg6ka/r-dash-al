@@ -42,6 +42,7 @@ export default class AnomaliesPage extends Component {
         data: [],
       },
       anomalies: [],
+      timeRange:[new Date().getTime() - 180000,new Date().getTime()]
     };
   }
 
@@ -70,14 +71,13 @@ export default class AnomaliesPage extends Component {
       this.props.updateTimeRange(this.getRelativeTime().relativeTime, new Date().getTime());
     }
 
-    if (props.anomaliesList.data.length !== this.props.anomaliesList.data.length) {
+    if (props.anomaliesList.data.length) {
       this.setState({
         anomalies: props.anomaliesList.data,
       });
     }
 
-    if (props.fleetActivities.data.length !== 0
-      && props.carsStatus.activities.length !== 0) {
+    if (props.fleetActivities.data.length) {
       const result = this.fleetActivitiesData(props);
       this.setState({
         bars: {
@@ -213,6 +213,16 @@ export default class AnomaliesPage extends Component {
     this.props.getTarget(tagId, relativeTime, nowTime);
   }
 
+
+  updateRange(from,to) {
+    this.props.getAnomaliesList(this.props.getTags.currentTag, from, to);
+    this.props.getAnomaliesConfidence(this.props.getTags.currentTag, from, to);
+    this.props.getTarget(this.props.getTags.currentTag, from, to);
+    this.setState({
+      timeRange:[from,to]
+    })
+  }
+
   fleetActivitiesData(props) {
     const resultArray = [];
     for (let i = 0; props.fleetActivities.data.length > i; i++) {
@@ -231,9 +241,9 @@ export default class AnomaliesPage extends Component {
   }
 
   clearFilter() {
-    this.setState({
-      anomalies: props.anomaliesList.data,
-    });
+//     this.setState({
+//       anomalies: props.anomaliesList.data,
+//     });
     let fileds = document.querySelectorAll('.table-search-input');
     if(fileds.length > 0)
       Object.keys(fileds).map(i => fileds[i].value = '');
@@ -302,8 +312,8 @@ export default class AnomaliesPage extends Component {
             <FilterTable
               data={ this.state.bars.result }
               time={ relativeTime }
-              updateRange={ (fT, sT) => this.props.updateTimeRange(fT, sT) }
-              timeRange={range}
+              updateRange={ (fT, sT) => this.updateRange(fT, sT) }
+              timeRange={this.state.timeRange}
               total={ this.state.bars.total }
 
               />

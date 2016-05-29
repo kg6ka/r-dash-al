@@ -293,7 +293,6 @@ export default class AnomaliesList extends Component {
                 <input
                   type="search"
                   name={item}
-                  value = {}
                   defaultValue=""
                   className={'table-search-input ' + styles.searchInput}
                   onChange={this.filterColumn.bind(this)}/>
